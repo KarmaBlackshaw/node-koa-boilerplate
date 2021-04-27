@@ -1,16 +1,11 @@
-const knexFile = require('../knexfile')[process.env.NODE_ENV || 'development']
-const knex = require('knex')(knexFile)
 const _isEmpty = require('lodash/isEmpty')
-const raw = qb => knex.raw(qb)
+const store = require('@store')
+const raw = qb => store.knex.raw(qb)
 
-// const isObject = obj => Object.prototype.toString.call(obj) === '[object Object]'
-// const getKey = (key, obj) => obj[key] === undefined ? obj.default : obj[key]
 const isArray = item => item && Array.isArray(item)
 const isNil = x => ['null', null, 'undefined', undefined].includes(x)
 
 const knexHelper = {
-  knex,
-
   raw,
 
   jsonObject (data, isRaw) {

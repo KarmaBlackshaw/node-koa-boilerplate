@@ -19,6 +19,7 @@ module.exports = {
         user: process.env.DB_USER || 'root',
         password: process.env.DB_PASS || '',
         database: process.env.DB_NAME || '',
+        port: process.env.DB_PORT || 3306,
 
         // timezone: '+00:00',
         dateStrings: true,
