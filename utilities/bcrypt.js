@@ -2,7 +2,7 @@ const Promise = require('bluebird')
 const bcrypt = Promise.promisifyAll(require('bcryptjs'))
 
 module.exports = {
-  verify: async ({ password, hash }) => {
+  verify: ({ password, hash }) => {
     return bcrypt.compareAsync(password, hash)
   },
 
