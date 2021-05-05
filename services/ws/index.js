@@ -1,35 +1,41 @@
-const io = require('socket.io')(process.env.SOCKET_PORT || 4001)
-const redisAdapter = require('socket.io-redis')
-const fs = require('fs')
-const path = require('path')
+// external libraries
+const Promise = require('bluebird')
+const socket = require('socket.io')
 
-io.adapter(redisAdapter({
-  host: process.env.REDIS_HOST || '127.0.0.1',
-  port: process.env.REDIS_PORT || 6379,
-  password: process.env.REDIS_PASSWORD || undefined
-}))
+// nodejs libraries
+const fs = Promise.promisifyAll(require('fs'))
+
+const io = socket(process.env.SOCKET_PORT || 4001, { 'transports': ['websocket', 'polling'] })
+
+// store
+const { redis } = require('@store')
 
 module.exports = async () => {
-  return new Promise((resolve, reject) => {
-    fs.readdir(`${__dirname}/namespaces`, (err, items) => {
-      if (err) {
-        reject(err)
+  try {
+    const sub = redis.getNewSubscriber()
+    const namespaces = {}
+    const files = await fs.readdirAsync(`${__dirname}/namespaces/`)
+
+    for (let i = 0; i < files.length; i++) {
+      const curr = files[i]
+      const namespace = curr.split('.')[0]
+
+      namespaces[namespace] = require(`./namespaces/${curr}`)(io, namespace)
+    }
+
+    sub.psubscribe('socket:user_events:*')
+    sub.on('pmessage', (pmessage, channel, message) => {
+      const chan = channel.split(':')
+
+      if (chan.length < 4) {
+        return
       }
 
-      try {
-        for (let i = 0; i < items.length; i++) {
-          if (items[i] === path.basename(__filename) ||
-            path.extname(items[i]) !== '.js') {
-            continue
-          }
-
-          require(`./namespaces/${items[i]}`)(io)
-        }
-      } catch (err) {
-        reject(err)
+      if (chan[2] && namespaces[chan[2]]) {
+        namespaces[chan[2]].emit(chan[3], message)
       }
     })
-
-    resolve(io)
-  })
+  } catch (err) {
+    throw new Error(err)
+  }
 }
