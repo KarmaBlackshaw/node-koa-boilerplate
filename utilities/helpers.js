@@ -1,8 +1,23 @@
-
+// libraries
 const Promise = require('bluebird')
-const fs = Promise.promisifyAll(require('fs'))
-const { v5: uuidv5 } = require('uuid')
 const _last = require('lodash/last')
+
+// core modules
+const fs = Promise.promisifyAll(require('fs'))
+const { promisify } = require('util')
+const path = require('path')
+const copyFile = promisify(fs.copyFile)
+
+const AWS = require('aws-sdk')
+const S3 = new AWS.S3()
+
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_KEY_ACCESS,
+  region: process.env.AWS_REGION
+})
+
+S3.config.update({ credentials: AWS.config.credentials })
 
 module.exports = {
   getKey: (key, obj) => obj[key] === undefined ? obj.default : obj[key],
@@ -17,18 +32,43 @@ module.exports = {
 
   toDecimal: number => new Intl.NumberFormat('en-US', { style: 'decimal' }).format(number),
 
-  async copyFile ({ file }) {
-    try {
-      const fileExtension = this.fileExtension(file.name)
-      const hash = uuidv5(file.name + file.path, process.env.SECRET_KEY)
-      const filename = `${hash}.${fileExtension}`
+  async copyFile (file, basePath, name = '') {
+    let params
+    let dest
+    let image
+    let exPath = path.extname(file.name).toLowerCase()
 
-      await fs.copyFileAsync(file.path, `assets/uploads/${filename}`)
+    if (exPath === '.jpeg') {
+      exPath = '.jpg'
+    }
 
-      return filename
-    } catch (error) {
-      console.log(error)
-      throw new Error(error)
+    if (process.env.NODE_ENV === 'development') {
+      dest = process.env.STATIC_ASSET_PATH
+      name = name || Math.floor((new Date()).getTime() / 1000)
+      name += exPath
+
+      await copyFile(file.path, path.join(dest, basePath, name))
+      return path.join(basePath, name)
+    } else {
+      name = name || Math.floor((new Date()).getTime() / 1000)
+      name += exPath
+      basePath = basePath.split('/')[1]
+      image = `${basePath}/${name}`
+      name = name.toLowerCase()
+
+      params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Body: fs.createReadStream(file.path),
+        Key: image,
+        ACL: 'public-read'
+      }
+
+      await S3.upload(params, (err, data) => {
+        console.log('S3 upload error')
+        console.log(err, data)
+      }).promise()
+
+      return `/${image}`
     }
   }
 }

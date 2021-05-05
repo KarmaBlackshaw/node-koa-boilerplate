@@ -1,8 +1,7 @@
-const { verify } = require('../../../utilities/jwt')
+const jwt = require('@utilities/jwt')
 
 module.exports = ({ except } = {}) => {
   return async (ctx, next) => {
-    console.log(ctx._matchedRouteName)
     if (Array.isArray(except) && except.includes(ctx._matchedRouteName)) {
       ctx.user = {}
       return next()
@@ -19,7 +18,7 @@ module.exports = ({ except } = {}) => {
       ctx.throw(401)
     }
 
-    const verification = await verify(splitToken[1], process.env.APP_KEY)
+    const verification = await jwt.verify(splitToken[1], process.env.SECRET_KEY)
 
     ctx.user = verification
 
