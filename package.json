@@ -27,6 +27,7 @@
   "dependencies": {
     "@koa/cors": "^2.2.2",
     "@koa/multer": "3.0.0",
+    "aws-sdk": "^2.900.0",
     "axios": "^0.18.1",
     "bcryptjs": "2.4.3",
     "bluebird": "^3.5.2",
