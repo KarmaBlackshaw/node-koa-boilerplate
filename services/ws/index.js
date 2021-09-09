@@ -2,19 +2,21 @@
 const Promise = require('bluebird')
 const socket = require('socket.io')
 
-// nodejs libraries
+// node core
 const fs = Promise.promisifyAll(require('fs'))
-
-const io = socket(process.env.SOCKET_PORT || 4001, { 'transports': ['websocket', 'polling'] })
+const path = require('path')
 
 // store
 const { redis } = require('@store')
+
+// instances
+const io = socket(process.env.SOCKET_PORT || 4001, { transports: ['websocket', 'polling'] })
 
 module.exports = async () => {
   try {
     const sub = redis.getNewSubscriber()
     const namespaces = {}
-    const files = await fs.readdirAsync(`${__dirname}/namespaces/`)
+    const files = await fs.readdirAsync(path.join(__dirname, 'namespaces'))
 
     for (let i = 0; i < files.length; i++) {
       const curr = files[i]
