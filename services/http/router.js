@@ -1,16 +1,18 @@
 const Promise = require('bluebird')
 const fs = Promise.promisifyAll(require('fs'))
+const path = require('path')
 const koaRouter = require('koa-router')
 const router = koaRouter()
 
 module.exports = async () => {
-  const files = await fs.readdirAsync(`${__dirname}/handlers/`)
+  const files = await fs.readdirAsync(path.join(__dirname, 'handlers'))
 
   for (let i = 0; i < files.length; i++) {
+    const curr = files[i]
     try {
       router.use(require(`./handlers/${files[i]}`).routes())
     } catch (err) {
-      throw new Error(err)
+      throw new Error(`Error on file ${curr}`)
     }
   }
 
