@@ -10,7 +10,7 @@ const store = require('@store')
 // utilities
 const CustomError = require('@utilities/CustomError')
 const { getKey, isPOJO } = require('@utilities/helpers')
-const { jsonObject, raw, makeQuery } = require('@utilities/knexHelper')
+const { makeQuery } = require('@utilities/knexHelper')
 
 // libraries
 const _pickBy = require('lodash/pickBy')
@@ -95,8 +95,8 @@ module.exports = {
 
   async findBy (filterBy, q) {
     const dictionary = {
-      id: 'users.id',
-      username: 'users.username'
+      sample_id: 'sample.id',
+      name: 'sample.name'
     }
 
     const filterByColumn = getKey(filterBy, dictionary)
@@ -117,8 +117,8 @@ module.exports = {
           }
         })
         .select({
-          id: 'users.id',
-          fname: 'users.fname'
+          sample_id: 'sample.id',
+          name: 'sample.name'
         })
         .first()
 
@@ -131,7 +131,7 @@ module.exports = {
   async modify (id, payload) {
     try {
       const dictionary = {
-        type: 'case.type'
+        sample_id: 'sample.id'
       }
 
       const updateData = {}
