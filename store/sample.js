@@ -1,67 +1,163 @@
-// stores
+/**
+* TODO - Describe what this store does in general.
+* CRUD Operations are done here...
+* @module Sample
+*/
+
+// store
 const store = require('@store')
 
-// utiltiies
-const { makeQuery } = require('@utilities/knexHelper')(store.knex)
+// utilities
 const CustomError = require('@utilities/CustomError')
+const { getKey, isPOJO } = require('@utilities/helpers')
+const { jsonObject, raw, makeQuery } = require('@utilities/knexHelper')
 
 // libraries
+const _pickBy = require('lodash/pickBy')
+const _isNil = require('lodash/isNil')
+const _isEmpty = require('lodash/isEmpty')
 
-// helpers
-const getKey = (key, obj) => obj[key] === undefined ? obj.default : obj[key]
+// middlewares
+
+// file-wide variables
 
 module.exports = {
-  async index ({ filterBy, sortBy, dateBy, q, sort, dateFrom, dateTo, page, rows, isCount }) {
+  async index ({ filterBy, q, page, rows, sortBy, sort, isCount }) {
     try {
-      const filterByColumn = getKey(filterBy, {
-        user_id: 'users.id'
-      })
+      const dictionary = {
+        sample_id: 'sample.id',
+        sample: 'sample.name'
+      }
 
-      const sortByColumn = getKey(sortBy, {})
-      const dateByColumn = getKey(dateBy, {})
+      const filterColumns = {
+        ...dictionary
+      }
 
-      const list = await store.knex('users')
+      const sortColumns = {
+        ...dictionary
+      }
+
+      const query = store.knex('sample')
         .modify(knex => {
           makeQuery({
-            ...{ filterBy: filterByColumn, q },
-            ...{ sortBy: sortByColumn, sort },
-            ...{ dateBy: dateByColumn, dateFrom, dateTo },
+            ...{ filterBy, q, filterColumns },
+            ...{ sortBy, sort, sortColumns },
             ...{ page, rows },
             knex,
             isCount
           })
 
           if (isCount) {
-            knex.count({ total: '*' }).first()
+            knex.count({ total: 1 }).first()
           } else {
             knex.select({
-              user_id: 'users.id',
-              username: 'users.username',
-              password: 'users.password'
+              id: 'sample.id',
+              name: 'sample.name'
             })
           }
         })
 
+      const list = await query
+
+      if (isCount) {
+        return list
+      }
+
+      // parse JSON here
+
       return list
     } catch (error) {
+      throw new CustomError(error)
+    }
+  },
+
+  async store (payload) {
+    const errDefaults = { name: 'REGISTER_ERROR', status: 400 }
+    const fillables = new Set([
+      'fname'
+    ])
+
+    try {
+      const data = _pickBy(payload, (val, key) => !_isNil(val) && fillables.has(key))
+
+      const [id] = await store.knex('sample').insert(data)
+
+      return id
+    } catch (error) {
+      if (error.code === 'ER_NO_REFERENCED_ROW_2') {
+        throw new CustomError({ ...errDefaults, message: 'UNKNOWN_DATA' })
+      }
+
       console.log(error)
       throw new CustomError(error)
     }
   },
 
-  create () {
-    // code here...
+  async findBy (filterBy, q) {
+    const dictionary = {
+      id: 'users.id',
+      username: 'users.username'
+    }
+
+    const filterByColumn = getKey(filterBy, dictionary)
+
+    try {
+      const data = await store.knex('sample')
+        .modify(knex => {
+          if (filterByColumn && !_isNil(q)) {
+            knex.where(filterByColumn, q)
+          }
+
+          if (isPOJO(filterBy)) {
+            for (const key in filterBy) {
+              if (dictionary[key] && !_isNil(filterBy[key])) {
+                knex.where(dictionary[key], filterBy[key])
+              }
+            }
+          }
+        })
+        .select({
+          id: 'users.id',
+          fname: 'users.fname'
+        })
+        .first()
+
+      return data
+    } catch (error) {
+      throw error
+    }
   },
 
-  read () {
-    // code here...
-  },
+  async modify (id, payload) {
+    try {
+      const dictionary = {
+        type: 'case.type'
+      }
 
-  update () {
-    // code here...
-  },
+      const updateData = {}
+      for (const key in payload) {
+        const updateValue = payload[key]
+        const currDictionary = dictionary[key]
 
-  delete () {
-    // code here...
+        if (_isNil(updateValue) || !currDictionary) {
+          continue
+        }
+
+        updateData[currDictionary] = updateValue
+      }
+
+      if (_isEmpty(updateData)) {
+        return
+      }
+
+      await store.knex('sample')
+        .where('sample.id', id)
+        .update(updateData)
+
+      return true
+    } catch (error) {
+      console.log(error)
+      throw new CustomError(error)
+    }
   }
 }
