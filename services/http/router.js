@@ -1,7 +1,12 @@
+// libs
 const Promise = require('bluebird')
+const koaRouter = require('koa-router')
+
+// node core
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
-const koaRouter = require('koa-router')
+
+// instances
 const router = koaRouter()
 
 module.exports = async () => {
