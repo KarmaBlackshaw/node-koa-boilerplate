@@ -60,12 +60,12 @@
     "write": "2.0.0"
   },
   "devDependencies": {
-    "eslint": "7.15.0",
-    "eslint-config-standard": "16.0.2",
-    "eslint-plugin-import": "2.20.1",
-    "eslint-plugin-node": "11.0.0",
-    "eslint-plugin-promise": "4.2.1",
-    "eslint-plugin-standard": "4.0.1",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-standard": "^4.0.1",
     "mysql-import": "5.0.21",
     "standard": "^12.0.1"
   },

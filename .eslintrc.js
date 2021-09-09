@@ -5,13 +5,18 @@ module.exports = {
     es6: true,
     node: true
   },
+
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
   },
+
   parserOptions: {
     ecmaVersion: 2018
   },
+
+  extends: ['standard'],
+
   rules: {
     indent: ['error', 2],
     'comma-dangle': ['error', 'never'],
@@ -20,6 +25,7 @@ module.exports = {
     'arrow-parens': [2, 'as-needed'],
     'no-await-in-loop': 'error',
     'no-console': 'off',
+    'no-useless-catch': 'off',
     'object-curly-spacing': ['error', 'always'],
     'no-unused-vars': ['error',
       {
