@@ -1,20 +1,28 @@
-// utilities
+/**
+
+const authentication = require('@middleware/authentication')
+
+.use(authentication())
+
+ */
+
 const JWT = require('@utilities/jwt')
 
-module.exports = ({ except } = {}) => {
+module.exports = () => {
   return async (ctx, next) => {
-    if (Array.isArray(except) && except.includes(ctx._matchedRouteName)) {
+    if (ctx._matchedRouteName === 'unauth') {
       return next()
     }
 
     try {
       const bearerHeader = ctx.request.headers.authorization
       const token = String(bearerHeader).split(' ')[1]
-      ctx.user = await JWT.verify(token)
+      const verifiedToken = await JWT.verify(token)
 
+      ctx.user = verifiedToken.data || verifiedToken
       return next()
     } catch (error) {
-      throw new Error(error)
+      ctx.throw(401)
     }
   }
 }
