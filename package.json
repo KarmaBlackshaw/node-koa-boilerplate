@@ -72,12 +72,5 @@
   "optionalDependencies": {
     "bufferutil": "^4.0.0",
     "utf-8-validate": "^5.0.1"
-  },
-  "_moduleAliases": {
-    "@utilities": "./utilities",
-    "@listeners": "./listeners",
-    "@services": "./services",
-    "@store": "./store",
-    "@middleware": "./services/http/middleware"
   }
 }
