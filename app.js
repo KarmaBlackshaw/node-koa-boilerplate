@@ -10,7 +10,7 @@ const cpus = require('os').cpus().length
 require('dotenv').config()
 
 // utilities
-require('./utilities/moduleAlias')(__dirname)
+require('./utilities/module-alias')(__dirname)
 
 if (cluster.isMaster) {
   require('@store').start()

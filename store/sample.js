@@ -8,9 +8,9 @@
 const store = require('@store')
 
 // utilities
-const CustomError = require('@utilities/CustomError')
+const CustomError = require('@utilities/custom-error')
 const { getKey, isPOJO } = require('@utilities/helpers')
-const { makeQuery } = require('@utilities/knexHelper')
+const { makeQuery } = require('@utilities/knex-helper')
 
 // libraries
 const _pickBy = require('lodash/pickBy')
