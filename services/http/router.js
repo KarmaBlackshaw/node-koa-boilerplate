@@ -12,14 +12,14 @@ const router = koaRouter()
 module.exports = async () => {
   const files = await fs.readdirAsync(path.join(__dirname, 'handlers'))
 
-  for (let i = 0; i < files.length; i++) {
-    const curr = files[i]
+  files.forEach(file => {
     try {
-      router.use(require(`./handlers/${files[i]}`).routes())
+      router.use(require(`./handlers/${file}`).routes())
     } catch (err) {
-      throw new Error(`Error on file ${curr}`)
+      console.log(err)
+      throw new Error(`Error on http/handlers/${file}`)
     }
-  }
+  })
 
   return router
 }
