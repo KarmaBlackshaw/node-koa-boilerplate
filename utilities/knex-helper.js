@@ -15,16 +15,14 @@ const isDate = date => !isNaN(new Date(date).getTime())
 const knexHelper = {
   raw,
 
-  jsonObject (data, isRaw = 1) {
+  jsonObject (data) {
     const cols = Object
       .keys(data)
       .reduce((acc, curr) => [...acc, `"${curr}", ${data[curr]}`], [])
       .join(', ')
       .trim()
 
-    return isRaw
-      ? raw(`JSON_OBJECT(${cols})`)
-      : `JSON_OBJECT(${cols})`
+    return raw(`JSON_OBJECT(${cols})`)
   },
 
   jsonExtract (column, key, raw) {
@@ -148,14 +146,12 @@ const knexHelper = {
     }
   },
 
-  wrapCase (caseStatements, raw) {
+  wrapCase (caseStatements) {
     if (_isEmpty(caseStatements)) {
       throw new Error(`Case statements expected a value. Received ${caseStatements}`)
     }
 
-    return raw
-      ? raw(`(CASE ${caseStatements} END)`)
-      : `(CASE ${caseStatements} END)`
+    return raw(`(CASE ${caseStatements} END)`)
   }
 }
 
