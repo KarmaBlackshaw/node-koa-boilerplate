@@ -4,9 +4,9 @@ const cors = require('@koa/cors')
 const routes = require('./router')
 
 // Custom Middlewares
-const responseTime = require('@middleware/responseTime')
-const koaParser = require('@middleware/koaParser')
-const errorHandler = require('@middleware/errorHandler')
+const responseTime = require('@middleware/response-time')
+const koaParser = require('@middleware/koa-parser')
+const errorHandler = require('@middleware/error-handler')
 
 module.exports = async () => {
   const router = await routes()
