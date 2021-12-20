@@ -1,14 +1,16 @@
 const Promise = require('bluebird')
+
 const fs = Promise.promisifyAll(require('fs'))
+const path = require('path')
 
 module.exports = async () => {
-  const files = await fs.readdirAsync(`${__dirname}/tasks`)
+  const files = await fs.readdirAsync(path.join(__dirname, 'items'))
 
-  try {
-    for (let i = 0; i < files.length; i++) {
-      require(`./tasks/${files[i]}`)
+  files.forEach(file => {
+    try {
+      require(path.join(__dirname, 'items', file))
+    } catch (error) {
+      throw new Error(`Error on file jobs/items/${file}`)
     }
-  } catch (error) {
-    throw new Error(error)
-  }
+  })
 }
