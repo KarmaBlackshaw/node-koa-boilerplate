@@ -5,19 +5,10 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js --exec \"npm run fix && npm run test && node\"",
-    "test": "standard",
-    "fix": "standard --fix",
-    "mocha": "mocha test/**/**.js",
-    "pm2_start": "pm2 start ./app.js --name admin-api",
-    "pm2_stop": "pm2 stop admin-api",
-    "pm2_delete": "pm2 delete admin-api",
-    "pm2_reset": "npm run pm2_stop && npm run pm2_delete && npm run pm2_start",
+    "test": "eslint .",
+    "fix": "eslint . --fix",
     "make:handler": "plop --plopfile ./generator/store_handler.js",
-    "make:migration": "plop --plopfile ./generator/migration_seed.js",
-    "migration": "knex migrate:latest",
-    "rollback": "knex migrate:rollback",
-    "reset": "knex migrate:rollback & knex migrate:latest & knex seed:run",
-    "seed": "knex seed:run"
+    "make:migration": "plop --plopfile ./generator/migration_seed.js"
   },
   "env": {
     "node": true
@@ -44,18 +35,14 @@
     "koa-static": "5.0.0",
     "koa2-formidable": "^1.0.2",
     "lodash": "^4.17.15",
-    "mocha": "^5.2.0",
     "module-alias": "2.2.2",
     "moment": "2.29.1",
     "multer": "1.4.2",
     "mysql": "^2.16.0",
-    "mysqldump": "3.2.0",
     "nodemon": "^1.18.7",
     "papaparse": "^4.6.3",
-    "raw-body": "^2.4.0",
     "redis": "^2.8.0",
     "socket.io": "^2.1.1",
-    "socket.io-redis": "6.0.1",
     "uuid": "8.3.1",
     "write": "2.0.0"
   },
@@ -65,13 +52,7 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "mysql-import": "5.0.21",
-    "standard": "^12.0.1"
-  },
-  "optionalDependencies": {
-    "bufferutil": "^4.0.0",
-    "utf-8-validate": "^5.0.1"
+    "eslint-plugin-standard": "^4.0.1"
   },
   "_moduleAliases": {
     "@utilities": "./utilities",
