@@ -81,7 +81,8 @@ module.exports = {
 
       return list
     } catch (error) {
-      throw new CustomError(error)
+      console.log(error)
+      throw error
     }
   },
 
@@ -133,6 +134,7 @@ module.exports = {
 
       return data
     } catch (error) {
+      console.log(error)
       throw error
     }
   },
@@ -168,7 +170,8 @@ module.exports = {
         throw new CustomError({ ...errDefaults, message: 'UNKNOWN_DATA' })
       }
 
-      throw new CustomError(error)
+      console.log(error)
+      throw error
     }
   },
 

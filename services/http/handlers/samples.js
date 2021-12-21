@@ -23,37 +23,34 @@ module.exports = router
 
   .get('/', async ctx => {
     try {
-      try {
-        const query = ctx.request.query
-        const params = {
-          filterBy: query.filter_by,
-          q: query.q,
-          page: query.page,
-          rows: query.rows,
-          sortBy: query.sort_by,
-          sort: query.sort,
-          dateBy: query.date_by,
-          dateFrom: query.date_from,
-          dateTo: query.date_to,
-          status: query.status,
-          isCount: query.is_count
-        }
-
-        /**
-         * Change necessarily and remove this comment
-         */
-        ctx.throw(404)
-
-        /**
-         * Change necessarily and remove this comment
-         */
-        const response = await Samples.list({ ...params })
-
-        ctx.body = params.isCount ? _get(response, 'total', 0) : response
-      } catch (err) {
-        ctx.throw(err)
+      const query = ctx.request.query
+      const params = {
+        filterBy: query.filter_by,
+        q: query.q,
+        page: query.page,
+        rows: query.rows,
+        sortBy: query.sort_by,
+        sort: query.sort,
+        dateBy: query.date_by,
+        dateFrom: query.date_from,
+        dateTo: query.date_to,
+        status: query.status,
+        isCount: query.is_count
       }
+
+      /**
+       * Change necessarily and remove this comment
+       */
+      ctx.throw(404)
+
+      /**
+       * Change necessarily and remove this comment
+       */
+      const response = await Samples.list({ ...params })
+
+      ctx.body = params.isCount ? _get(response, 'total', 0) : response
     } catch (error) {
+      console.log(error)
       ctx.throw(error)
     }
   })
@@ -86,8 +83,9 @@ module.exports = router
         is_active: request.is_active,
         status: request.status
       })
-    } catch (err) {
-      ctx.throw(err)
+    } catch (error) {
+      console.log(error)
+      ctx.throw(error)
     }
   })
 
@@ -112,8 +110,9 @@ module.exports = router
        * Change necessarily and remove this comment
        */
       ctx.body = await Samples.modify(data.id, {})
-    } catch (err) {
-      ctx.throw(err)
+    } catch (error) {
+      console.log(error)
+      ctx.throw(error)
     }
   })
 
@@ -139,7 +138,8 @@ module.exports = router
       })
 
       ctx.status = 200
-    } catch (err) {
-      ctx.throw(err)
+    } catch (error) {
+      console.log(error)
+      ctx.throw(error)
     }
   })
