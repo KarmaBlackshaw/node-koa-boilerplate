@@ -13,21 +13,7 @@ module.exports = {
         database: process.env.DB_NAME || '',
         port: process.env.DB_PORT || 3306,
 
-        dateStrings: true,
-
-        typeCast (field, next) {
-          try {
-            if (field.type === 'BIT' && field.length === 1) {
-              const bytes = field.buffer()
-              return bytes ? (bytes[0] === 1) : null
-            }
-
-            return next()
-          } catch (err) {
-            console.log(err)
-            throw err
-          }
-        }
+        dateStrings: true
       }
     })
 
