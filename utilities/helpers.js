@@ -32,10 +32,6 @@ module.exports = {
 
   getKey: (key, obj) => obj[key] === undefined ? obj.default : obj[key],
 
-  safeLower: str => String(str).toLowerCase(),
-
-  isNil: x => ['null', null, 'undefined', undefined].includes(x),
-
   fileExtension: name => _last(name.split('.')),
 
   toDecimal: number => new Intl.NumberFormat('en-US', { style: 'decimal' }).format(number),

@@ -1,4 +1,5 @@
-const redis = require('../utilities/redis')
+const redis = require('@utilities/redis')
+const knex = require('@utilities/knex')
 const { flatten } = require('../utilities/helpers')
 
 module.exports = {
@@ -12,31 +13,7 @@ module.exports = {
 
   start () {
     // todo: transfer this to different file
-    this.knex = require('knex')({
-      client: process.env.DB_CLIENT || 'mysql',
-      connection: {
-        host: process.env.DB_HOST || '127.0.0.1',
-        user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASS || '',
-        database: process.env.DB_NAME || '',
-        port: process.env.DB_PORT || 3306,
-
-        // timezone: '+00:00',
-        dateStrings: true,
-        typeCast (field, next) {
-          try {
-            if (field.type === 'BIT' && field.length === 1) {
-              const bytes = field.buffer()
-              return bytes ? (bytes[0] === 1) : null
-            }
-
-            return next()
-          } catch (err) {
-            console.log(err)
-          }
-        }
-      }
-    })
+    this.knex = knex.connect()
 
     redis.connect()
   },

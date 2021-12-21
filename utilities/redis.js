@@ -15,7 +15,9 @@ module.exports = {
 
   getNewSubscriber () {
     const newSubscriber = this.getConnection()
+
     this.subscribers.push(newSubscriber)
+
     return newSubscriber
   },
 
