@@ -18,41 +18,44 @@ module.exports = {
     /**
      * Change necessarily and remove this comment
      */
-    const dictionary = {}
+    const dictionary = {
+      login_id: 'users.login_id'
+    }
 
     /**
      * Change necessarily and remove this comment
      */
-    const filterByColumn = getKey(filterBy, {
+    const filterDictionary = {
       ...dictionary
-    })
+    }
 
     /**
      * Change necessarily and remove this comment
      */
-    const sortByColumn = getKey(sortBy, {
+    const sortDictionary = {
       ...dictionary,
-      id: 'cash.id'
-    })
+      login_id: 'users.login_id',
+      login_name: 'users.login_name',
+      amount: 'users.amount'
+    }
 
     /**
      * Change necessarily and remove this comment
      */
-    const dateByColumn = getKey(dateBy, {
-      ...dictionary,
-      created_at: 'cash.created_at'
-    })
+    const dateDictionary = {
+      created_at: 'users.created_at'
+    }
 
     try {
       /**
        * Change necessarily and remove this comment
        */
-      const query = store.knex({ cash: 'cashbacks' })
+      const query = store.knex('users')
         .modify(knex => {
           makeQuery({
-            ...{ filterBy: filterByColumn, q },
-            ...{ sortBy: sortByColumn, sort },
-            ...{ dateBy: dateByColumn, dateFrom, dateTo },
+            ...{ filterBy, q, filterDictionary },
+            ...{ sortBy, sort, sortDictionary },
+            ...{ dateBy, dateFrom, dateTo, dateDictionary },
             ...{ page, rows },
             knex,
             isCount
@@ -62,14 +65,18 @@ module.exports = {
             /**
              * Change necessarily and remove this comment
              */
-            knex.count({ total: 'cash.id' }).first()
+            knex.count({ total: 'users.id' }).first()
           } else {
             /**
              * Change necessarily and remove this comment
              */
-            knex.select({
-              id: 'cash.id'
-            })
+            knex.select([
+              'id',
+              'login_id',
+              'login_name',
+              'amount',
+              'created_at'
+            ])
           }
         })
 

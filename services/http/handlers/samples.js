@@ -19,7 +19,7 @@ const authentication = require('@middleware/authentication')
 module.exports = router
   .prefix('/samples')
 
-  .use(authentication())
+// .use(authentication())
 
   .get('/', async ctx => {
     try {
@@ -38,10 +38,10 @@ module.exports = router
         isCount: query.is_count
       }
 
-      /**
-       * Change necessarily and remove this comment
-       */
-      ctx.throw(404)
+      // /**
+      //  * Change necessarily and remove this comment
+      //  */
+      // ctx.throw(404)
 
       /**
        * Change necessarily and remove this comment
