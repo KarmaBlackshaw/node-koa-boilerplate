@@ -1,13 +1,17 @@
+// libs
 const moduleAlias = require('module-alias')
+
+// node core
+const path = require('path')
 
 module.exports = dir => {
   moduleAlias.addAliases({
-    '@': `${dir}`,
-    '@utilities': `${dir}/utilities`,
-    '@listeners': `${dir}/listeners`,
-    '@jobs': `${dir}/jobs`,
-    '@services': `${dir}/services`,
-    '@store': `${dir}/store`,
-    '@middleware': `${dir}/services/http/middleware`
+    '@': path.join(dir),
+    '@utilities': path.join(dir, 'utilities'),
+    '@listeners': path.join(dir, 'listeners'),
+    '@jobs': path.join(dir, 'jobs'),
+    '@services': path.join(dir, 'services'),
+    '@store': path.join(dir, 'store'),
+    '@middleware': path.join(dir, 'services', 'http', 'middleware')
   })
 }
