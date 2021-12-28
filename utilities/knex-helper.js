@@ -118,8 +118,19 @@ const knexHelper = {
     if (dateBy && dateFrom && dateTo && dateDictionary) {
       (() => {
         if (dateDictionary[dateBy] && isDate(dateFrom) && isDate(dateTo)) {
-          knex.where(dateDictionary[dateBy], '>=', moment(dateFrom).startOf('day').format('YYYY-MM-DD HH:mm:ss'))
-          knex.where(dateDictionary[dateBy], '<=', moment(dateTo).endOf('day').format('YYYY-MM-DD HH:mm:ss'))
+          const hasTime = date => Number(moment(date).format('HHmmss')) > 0
+          const format = 'YYYY-MM-DD HH:mm:ss'
+
+          const dateFromTimestamp = hasTime(dateFrom)
+            ? moment(dateFrom).format(format)
+            : moment(dateFrom).startOf('day').format(format)
+
+          const dateToTimestamp = hasTime(dateTo)
+            ? moment(dateTo).format(format)
+            : moment(dateTo).endOf('day').format(format)
+
+          knex.where(dateBy, '>=', dateFromTimestamp)
+          knex.where(dateBy, '<=', dateToTimestamp)
         }
       })()
     }
