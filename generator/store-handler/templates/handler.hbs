@@ -4,7 +4,7 @@ const router = require('koa-router')()
  * Change necessarily and remove this comment
  */
 // store
-const Samples = require('@store/samples')
+const {{ properCase name }} = require('@store/{{ kebabCase name }}')
 
 // utilities
 
@@ -17,7 +17,7 @@ const authentication = require('@middleware/authentication')
 // const userLevel = require('@middleware/userLevel')
 
 module.exports = router
-  .prefix('/samples')
+  .prefix('/{{ kebabCase name }}')
 
 // .use(authentication())
 
@@ -34,8 +34,7 @@ module.exports = router
         dateBy: query.date_by,
         dateFrom: query.date_from,
         dateTo: query.date_to,
-        status: query.status,
-        isCount: query.is_count
+        status: query.status
       }
 
       // /**
@@ -46,9 +45,10 @@ module.exports = router
       /**
        * Change necessarily and remove this comment
        */
-      const response = await Samples.list({ ...params })
+      const list = await {{ properCase name }}.list({ ...params })
+      const count = await {{ properCase name }}.list({ ...params, isCount: true })
 
-      ctx.body = params.isCount ? _get(response, 'total', 0) : response
+      ctx.body = { count: _get(count, 'total', 0), list }
     } catch (error) {
       console.log(error)
       ctx.throw(error)
@@ -61,7 +61,11 @@ module.exports = router
      */
     const schema = Joi.object({
       start_date: Joi.date()
-        .optional()
+        .optional(),
+      end_date: Joi.date()
+        .optional(),
+      profit: Joi.number()
+        .required()
     })
 
     try {
@@ -75,13 +79,10 @@ module.exports = router
       /**
        * Change necessarily and remove this comment
        */
-      ctx.body = await Samples.store({
+      ctx.body = await {{ properCase name }}.store({
         start_date: request.start_date,
         end_date: request.end_date,
-        profit: request.profit,
-        minimum_net: request.minimum_net,
-        is_active: request.is_active,
-        status: request.status
+        profit: request.profit
       })
     } catch (error) {
       console.log(error)
@@ -109,7 +110,7 @@ module.exports = router
       /**
        * Change necessarily and remove this comment
        */
-      ctx.body = await Samples.modify(data.id, {})
+      ctx.body = await {{ properCase name }}.modify(data.id, {})
     } catch (error) {
       console.log(error)
       ctx.throw(error)
@@ -133,7 +134,7 @@ module.exports = router
       /**
        * Change necessarily and remove this comment
        */
-      await Samples.modify(data.id, {
+      await {{ properCase name }}.modify(data.id, {
         deleted_at: new Date()
       })
 

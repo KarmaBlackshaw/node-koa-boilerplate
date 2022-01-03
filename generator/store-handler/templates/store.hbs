@@ -1,7 +1,7 @@
+// store
 const store = require('@store')
 
 // utilities
-const CustomError = require('@utilities/custom-error')
 const { makeQuery } = require('@utilities/knex-helper')
 
 // libs
@@ -11,46 +11,35 @@ const _castArray = require('lodash/castArray')
 const _pickBy = require('lodash/pickBy')
 
 // helpers
-const getKey = (key, obj) => obj[key] === undefined ? obj.default : obj[key]
 
 module.exports = {
   async list ({ filterBy, q, page, rows, sortBy, sort, isCount, dateBy, dateFrom, dateTo } = {}) {
     /**
      * Change necessarily and remove this comment
      */
-    const dictionary = {
-      login_id: 'users.login_id'
-    }
-
-    /**
-     * Change necessarily and remove this comment
-     */
-    const filterDictionary = {
-      ...dictionary
-    }
+    const filterDictionary = {}
 
     /**
      * Change necessarily and remove this comment
      */
     const sortDictionary = {
-      ...dictionary,
-      login_id: 'users.login_id',
-      login_name: 'users.login_name',
-      amount: 'users.amount'
+      login_id: '{{ snakeCase name }}.login_id',
+      login_name: '{{ snakeCase name }}.login_name',
+      amount: '{{ snakeCase name }}.amount'
     }
 
     /**
      * Change necessarily and remove this comment
      */
     const dateDictionary = {
-      created_at: 'users.created_at'
+      created_at: '{{ snakeCase name }}.created_at'
     }
 
     try {
       /**
        * Change necessarily and remove this comment
        */
-      const query = store.knex('users')
+      const query = store.knex('{{ snakeCase name }}')
         .modify(knex => {
           makeQuery({
             ...{ filterBy, q, filterDictionary },
@@ -65,18 +54,20 @@ module.exports = {
             /**
              * Change necessarily and remove this comment
              */
-            knex.count({ total: 'users.id' }).first()
+            knex
+              .count({ total: '{{ snakeCase name }}.id' })
+              .first()
           } else {
             /**
              * Change necessarily and remove this comment
              */
-            knex.select([
-              'id',
-              'login_id',
-              'login_name',
-              'amount',
-              'created_at'
-            ])
+            knex.select({
+              id: '{{ snakeCase name }}.id',
+              login_id: '{{ snakeCase name }}.login_id',
+              login_name: '{{ snakeCase name }}.login_name',
+              amount: '{{ snakeCase name }}.amount',
+              created_at: '{{ snakeCase name }}.created_at'
+            })
           }
         })
 
@@ -98,14 +89,14 @@ module.exports = {
      * Change necessarily and remove this comment
      */
     const dictionary = {
-      id: 'games.id',
-      type_id: 'games.type_id',
-      name: 'games.name',
-      table: 'games.table'
+      id: '{{ snakeCase name }}.id',
+      type_id: '{{ snakeCase name }}.type_id',
+      name: '{{ snakeCase name }}.name',
+      table: '{{ snakeCase name }}.table'
     }
 
     try {
-      const data = await store.knex({ games: 'mini_games' })
+      const data = await store.knex('{{ snakeCase name }}')
         .modify(knex => {
           if (_isEmpty(conditions)) {
             knex.whereRaw('1 = 0')
@@ -123,19 +114,19 @@ module.exports = {
            * Change necessarily and remove this comment
            */
           if (conditions.is_deleted) {
-            knex.whereNotNull('games.deleted_at')
+            knex.whereNotNull('{{ snakeCase name }}.deleted_at')
           } else {
-            knex.whereNull('games.deleted_at')
+            knex.whereNull('{{ snakeCase name }}.deleted_at')
           }
         })
         /**
          * Change necessarily and remove this comment
          */
         .select({
-          id: 'games.id',
-          type_id: 'games.type_id',
-          name: 'games.name',
-          table: 'games.table'
+          id: '{{ snakeCase name }}.id',
+          type_id: '{{ snakeCase name }}.type_id',
+          name: '{{ snakeCase name }}.name',
+          table: '{{ snakeCase name }}.table'
         })
         .first()
 
@@ -147,8 +138,6 @@ module.exports = {
   },
 
   async store (payload) {
-    const errDefaults = { name: 'CREATE_ERROR', status: 400 }
-
     /**
      * Change necessarily and remove this comment
      */
@@ -165,18 +154,10 @@ module.exports = {
       /**
        * Change necessarily and remove this comment
        */
-      const [id] = await store.knex('contacts').insert(data)
+      const [id] = await store.knex('{{ snakeCase name }}').insert(data)
 
       return id
     } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') {
-        throw new CustomError({ ...errDefaults, message: 'DUPLICATE', info: error.sqlMessage })
-      }
-
-      if (error.code === 'ER_NO_REFERENCED_ROW_2') {
-        throw new CustomError({ ...errDefaults, message: 'UNKNOWN_DATA' })
-      }
-
       console.log(error)
       throw error
     }
@@ -188,7 +169,7 @@ module.exports = {
        * Change necessarily and remove this comment
        */
       const dictionary = {
-        foo: 'tbl.foo'
+        foo: '{{ snakeCase name }}.foo'
       }
 
       const updateData = {}
@@ -210,7 +191,7 @@ module.exports = {
       /**
        * Change necessarily and remove this comment
        */
-      return store.knex({ tbl: 'table' })
+      await store.knex('{{ snakeCase name }}')
         .where('tbl.id', id)
         .update(updateData)
     } catch (error) {

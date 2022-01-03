@@ -7,8 +7,7 @@
     "dev": "nodemon app.js --exec \"npm run fix && npm run test && node\"",
     "test": "eslint .",
     "fix": "eslint . --fix",
-    "make:handler": "plop --plopfile ./generator/store_handler.js",
-    "make:migration": "plop --plopfile ./generator/migration_seed.js"
+    "make:handler": "plop --plopfile ./generator/store-handler/index.js"
   },
   "env": {
     "node": true
@@ -43,12 +42,14 @@
     "mysql": "2.16.0",
     "nodemon": "1.18.7",
     "papaparse": "4.6.3",
+    "pluralize": "^8.0.0",
     "redis": "2.8.0",
     "socket.io": "2.1.1",
     "uuid": "8.3.1",
     "write": "2.0.0"
   },
   "devDependencies": {
+    "plop": "^2.7.4",
     "eslint": "7.32.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.25.3",

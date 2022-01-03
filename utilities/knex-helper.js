@@ -1,12 +1,12 @@
 const store = require('@store')
 
 // utilities
-const { getKey, isPOJO } = require('@utilities/helpers')
+const { getKey } = require('@utilities/helpers')
 
 // libraries
 const moment = require('@utilities/moment')
-const _isEmpty = require('lodash/isEmpty')
 const _isNil = require('lodash/isNil')
+const _isPlainObject = require('lodash/isPlainObject')
 const _size = require('lodash/size')
 const _isString = require('lodash/isString')
 const _isArray = require('lodash/isArray')
@@ -54,8 +54,8 @@ const knexHelper = {
     @param {array|string} sort        ex: ['asc', 'desc'] or 'asc'
     @param {number} page              ex: 1
     @param {number} rows              ex: 50
-    @param {number} filterBy          ex: ['fname', 'mname'] or 'fname'
-    @param {number} q                 ex: ['foo', 'bar'] or 'foo'
+    @param {array|string} filterBy    ex: ['fname', 'mname'] or 'fname'
+    @param {array|string} q           ex: ['foo', 'bar'] or 'foo'
 
     EXAMPLE
     http://localhost:4002/samples?rows=100&page=1&date_by=created_at&date_from=2021-07-06&date_to=2021-07-10&sort_by=amount&sort=desc&sort_by=login_id&sort=asc&filter_by=login_id&q=ndm&filter_by=login_id&q=104
@@ -175,51 +175,65 @@ const knexHelper = {
   },
 
   jsonObject (data) {
-    const cols = Object
-      .keys(data)
-      .reduce((acc, curr) => [...acc, `"${curr}", ${data[curr]}`], [])
+    const cols = Object.entries(data)
+      .map(([key, value]) => `"${key}", ${value}`)
       .join(', ')
-      .trim()
 
     return raw(`JSON_OBJECT(${cols})`)
   },
 
   jsonExtract (column, key) {
-    return knexHelper.raw(`JSON_EXTRACT(${column}, '$.${key}')`)
+    return knexHelper.raw(`JSON_EXTRACT(${column}, '$."${key}"')`)
   },
 
+  /**
+    const dictionary = {
+      id: 'res.id',
+      fname: 'res.fname',
+      mname: 'res.mname',
+      lname: 'res.lname',
+    }
+
+    findBy({
+      ...{ filterBy, q, dictionary },
+      knex
+    })
+
+    API
+    @param {array|string} filterBy    ex: ['fname', 'mname'] or 'fname'
+    @param {array|string} q           ex: ['foo', 'bar'] or 'foo'
+
+   */
   findBy ({ knex, filterBy, q, dictionary }) {
     try {
       const filterByColumn = getKey(filterBy, dictionary)
-      let counter = 0
+      let hasFilter = false
 
       if (filterByColumn && !_isNil(q)) {
-        counter++
+        hasFilter = true
         knex.where(filterByColumn, q)
       }
 
-      if (isPOJO(filterBy)) {
+      if (_isPlainObject(filterBy)) {
         for (const key in filterBy) {
           if (dictionary[key] && !_isNil(filterBy[key])) {
-            counter++
+            hasFilter = true
             knex.where(dictionary[key], filterBy[key])
           }
         }
       }
 
-      if (!counter) {
+      if (!hasFilter) {
         knex.whereRaw('0 = 1')
       }
+
+      knex.first()
     } catch (error) {
       throw error
     }
   },
 
   wrapCase (caseStatements) {
-    if (_isEmpty(caseStatements)) {
-      throw new Error(`Case statements expected a value. Received ${caseStatements}`)
-    }
-
     return raw(`(CASE ${caseStatements} END)`)
   }
 }
