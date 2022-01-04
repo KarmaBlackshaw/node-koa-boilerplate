@@ -38,6 +38,6 @@ module.exports = async () => {
       }
     })
   } catch (err) {
-    throw new Error(err)
+    throw err
   }
 }
