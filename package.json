@@ -56,12 +56,5 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.3.1",
     "eslint-plugin-standard": "4.0.1"
-  },
-  "_moduleAliases": {
-    "@utilities": "./utilities",
-    "@listeners": "./listeners",
-    "@services": "./services",
-    "@store": "./store",
-    "@middleware": "./services/http/middleware"
   }
 }
