@@ -1,16 +1,16 @@
-const _size = require('lodash/size')
+const logger = require('@utilities/logger')
 
 module.exports = () => {
   return async (ctx, next) => {
     try {
       await next()
     } catch (error) {
-      ctx.status = 500
+      logger.error(error)
+      ctx.status = error.status || 500
       ctx.body = {
-        status: 'error',
         name: error.name,
         message: error.message,
-        ...(_size(error.params) && { params: error.params })
+        params: error.params
       }
     }
   }
