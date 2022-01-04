@@ -6,12 +6,12 @@ module.exports = plop => {
   })
 
   plop.setGenerator('module', {
-    description: 'Generate store and handler module',
+    description: 'Generate module',
     prompts: [
       {
         type: 'input',
         name: 'name',
-        message: 'Generate store and handler module:',
+        message: 'Generate module:',
         validate: function (input) {
           if (isNaN(input)) {
             return true

@@ -14,12 +14,11 @@ const _get = require('lodash/get')
 
 // middlewares
 const authentication = require('@middleware/authentication')
-// const userLevel = require('@middleware/userLevel')
 
 module.exports = router
   .prefix('/{{ kebabCase name }}')
 
-// .use(authentication())
+  .use(authentication())
 
   .get('/', async ctx => {
     try {
