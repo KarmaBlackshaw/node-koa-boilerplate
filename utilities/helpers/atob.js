@@ -1,0 +1,13 @@
+/**
+
+USAGE:
+
+const atob = require('@helpers/atob')
+
+*/
+
+const atob = base64 => {
+  return Buffer.from(base64, 'base64').toString()
+}
+
+module.exports = atob
