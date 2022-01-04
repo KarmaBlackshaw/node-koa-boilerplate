@@ -22,6 +22,6 @@ if (cluster.isMaster) {
 } else {
   require('@store').start()
   require('@services')()
-    .then(() => console.info(`🚀 App running on port ${process.env.APP_PORT || 4000} | WID ${process.pid}`))
+    .then(() => console.info(`App running on port ${process.env.APP_PORT || 4000} | WID ${process.pid}`))
     .catch(console.error)
 }
