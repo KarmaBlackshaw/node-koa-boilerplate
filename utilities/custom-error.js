@@ -29,7 +29,7 @@ module.exports = class CustomError extends Error {
       this.message = 'CANNOT_CONNECT_TO_SERVER'
     }
 
-    this.status = err.status || 500
+    this.status = err.status || 422
     this.params = err.params || {}
     this.info = err.info
   }
