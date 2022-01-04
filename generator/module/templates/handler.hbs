@@ -4,7 +4,7 @@ const router = require('koa-router')()
  * Change necessarily and remove this comment
  */
 // store
-const {{ properCase name }} = require('@store/{{ kebabCase name }}')
+const {{ pluralPascalCase name }} = require('@store/{{ pluralKebabCase name }}')
 
 // utilities
 
@@ -16,7 +16,7 @@ const _get = require('lodash/get')
 const authentication = require('@middleware/authentication')
 
 module.exports = router
-  .prefix('/{{ kebabCase name }}')
+  .prefix('/{{ pluralKebabCase name }}')
 
   .use(authentication())
 
@@ -44,8 +44,8 @@ module.exports = router
       /**
        * Change necessarily and remove this comment
        */
-      const list = await {{ properCase name }}.list({ ...params })
-      const count = await {{ properCase name }}.list({ ...params, isCount: true })
+      const list = await {{ pluralPascalCase name }}.list({ ...params })
+      const count = await {{ pluralPascalCase name }}.list({ ...params, isCount: true })
 
       ctx.body = { count: _get(count, 'total', 0), list }
     } catch (error) {
@@ -78,7 +78,7 @@ module.exports = router
       /**
        * Change necessarily and remove this comment
        */
-      ctx.body = await {{ properCase name }}.store({
+      ctx.body = await {{ pluralPascalCase name }}.store({
         start_date: request.start_date,
         end_date: request.end_date,
         profit: request.profit
@@ -109,7 +109,7 @@ module.exports = router
       /**
        * Change necessarily and remove this comment
        */
-      ctx.body = await {{ properCase name }}.modify(data.id, {})
+      ctx.body = await {{ pluralPascalCase name }}.modify(data.id, {})
     } catch (error) {
       console.log(error)
       ctx.throw(error)
@@ -133,7 +133,7 @@ module.exports = router
       /**
        * Change necessarily and remove this comment
        */
-      await {{ properCase name }}.modify(data.id, {
+      await {{ pluralPascalCase name }}.modify(data.id, {
         deleted_at: new Date()
       })
 
