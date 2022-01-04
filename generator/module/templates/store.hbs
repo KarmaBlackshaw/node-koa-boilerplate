@@ -23,23 +23,23 @@ module.exports = {
      * Change necessarily and remove this comment
      */
     const sortDictionary = {
-      login_id: '{{ snakeCase name }}.login_id',
-      login_name: '{{ snakeCase name }}.login_name',
-      amount: '{{ snakeCase name }}.amount'
+      login_id: '{{ pluralSnakeCase name }}.login_id',
+      login_name: '{{ pluralSnakeCase name }}.login_name',
+      amount: '{{ pluralSnakeCase name }}.amount'
     }
 
     /**
      * Change necessarily and remove this comment
      */
     const dateDictionary = {
-      created_at: '{{ snakeCase name }}.created_at'
+      created_at: '{{ pluralSnakeCase name }}.created_at'
     }
 
     try {
       /**
        * Change necessarily and remove this comment
        */
-      const query = store.knex('{{ snakeCase name }}')
+      const query = store.knex('{{ pluralSnakeCase name }}')
         .modify(knex => {
           makeQuery({
             ...{ filterBy, q, filterDictionary },
@@ -55,18 +55,18 @@ module.exports = {
              * Change necessarily and remove this comment
              */
             knex
-              .count({ total: '{{ snakeCase name }}.id' })
+              .count({ total: '{{ pluralSnakeCase name }}.id' })
               .first()
           } else {
             /**
              * Change necessarily and remove this comment
              */
             knex.select({
-              id: '{{ snakeCase name }}.id',
-              login_id: '{{ snakeCase name }}.login_id',
-              login_name: '{{ snakeCase name }}.login_name',
-              amount: '{{ snakeCase name }}.amount',
-              created_at: '{{ snakeCase name }}.created_at'
+              id: '{{ pluralSnakeCase name }}.id',
+              login_id: '{{ pluralSnakeCase name }}.login_id',
+              login_name: '{{ pluralSnakeCase name }}.login_name',
+              amount: '{{ pluralSnakeCase name }}.amount',
+              created_at: '{{ pluralSnakeCase name }}.created_at'
             })
           }
         })
@@ -89,14 +89,14 @@ module.exports = {
      * Change necessarily and remove this comment
      */
     const dictionary = {
-      id: '{{ snakeCase name }}.id',
-      type_id: '{{ snakeCase name }}.type_id',
-      name: '{{ snakeCase name }}.name',
-      table: '{{ snakeCase name }}.table'
+      id: '{{ pluralSnakeCase name }}.id',
+      type_id: '{{ pluralSnakeCase name }}.type_id',
+      name: '{{ pluralSnakeCase name }}.name',
+      table: '{{ pluralSnakeCase name }}.table'
     }
 
     try {
-      const data = await store.knex('{{ snakeCase name }}')
+      const data = await store.knex('{{ pluralSnakeCase name }}')
         .modify(knex => {
           if (_isEmpty(conditions)) {
             knex.whereRaw('1 = 0')
@@ -114,19 +114,19 @@ module.exports = {
            * Change necessarily and remove this comment
            */
           if (conditions.is_deleted) {
-            knex.whereNotNull('{{ snakeCase name }}.deleted_at')
+            knex.whereNotNull('{{ pluralSnakeCase name }}.deleted_at')
           } else {
-            knex.whereNull('{{ snakeCase name }}.deleted_at')
+            knex.whereNull('{{ pluralSnakeCase name }}.deleted_at')
           }
         })
         /**
          * Change necessarily and remove this comment
          */
         .select({
-          id: '{{ snakeCase name }}.id',
-          type_id: '{{ snakeCase name }}.type_id',
-          name: '{{ snakeCase name }}.name',
-          table: '{{ snakeCase name }}.table'
+          id: '{{ pluralSnakeCase name }}.id',
+          type_id: '{{ pluralSnakeCase name }}.type_id',
+          name: '{{ pluralSnakeCase name }}.name',
+          table: '{{ pluralSnakeCase name }}.table'
         })
         .first()
 
@@ -154,7 +154,7 @@ module.exports = {
       /**
        * Change necessarily and remove this comment
        */
-      const [id] = await store.knex('{{ snakeCase name }}').insert(data)
+      const [id] = await store.knex('{{ pluralSnakeCase name }}').insert(data)
 
       return id
     } catch (error) {
@@ -169,7 +169,7 @@ module.exports = {
        * Change necessarily and remove this comment
        */
       const dictionary = {
-        foo: '{{ snakeCase name }}.foo'
+        foo: '{{ pluralSnakeCase name }}.foo'
       }
 
       const updateData = {}
@@ -191,7 +191,7 @@ module.exports = {
       /**
        * Change necessarily and remove this comment
        */
-      await store.knex('{{ snakeCase name }}')
+      await store.knex('{{ pluralSnakeCase name }}')
         .where('tbl.id', id)
         .update(updateData)
     } catch (error) {
