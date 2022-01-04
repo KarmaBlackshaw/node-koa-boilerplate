@@ -7,7 +7,10 @@
     "dev": "nodemon app.js --exec \"npm run fix && npm run test && node\"",
     "test": "eslint .",
     "fix": "eslint . --fix",
-    "make:handler": "plop --plopfile ./generator/store-handler/index.js"
+    "make:module": "plop --plopfile ./generator/module/index.js",
+    "make:job": "plop --plopfile ./generator/job/index.js",
+    "make:listener": "plop --plopfile ./generator/listener/index.js",
+    "make:helper": "plop --plopfile ./generator/helper/index.js"
   },
   "env": {
     "node": true
