@@ -22,7 +22,6 @@ module.exports = () => {
     try {
       await req(ctx, next)
     } catch (err) {
-      console.log(ctx.request)
       throw err
     }
   }
