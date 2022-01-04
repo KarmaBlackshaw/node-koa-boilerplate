@@ -17,6 +17,7 @@ module.exports = {
     'no-await-in-loop': 'off',
     'no-console': 'off',
     'no-useless-catch': 'off',
+    eqeqeq: 'off',
     'prefer-regex-literals': 'off',
     'default-case': 'off',
     'comma-dangle': ['error', 'never'],
