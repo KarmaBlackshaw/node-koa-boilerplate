@@ -7,6 +7,8 @@ const routes = require('./router')
 const responseTime = require('@middleware/response-time')
 const koaParser = require('@middleware/koa-parser')
 const errorHandler = require('@middleware/error-handler')
+const ip = require('@middleware/ip')
+const compress = require('@middleware/compress')
 
 module.exports = async () => {
   const router = await routes()
@@ -17,6 +19,8 @@ module.exports = async () => {
   app.use(router.allowedMethods())
 
   app.use(koaParser())
+  app.use(ip())
+  app.use(compress())
   app.use(responseTime())
   app.use(errorHandler())
 
