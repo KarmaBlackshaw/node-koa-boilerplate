@@ -1,42 +1,66 @@
 // external libraries
 const Promise = require('bluebird')
-const socket = require('socket.io')
+const { Server } = require('socket.io')
+const minimatch = require('minimatch')
+const _kebabCase = require('lodash/kebabCase')
 
 // node core
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
 
 // store
-const { redis } = require('@store')
+const store = require('@store')
 
-// instances
-const io = socket(process.env.SOCKET_PORT || 4001, { transports: ['websocket', 'polling'] })
+const getNamespaces = async io => {
+  const files = await fs.readdirAsync(path.join(__dirname, 'namespaces'))
+
+  const exclude = ['_*', '.*']
+
+  const namespaces = {}
+  files.forEach(file => {
+    const isExcluded = exclude.some(glob => !!minimatch(file, glob))
+
+    if (isExcluded) {
+      return
+    }
+
+    const namespace = _kebabCase(file.split('.')[0])
+
+    const ioInstance = io.of(namespace)
+
+    namespaces[namespace] = require(path.join(__dirname, 'namespaces', file))(ioInstance)
+  })
+
+  return namespaces
+}
 
 module.exports = async () => {
   try {
-    const sub = redis.getNewSubscriber()
-    const namespaces = {}
-    const files = await fs.readdirAsync(path.join(__dirname, 'namespaces'))
+    const io = new Server({
+      transports: ['websocket', 'polling'],
+      rejectUnauthorized: false
+    })
 
-    for (let i = 0; i < files.length; i++) {
-      const curr = files[i]
-      const namespace = curr.split('.')[0]
+    const namespaces = await getNamespaces(io)
 
-      namespaces[namespace] = require(`./namespaces/${curr}`)(io, namespace)
-    }
-
+    const sub = store.redis.getNewSubscriber()
     sub.psubscribe('socket:user_events:*')
-    sub.on('pmessage', (pmessage, channel, message) => {
-      const chan = channel.split(':')
+    sub.on('pmessage', (_, channel, message) => {
+      const channelArray = channel.split(':')
 
-      if (chan.length < 4) {
+      if (channelArray.length < 4) {
         return
       }
 
-      if (chan[2] && namespaces[chan[2]]) {
-        namespaces[chan[2]].emit(chan[3], message)
+      const namespace = channelArray[2]
+      const event = channelArray[3]
+
+      if (namespaces[namespace]) {
+        namespaces[namespace].emit(event, message)
       }
     })
+
+    io.listen(process.env.SOCKET_PORT)
   } catch (err) {
     throw err
   }

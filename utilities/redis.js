@@ -28,5 +28,13 @@ module.exports = {
       password: process.env.REDIS_PASSWORD || undefined,
       db: process.env.REDIS_DB || num || 0
     })
+  },
+
+  emitSocketAdmin (namespace, event, data) {
+    return this.publisher.publish(`socket:admin_events:${namespace}:${event}`, JSON.stringify(data))
+  },
+
+  emitSocketUser (namespace, event, data) {
+    return this.publisher.publish(`socket:user_events:${namespace}:${event}`, JSON.stringify(data))
   }
 }

@@ -1,0 +1,7 @@
+module.exports = io => {
+  io.on('connection', () => {
+    console.log('{{pluralKebabCase name}} socket connected')
+  })
+
+  return io
+}

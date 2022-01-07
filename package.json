@@ -11,7 +11,8 @@
     "make:job": "plop --plopfile ./generator/job/index.js",
     "make:listener": "plop --plopfile ./generator/listener/index.js",
     "make:helper": "plop --plopfile ./generator/helper/index.js",
-    "make:middleware": "plop --plopfile ./generator/middleware/index.js"
+    "make:middleware": "plop --plopfile ./generator/middleware/index.js",
+    "make:socket": "plop --plopfile ./generator/socket/index.js"
   },
   "env": {
     "node": true
@@ -28,7 +29,7 @@
     "faker": "5.2.0",
     "joi": "17.3.0",
     "jsonwebtoken": "8.3.0",
-    "knex": "^0.95.15",
+    "knex": "0.95.15",
     "koa": "2.5.3",
     "koa-body": "4.2.0",
     "koa-bodyparser": "4.2.1",
@@ -42,14 +43,14 @@
     "moment-timezone": "0.5.34",
     "mysql": "2.16.0",
     "nodemon": "1.18.7",
-    "pluralize": "^8.0.0",
+    "pluralize": "8.0.0",
     "redis": "2.8.0",
-    "simple-node-logger": "^21.8.12",
-    "socket.io": "2.1.1",
+    "simple-node-logger": "21.8.12",
+    "socket.io": "4.3.2",
     "uuid": "8.3.1"
   },
   "devDependencies": {
-    "plop": "^2.7.4",
+    "plop": "2.7.4",
     "eslint": "7.32.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.25.3",

@@ -7,6 +7,7 @@ const cluster = require('cluster')
 const cpus = require('os').cpus().length
 
 // libs
+const chalk = require('chalk')
 require('dotenv').config()
 
 // utilities
@@ -19,6 +20,9 @@ if (cluster.isMaster) {
   for (let i = 0; i < cpus; i++) {
     cluster.fork()
   }
+
+  const network = chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)
+  console.log(`Socket running at: \t${network}`)
 } else {
   require('@store').start()
   require('@services')()
