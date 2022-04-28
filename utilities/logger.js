@@ -1,7 +1,7 @@
 const SimpleNodeLogger = require('simple-node-logger')
 
 const log = SimpleNodeLogger.createRollingFileLogger({
-  logDirectory: './logs',
+  logDirectory: './storage/logs',
   fileNamePattern: '<DATE>.log',
   timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
 })

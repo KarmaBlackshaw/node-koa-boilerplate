@@ -17,26 +17,26 @@ const app = {
   async shred  () {
     try {
       const today = moment().format('YYYY.MM.DD')
-      const logs = await fs.readdirAsync('logs')
+      const logs = await fs.readdirAsync('./storage/logs')
 
       logs.forEach(async curr => {
         const ext = path.extname(curr)
 
         /**
-     * Exclude non-log files
-     */
+         * Exclude non-log files
+         */
         if (ext !== '.log') {
           return
         }
 
         /**
-     * Skip logs for today
-     */
+         * Skip logs for today
+         */
         if (curr.includes(today)) {
           return
         }
 
-        await this.deleteFileIfNotEmpty(`logs/${curr}`)
+        await this.deleteFileIfNotEmpty(`./storage/logs/${curr}`)
       })
 
       console.log('🔥 Burned empty logs')
