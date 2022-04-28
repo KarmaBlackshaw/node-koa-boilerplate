@@ -4,7 +4,7 @@
  */
 
 const cluster = require('cluster')
-const cpus = require('os').cpus().length
+const cpus = require('os').cpus()
 
 // libs
 const chalk = require('chalk')
@@ -17,9 +17,8 @@ if (cluster.isMaster) {
   require('@store').start()
   require('@jobs')()
   require('@listeners')()
-  for (let i = 0; i < cpus; i++) {
-    cluster.fork()
-  }
+
+  cpus.forEach(() => cluster.fork())
 
   const network = chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)
   console.log(`Socket running at: \t${network}`)
