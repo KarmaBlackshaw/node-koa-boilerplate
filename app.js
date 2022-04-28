@@ -15,8 +15,8 @@ require('./utilities/module-alias')(__dirname)
 
 if (cluster.isMaster) {
   require('@store').start()
-  require('@jobs')()
-  require('@listeners')()
+  require('@bootstrap/jobs')()
+  require('@bootstrap/listeners')()
 
   cpus.forEach(() => cluster.fork())
 
