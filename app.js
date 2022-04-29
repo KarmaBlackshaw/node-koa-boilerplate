@@ -14,17 +14,20 @@ require('dotenv').config()
 require('./utilities/module-alias')(__dirname)
 
 if (cluster.isMaster) {
-  require('@store').start()
+  require('@utilities/knex').connect()
+  require('@utilities/redis').connect()
   require('@bootstrap/jobs')()
   require('@bootstrap/listeners')()
 
   cpus.forEach(() => cluster.fork())
 
-  const network = chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)
-  console.log(`Socket running at: \t${network}`)
+  const socketNetwork = chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)
+  console.log(`Socket running at: \t${socketNetwork}`)
 } else {
-  require('@store').start()
-  require('@services')()
+  require('@utilities/knex').connect()
+  require('@utilities/redis').connect()
+  require('@bootstrap/websocket')()
+  require('@bootstrap/http')()
     .then(() => console.info(`App running on port ${process.env.APP_PORT || 4000} | WID ${process.pid}`))
     .catch(console.error)
 }

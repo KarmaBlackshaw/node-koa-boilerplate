@@ -1,20 +1,20 @@
-// external libraries
+// libs
 const Promise = require('bluebird')
 const { Server } = require('socket.io')
 const minimatch = require('minimatch')
 const _kebabCase = require('lodash/kebabCase')
 
-// node core
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
 
-// store
-const store = require('@store')
+const redis = require('@utilities/redis')
 
 const getNamespaces = async io => {
-  const files = await fs.readdirAsync(path.join(__dirname, 'namespaces'))
+  const dir = [__dirname, '..', 'services', 'ws']
 
-  const exclude = ['_*', '.*']
+  const files = await fs.readdirAsync(path.join(...dir))
+
+  const exclude = ['_*', '.*', '*.md']
 
   const namespaces = {}
   files.forEach(file => {
@@ -28,7 +28,7 @@ const getNamespaces = async io => {
 
     const ioInstance = io.of(namespace)
 
-    namespaces[namespace] = require(path.join(__dirname, 'namespaces', file))(ioInstance)
+    namespaces[namespace] = require(path.join(...dir, file))(ioInstance)
   })
 
   return namespaces
@@ -43,7 +43,7 @@ module.exports = async () => {
 
     const namespaces = await getNamespaces(io)
 
-    const sub = store.redis.getNewSubscriber()
+    const sub = redis.getNewSubscriber()
     sub.psubscribe('socket:user_events:*')
     sub.on('pmessage', (_, channel, message) => {
       const channelArray = channel.split(':')
@@ -62,6 +62,7 @@ module.exports = async () => {
 
     io.listen(process.env.SOCKET_PORT)
   } catch (err) {
+    console.log(err)
     throw err
   }
 }

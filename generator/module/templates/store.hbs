@@ -1,5 +1,6 @@
 // store
-const store = require('@store')
+const { knex } = require('@utilities/knex')
+const redis = require('@utilities/redis')
 
 // utilities
 const { makeQuery } = require('@utilities/knex-helper')
