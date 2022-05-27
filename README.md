@@ -1,26 +1,20 @@
-# API project template
+# Node-Koa Boilerplate
 
+[![GitHub Karmablackshaw](https://badges.pufler.dev/visits/karmablackshaw/node-koa-boilerplate)](https://github.com/karmablackshaw)
+[![GitHub Karmablackshaw](https://img.shields.io/github/last-commit/karmablackshaw/node-koa-boilerplate?label=Last+Commit)](https://github.com/karmablackshaw)
+[![GitHub Karmablackshaw](https://img.shields.io/github/commit-activity/m/karmablackshaw/node-koa-boilerplate?color=orange&label=Average+Commits)](https://github.com/karmablackshaw)
+[![GitHub Karmablackshaw](https://img.shields.io/github/last-commit/karmablackshaw/node-koa-boilerplate?label=Last+Commit)](https://github.com/karmablackshaw)
 
-## \# Directory structure
-```
-- app.js // application starting point
-* services // application specific structure
-    * http // http related code
-        * handlers // register endpoints here
-        * middleware // common middleware among handlers
-        - index.js  // registers http specific configurations, plugins for koa should be registered here
-        - router.js // autoloads all files under handlers
-    * tcp // start tcp connections here
-    * ws // websocket handlers here
-    - index.js // register services here e.g. http or ws, if you have specific service register  it here
-* store // database queries and cache implementation here
-* utilities // common functionality
-    - mysql.js
-    - redis.js
-* config // extra configuration
-```
+A simple node-koa boilerplate
 
+## Commands
 
-## npm Commands
-* `npm run dev`: run development server and lint; auto reloads on code change
-* `npm run test`: runs linter
+- `npm run dev`: run development server and lint; auto reloads on code change
+- `npm run test`: runs linter
+- `npm run fix`: runs linter and fix lint errors
+- `npm run make:module [name]`: create application handler and model pair
+- `npm run make:job [name]`: create application job
+- `npm run make:listener [name]`: create application listener
+- `npm run make:helper [name]`: create application helper
+- `npm run make:middleware [name]`: create application middleware
+- `npm run make:socket [name]`: create application socket namespace
