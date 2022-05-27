@@ -5,7 +5,7 @@
 [![GitHub Karmablackshaw](https://img.shields.io/github/commit-activity/m/karmablackshaw/node-koa-boilerplate?color=orange&label=Average+Commits)](https://github.com/karmablackshaw)
 [![GitHub Karmablackshaw](https://img.shields.io/github/last-commit/karmablackshaw/node-koa-boilerplate?label=Last+Commit)](https://github.com/karmablackshaw)
 
-A simple node-koa boilerplate
+Another simple node-koa boilerplate
 
 ## Features
 
