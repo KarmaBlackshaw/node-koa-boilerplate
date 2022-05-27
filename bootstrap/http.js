@@ -11,6 +11,7 @@ const koaParser = require('@middleware/koa-parser')
 const errorHandler = require('@middleware/error-handler')
 const ip = require('@middleware/ip')
 const compress = require('@middleware/compress')
+const koaStatic = require('@middleware/koa-static')
 
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
@@ -42,7 +43,7 @@ async function routes () {
       router.use(require(path.join(...dir, file)).routes())
     } catch (err) {
       console.log(err)
-      throw new Error(`Error on http/handlers/${file}`)
+      throw new Error(`Failed on http/handlers/${file}`)
     }
   })
 
@@ -57,6 +58,7 @@ module.exports = async () => {
   app.use(cors())
   app.use(router.allowedMethods())
 
+  app.use(koaStatic())
   app.use(koaParser())
   app.use(ip())
   app.use(compress())
