@@ -17,7 +17,22 @@
   "env": {
     "node": true
   },
-  "author": "",
+  "keywords": [
+    "boilerplate",
+    "koa",
+    "javascript",
+    "redis",
+    "knex",
+    "mysql",
+    "socket.io",
+    "database",
+    "utilities",
+    "utilities",
+    "logger",
+    "env-validate",
+    "node"
+  ],
+  "author": "Ernie Jeash",
   "license": "ISC",
   "dependencies": {
     "@koa/cors": "2.2.2",
