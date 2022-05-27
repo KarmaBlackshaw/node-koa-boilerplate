@@ -7,7 +7,7 @@ const _kebabCase = require('lodash/kebabCase')
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
 
-const redis = require('@utilities/redis')
+const redis = require('@config/redis')
 
 const getNamespaces = async io => {
   const dir = [__dirname, '..', 'services', 'ws']

@@ -11,11 +11,10 @@ const chalk = require('chalk')
 require('dotenv').config()
 
 // utilities
-require('./utilities/module-alias')(__dirname)
+require('./config/module-alias')(__dirname)
 
 if (cluster.isMaster) {
-  require('@utilities/knex').connect()
-  require('@utilities/redis').connect()
+  require('@config/redis').connect()
   require('@bootstrap/jobs')()
   require('@bootstrap/listeners')()
 
@@ -24,8 +23,7 @@ if (cluster.isMaster) {
   const socketNetwork = chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)
   console.log(`Socket running at: \t${socketNetwork}`)
 } else {
-  require('@utilities/knex').connect()
-  require('@utilities/redis').connect()
+  require('@config/redis').connect()
   require('@bootstrap/websocket')()
   require('@bootstrap/http')()
     .then(() => console.info(`App running on port ${process.env.APP_PORT || 4000} | WID ${process.pid}`))

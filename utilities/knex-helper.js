@@ -1,4 +1,4 @@
-const store = require('@store')
+const knex = require('@config/knex')
 
 // utilities
 const { getKey } = require('@utilities/helpers')

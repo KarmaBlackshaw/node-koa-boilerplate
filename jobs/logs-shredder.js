@@ -8,7 +8,7 @@ const path = require('path')
 const readline = require('readline')
 
 // utils
-const logger = require('@utilities/logger')
+const logger = require('@config/logger')
 
 // vars
 const midnightTime = moment().endOf('day').format('HH:mm:ss')
