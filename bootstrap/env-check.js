@@ -54,8 +54,8 @@ module.exports = async () => {
 
   try {
     await schema.validateAsync(process.env)
-  } catch (err) {
-    console.log(`[Env Validation]: ${err.message}`)
-    throw err.message
+  } catch (error) {
+    console.log(`[Env Validation]: ${error.message}`)
+    throw error.message
   }
 }
