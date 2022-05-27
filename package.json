@@ -10,7 +10,7 @@
     "make:module": "plop --plopfile ./generator/module/index.js",
     "make:job": "plop --plopfile ./generator/job/index.js",
     "make:listener": "plop --plopfile ./generator/listener/index.js",
-    "make:helper": "plop --plopfile ./generator/helper/index.js",
+    "make:utility": "plop --plopfile ./generator/utility/index.js",
     "make:middleware": "plop --plopfile ./generator/middleware/index.js",
     "make:socket": "plop --plopfile ./generator/socket/index.js"
   },
