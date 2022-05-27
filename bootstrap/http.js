@@ -16,6 +16,9 @@ const koaStatic = require('@middleware/koa-static')
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
 
+// constants
+const ROOT = path.join(__dirname, '..')
+
 // instances
 const app = new Koa()
 
@@ -29,7 +32,7 @@ async function routes () {
 
   const router = koaRouter()
 
-  const dir = [__dirname, '..', 'services', 'http', 'handlers']
+  const dir = [ROOT, 'services', 'http', 'handlers']
   const files = await fs.readdirAsync(path.join(...dir))
 
   files.forEach(file => {
@@ -58,7 +61,7 @@ module.exports = async () => {
   app.use(cors())
   app.use(router.allowedMethods())
 
-  app.use(koaStatic())
+  app.use(koaStatic(ROOT))
   app.use(koaParser())
   app.use(ip())
   app.use(compress())
