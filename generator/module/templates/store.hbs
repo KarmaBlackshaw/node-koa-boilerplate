@@ -40,7 +40,7 @@ module.exports = {
       /**
        * Change necessarily and remove this comment
        */
-      const query = store.knex('{{ pluralSnakeCase name }}')
+      const query = knex('{{ pluralSnakeCase name }}')
         .modify(knex => {
           makeQuery({
             ...{ filterBy, q, filterDictionary },
@@ -97,7 +97,7 @@ module.exports = {
     }
 
     try {
-      const data = await store.knex('{{ pluralSnakeCase name }}')
+      const data = await knex('{{ pluralSnakeCase name }}')
         .modify(knex => {
           if (_isEmpty(conditions)) {
             knex.whereRaw('1 = 0')
@@ -155,7 +155,7 @@ module.exports = {
       /**
        * Change necessarily and remove this comment
        */
-      const [id] = await store.knex('{{ pluralSnakeCase name }}').insert(data)
+      const [id] = await knex('{{ pluralSnakeCase name }}').insert(data)
 
       return id
     } catch (error) {
@@ -192,7 +192,7 @@ module.exports = {
       /**
        * Change necessarily and remove this comment
        */
-      await store.knex('{{ pluralSnakeCase name }}')
+      await knex('{{ pluralSnakeCase name }}')
         .where('tbl.id', id)
         .update(updateData)
     } catch (error) {
