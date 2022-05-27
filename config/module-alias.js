@@ -13,7 +13,7 @@ module.exports = dir => {
     '@listeners': path.join(dir, 'listeners'),
     '@jobs': path.join(dir, 'jobs'),
     '@services': path.join(dir, 'services'),
-    '@store': path.join(dir, 'store'),
+    '@model': path.join(dir, 'model'),
     '@middleware': path.join(dir, 'services', 'http', 'middleware')
   })
 }
