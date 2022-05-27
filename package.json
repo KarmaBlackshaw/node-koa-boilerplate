@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js --exec \"npm run fix && npm run test && node\"",
+    "dev": "nodemon app.js",
     "test": "eslint .",
     "fix": "eslint . --fix",
     "make:module": "plop --plopfile ./generator/module/index.js",
