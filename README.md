@@ -9,14 +9,14 @@ A simple node-koa boilerplate
 
 ## Features
 
-- Auto import routes
-- Commands to generate routes, handlers, etc.
-- Validate env on boot
-- Socket IO
-- Redis
-- Mysql
-- Logs
-- Utilities
+- 🚀 Auto import routes
+- 📂 Commands to generate routes, handlers, etc.
+- ✅ Validate env on boot
+- 🚦 Socket IO
+- ⚡ Redis
+- ⭐ Mysql
+- 📃 Logs
+- ⛏ Utilities
 
 ## Commands
 
