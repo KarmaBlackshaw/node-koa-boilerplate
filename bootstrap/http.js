@@ -66,7 +66,7 @@ module.exports = async () => {
   app.use(errorHandler())
 
   app.use(router.routes())
-  app.listen(process.env.PORT || '4000')
+  app.listen(process.env.APP_PORT || '4000')
 
   return app
 }
