@@ -13,19 +13,27 @@ require('dotenv').config()
 // utilities
 require('./config/module-alias')(__dirname)
 
-if (cluster.isMaster) {
-  require('@config/redis').connect()
-  require('@bootstrap/jobs')()
-  require('@bootstrap/listeners')()
+;(async () => {
+  try {
+    if (cluster.isMaster) {
+      await require('@bootstrap/env-check')()
+      await require('@config/redis').connect()
+      await require('@bootstrap/jobs')()
+      await require('@bootstrap/listeners')()
 
-  cpus.forEach(() => cluster.fork())
+      cpus.forEach(() => cluster.fork())
 
-  const socketNetwork = chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)
-  console.log(`Socket running at: \t${socketNetwork}`)
-} else {
-  require('@config/redis').connect()
-  require('@bootstrap/websocket')()
-  require('@bootstrap/http')()
-    .then(() => console.info(`App running on port ${process.env.APP_PORT || 4000} | WID ${process.pid}`))
-    .catch(console.error)
-}
+      const socketNetwork = chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)
+      console.log(`Socket running at: \t${socketNetwork}`)
+    } else {
+      await require('@config/redis').connect()
+      await require('@bootstrap/websocket')()
+      await require('@bootstrap/http')()
+
+      console.info(`App running on port ${process.env.APP_PORT} | WID ${process.pid}`)
+    }
+  } catch (error) {
+    console.log(`[Application Error]: ${error}`)
+    process.exit(1)
+  }
+})()
