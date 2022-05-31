@@ -35,7 +35,11 @@ async function getRoutes () {
     }
 
     try {
-      router.use(require(path.join(...dir, file)).routes())
+      const endpoint = require(path.join(...dir, file))({
+        router
+      })
+
+      router.use(endpoint.routes())
     } catch (err) {
       console.log(err)
       throw new Error(`Failed on http/handlers/${file}`)
