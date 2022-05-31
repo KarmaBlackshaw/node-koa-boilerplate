@@ -16,19 +16,23 @@ require('./config/module-alias')(__dirname)
 ;(async () => {
   try {
     if (cluster.isMaster) {
-      await require('@bootstrap/env-check')()
-      await require('@config/redis').connect()
-      await require('@bootstrap/jobs')()
-      await require('@bootstrap/listeners')()
+      await Promise.all([
+        require('@bootstrap/env-check')(),
+        require('@config/redis').connect(),
+        require('@bootstrap/jobs')(),
+        require('@bootstrap/listeners')()
+      ])
 
       cpus.forEach(() => cluster.fork())
 
       const socketNetwork = chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)
       console.log(`Socket running at: \t${socketNetwork}`)
     } else {
-      await require('@config/redis').connect()
-      await require('@bootstrap/websocket')()
-      await require('@bootstrap/http')()
+      await Promise.all([
+        require('@config/redis').connect(),
+        require('@bootstrap/websocket')(),
+        require('@bootstrap/http')()
+      ])
 
       console.info(`App running on port ${process.env.APP_PORT} | WID ${process.pid}`)
     }
