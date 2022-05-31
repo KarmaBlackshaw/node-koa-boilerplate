@@ -16,9 +16,9 @@ require('./config/module-alias')(__dirname)
 ;(async () => {
   try {
     if (cluster.isMaster) {
+      await require('@config/redis').connect()
       await Promise.all([
         require('@bootstrap/env-check')(),
-        require('@config/redis').connect(),
         require('@bootstrap/jobs')(),
         require('@bootstrap/listeners')()
       ])
@@ -28,8 +28,8 @@ require('./config/module-alias')(__dirname)
       const socketNetwork = chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)
       console.log(`Socket running at: \t${socketNetwork}`)
     } else {
+      await require('@config/redis').connect()
       await Promise.all([
-        require('@config/redis').connect(),
         require('@bootstrap/websocket')(),
         require('@bootstrap/http')()
       ])
