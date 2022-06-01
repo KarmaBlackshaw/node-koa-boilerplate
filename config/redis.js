@@ -17,7 +17,7 @@ module.exports = {
 
     await client.connect()
 
-    client.on('error', e => console.log('Subscriber: ', e.stack))
+    client.on('error', e => console.log('Redis instance: ', e.stack))
 
     return client
   },
