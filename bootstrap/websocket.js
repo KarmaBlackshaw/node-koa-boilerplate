@@ -43,9 +43,9 @@ module.exports = async () => {
 
     const namespaces = await getNamespaces(io)
 
-    const sub = redis.getNewSubscriber()
-    sub.psubscribe('socket:user_events:*')
-    sub.on('pmessage', (_, channel, message) => {
+    const sub = await redis.createInstance()
+
+    sub.pSubscribe('socket:user_events:*', (message, channel) => {
       const channelArray = channel.split(':')
 
       if (channelArray.length < 4) {

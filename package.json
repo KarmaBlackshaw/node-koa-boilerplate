@@ -59,7 +59,7 @@
     "mysql": "2.16.0",
     "nodemon": "1.18.7",
     "pluralize": "8.0.0",
-    "redis": "2.8.0",
+    "redis": "^4.1.0",
     "simple-node-logger": "21.8.12",
     "socket.io": "4.3.2"
   },
