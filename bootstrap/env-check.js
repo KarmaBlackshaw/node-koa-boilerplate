@@ -3,9 +3,9 @@ const Joi = require('joi')
 module.exports = async () => {
   const schema = Joi
     .object({
-    /**
-     * Database schema
-     */
+      /**
+       * Database schema
+       */
       DB_HOST: Joi.string()
         .required(),
       DB_USER: Joi.string()
@@ -16,8 +16,8 @@ module.exports = async () => {
         .required(),
 
       /**
-     * Node environment
-     */
+       * Node environment
+       */
       NODE_ENV: Joi.string()
         .optional(),
 
@@ -33,11 +33,17 @@ module.exports = async () => {
       STATIC_ASSET_PATH: Joi.string()
         .required(),
 
+      /**
+       * Redis config
+       */
       REDIS_HOST: Joi.string()
         .required(),
       REDIS_PORT: Joi.number()
         .required(),
 
+      /**
+       * AWS config
+       */
       AWS_ACCESS_KEY_ID: Joi.string()
         .optional()
         .allow(''),
