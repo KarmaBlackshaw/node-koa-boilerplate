@@ -43,7 +43,7 @@ module.exports = async () => {
 
     const namespaces = await getNamespaces(io)
 
-    const sub = await redis.createInstance()
+    const sub = await redis.duplicate()
 
     sub.pSubscribe('socket:user_events:*', (message, channel) => {
       const channelArray = channel.split(':')
