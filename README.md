@@ -4,6 +4,8 @@
 [![GitHub Karmablackshaw](https://img.shields.io/github/last-commit/karmablackshaw/node-koa-boilerplate?label=Last+Commit)](https://github.com/karmablackshaw)
 [![GitHub Karmablackshaw](https://img.shields.io/github/commit-activity/m/karmablackshaw/node-koa-boilerplate?color=orange&label=Average+Commits)](https://github.com/karmablackshaw)
 [![GitHub Karmablackshaw](https://img.shields.io/github/last-commit/karmablackshaw/node-koa-boilerplate?label=Last+Commit)](https://github.com/karmablackshaw)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+
 
 Another simple node-koa boilerplate
 
