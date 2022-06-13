@@ -4,15 +4,14 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "test": "eslint .",
-    "fix": "eslint . --fix",
+    "start": "nodemon app",
     "make:module": "plop --plopfile ./generator/module/index.js",
     "make:job": "plop --plopfile ./generator/job/index.js",
     "make:listener": "plop --plopfile ./generator/listener/index.js",
     "make:utility": "plop --plopfile ./generator/utility/index.js",
     "make:middleware": "plop --plopfile ./generator/middleware/index.js",
-    "make:socket": "plop --plopfile ./generator/socket/index.js"
+    "make:socket": "plop --plopfile ./generator/socket/index.js",
+    "generate:key": "node ./bin/key-generator.js"
   },
   "env": {
     "node": true
@@ -61,15 +60,17 @@
     "pluralize": "8.0.0",
     "redis": "^4.1.0",
     "simple-node-logger": "21.8.12",
-    "socket.io": "4.3.2"
+    "socket.io": "4.3.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "plop": "2.7.4",
+    "colors": "^1.4.0",
     "eslint": "7.32.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.3.1",
-    "eslint-plugin-standard": "4.0.1"
+    "eslint-plugin-standard": "4.0.1",
+    "plop": "2.7.4"
   }
 }
