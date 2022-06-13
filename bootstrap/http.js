@@ -36,7 +36,7 @@ async function getRoutes () {
 
     try {
       const endpoint = require(path.join(...dir, file))({
-        router
+        router: koaRouter()
       })
 
       router.use(endpoint.routes())
