@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+const colors = require('colors')
 
 module.exports = plop => {
   plop.load('../utility', {}, {
@@ -29,15 +29,15 @@ module.exports = plop => {
             '-------------------------------------------------------'
           ].join('\n')
 
-          console.log(chalk.bold.red(error))
-          console.log(chalk.bold.red('Number is not a valid file name!\n'))
+          console.log(colors.bold.red(error))
+          console.log(colors.bold.red('Number is not a valid file name!\n'))
         }
       }
     ],
     actions: [
       {
         type: 'add',
-        path: '../../jobs/items/{{kebabCase name}}.js',
+        path: '../../jobs/{{kebabCase name}}.js',
         templateFile: './templates/job.hbs',
         skipIfExists: false
       }
