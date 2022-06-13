@@ -25,10 +25,10 @@ function startSocket () {
 
 ;(async () => {
   try {
-    if (cluster.isMaster) {
-      await env.validate()
-      await startRedis()
+    await env.validate()
+    await startRedis()
 
+    if (cluster.isMaster) {
       await Promise.all([
         require('@bootstrap/jobs')(),
         require('@bootstrap/listeners')()
@@ -39,8 +39,6 @@ function startSocket () {
       const socketNetwork = colors.cyan(`http://localhost:${env.SOCKET_PORT}`)
       console.log(`Socket running at: \t${socketNetwork}`)
     } else {
-      await startRedis()
-
       await Promise.all([
         startSocket(),
         require('@bootstrap/http')()
