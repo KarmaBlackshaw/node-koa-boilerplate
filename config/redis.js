@@ -1,4 +1,5 @@
 const redis = require('redis')
+const env = require('@config/env')
 
 module.exports = {
   client: null,
@@ -7,7 +8,6 @@ module.exports = {
 
   async start () {
     this.client = await this.connect()
-
     this.publisher = await this.duplicate()
     this.subscriber = await this.duplicate()
   },
@@ -27,10 +27,7 @@ module.exports = {
     }
 
     const client = redis.createClient({
-      host: process.env.REDIS_HOST || '127.0.0.1',
-      port: process.env.REDIS_PORT || 6379,
-      password: process.env.REDIS_PASSWORD || undefined,
-      db: process.env.REDIS_DB || 0
+      url: `redis://@${env.REDIS_HOST}:${env.REDIS_PORT}`
     })
 
     await client.connect()
