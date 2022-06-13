@@ -77,7 +77,12 @@ Object.defineProperty(env, 'validate', {
       const data = await schema.validateAsync(process.env)
 
       for (const key in data) {
-        env[key] = data[key]
+        Object.defineProperty(env, key, {
+          value: data[key],
+          writable: false,
+          enumerable: true,
+          configurable: false
+        })
       }
 
       return data
