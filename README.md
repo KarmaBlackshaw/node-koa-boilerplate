@@ -22,12 +22,15 @@ Another simple node-koa boilerplate
 
 ## Commands
 
-- `npm run dev`: run development server and lint; auto reloads on code change
+- `npm run start`: run development server and lint; auto reloads on code change
 - `npm run test`: runs linter
 - `npm run fix`: runs linter and fix lint errors
+
 - `npm run make:module [name]`: create application handler and model pair
 - `npm run make:job [name]`: create application job
 - `npm run make:listener [name]`: create application listener
 - `npm run make:helper [name]`: create application helper
 - `npm run make:middleware [name]`: create application middleware
 - `npm run make:socket [name]`: create application socket namespace
+
+- `npm run generate:key`: create application key for literally anything

@@ -5,6 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app",
+    "test": "eslint .",
+    "fix": "eslint . --fix",
     "make:module": "plop --plopfile ./generator/module/index.js",
     "make:job": "plop --plopfile ./generator/job/index.js",
     "make:listener": "plop --plopfile ./generator/listener/index.js",
