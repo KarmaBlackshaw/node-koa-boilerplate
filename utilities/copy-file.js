@@ -10,13 +10,18 @@ const Promise = require('bluebird')
 const fs = Promise.promisifyAll(require('fs'))
 const path = Promise.promisifyAll(require('path'))
 
+// config
+const env = require('@config/env')
+
+// libs
 const AWS = require('aws-sdk')
+
 const S3 = new AWS.S3()
 
 AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_KEY_ACCESS,
-  region: process.env.AWS_REGION
+  accessKeyId: env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: env.AWS_SECRET_KEY_ACCESS,
+  region: env.AWS_REGION
 })
 
 S3.config.update({ credentials: AWS.config.credentials })
@@ -31,8 +36,8 @@ const copyFile = async (file, basePath, name = '') => {
     exPath = '.jpg'
   }
 
-  if (process.env.NODE_ENV === 'development') {
-    dest = process.env.STATIC_ASSET_PATH
+  if (env.NODE_ENV === 'development') {
+    dest = env.STATIC_ASSET_PATH
     name = name || Math.floor((new Date()).getTime() / 1000)
     name += exPath
 
@@ -46,7 +51,7 @@ const copyFile = async (file, basePath, name = '') => {
     name = name.toLowerCase()
 
     params = {
-      Bucket: process.env.AWS_BUCKET_NAME,
+      Bucket: env.AWS_BUCKET_NAME,
       Body: fs.createReadStream(file.path),
       Key: image,
       ACL: 'public-read'

@@ -8,6 +8,7 @@ const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
 
 const redis = require('@config/redis')
+const env = require('@config/env')
 
 const getNamespaces = async io => {
   const dir = [__dirname, '..', 'services', 'ws']
@@ -60,7 +61,7 @@ module.exports = async () => {
       }
     })
 
-    io.listen(process.env.SOCKET_PORT)
+    io.listen(env.SOCKET_PORT)
   } catch (err) {
     console.log(err)
     throw err
