@@ -69,7 +69,11 @@ Object.defineProperty(env, 'validate', {
           .optional()
           .allow(''),
         JWT_SECRET_KEY: Joi.string()
-          .required()
+          .required(),
+
+        CLUSTER_COUNT: Joi.number()
+          .optional()
+          .allow('')
       })
       .options({ allowUnknown: true })
 

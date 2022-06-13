@@ -34,7 +34,7 @@ function startSocket () {
         require('@bootstrap/listeners')()
       ])
 
-      cpus.forEach(() => cluster.fork())
+      Array.from({ length: env.CLUSTER_COUNT || cpus.length }, () => cluster.fork())
 
       const socketNetwork = colors.cyan(`http://localhost:${env.SOCKET_PORT}`)
       console.log(`Socket running at: \t${socketNetwork}`)
