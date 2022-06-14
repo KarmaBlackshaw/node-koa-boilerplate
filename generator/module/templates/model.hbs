@@ -192,7 +192,7 @@ module.exports = {
       /**
        * Change necessarily and remove this comment
        */
-      await knex('{{ pluralSnakeCase name }}')
+      await knex({ tbl: '{{ pluralSnakeCase name }}' })
         .where('tbl.id', id)
         .update(updateData)
     } catch (error) {
