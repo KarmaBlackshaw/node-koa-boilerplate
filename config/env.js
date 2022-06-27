@@ -7,15 +7,16 @@ Object.defineProperty(env, 'validate', {
   async value () {
     const schema = Joi
       .object({
-      /**
-       * Database schema
-       */
+        /**
+         * Database schema
+         */
         DB_HOST: Joi.string()
           .required(),
         DB_USER: Joi.string()
           .required(),
         DB_PASS: Joi.string()
-          .required(),
+          .optional()
+          .allow(''),
         DB_NAME: Joi.string()
           .required(),
 
@@ -43,11 +44,15 @@ Object.defineProperty(env, 'validate', {
        * Redis config
        */
         REDIS_HOST: Joi.string()
-          .required(),
+          .optional()
+          .allow(''),
         REDIS_PORT: Joi.number()
-          .required(),
+          .optional()
+          .allow(''),
         REDIS_ENABLED: Joi.number()
-          .required(),
+          .optional()
+          .allow('')
+          .default(false),
 
         /**
        * AWS config
