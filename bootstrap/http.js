@@ -8,9 +8,6 @@ const minimatch = require('minimatch')
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
 
-// constants
-const ROOT = path.join(__dirname, '..')
-
 // instances
 const app = new Koa()
 
@@ -24,7 +21,7 @@ async function getRoutes () {
 
   const router = koaRouter()
 
-  const dir = [ROOT, 'services', 'http', 'handlers']
+  const dir = [process.cwd(), 'services', 'http', 'handlers']
   const files = await fs.readdirAsync(path.join(...dir))
 
   files.forEach(file => {
@@ -50,7 +47,7 @@ async function getRoutes () {
 }
 
 async function getMiddlewares () {
-  const dir = [ROOT, 'services', 'http', 'middleware']
+  const dir = [process.cwd(), 'services', 'http', 'middleware']
   const files = await fs.readdirAsync(path.join(...dir))
 
   return files
@@ -72,9 +69,7 @@ module.exports = async () => {
   app.use(router.allowedMethods())
 
   middlewares.forEach(middleware => {
-    app.use(middleware({
-      root: ROOT
-    }))
+    app.use(middleware())
   })
 
   app.use(router.routes())
