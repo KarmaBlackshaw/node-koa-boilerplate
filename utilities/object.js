@@ -1,15 +1,12 @@
-/**
-
-USAGE:
-
-const isEqual = require('@helpers/is-equal')
-
-*/
-
+const _isNil = require('lodash/isNil')
 const _isArray = require('lodash/isArray')
 const _isObject = require('lodash/isObject')
 
-const isEqual = (original, latest) => {
+function getKey (key, obj) {
+  return _isNil(obj[key]) ? obj.default : obj[key]
+}
+
+function isEqual (original, latest) {
   if (_isArray(original)) {
     for (let i = 0; i < original.length; i++) {
       const originalCurr = original[i]
@@ -45,4 +42,7 @@ const isEqual = (original, latest) => {
   return true
 }
 
-module.exports = isEqual
+module.exports = {
+  getKey,
+  isEqual
+}

@@ -1,13 +1,6 @@
-/**
-
-USAGE:
-
-const parsify = require('@helpers/parsify')
-
-*/
 const _isObject = require('lodash/isObject')
 
-const parsify = (payload, def) => {
+const parse = (payload, def) => {
   if (['null', 'undefined'].includes(String(payload))) {
     return def
   }
@@ -27,4 +20,6 @@ const parsify = (payload, def) => {
   }
 }
 
-module.exports = parsify
+module.exports = {
+  parse
+}
