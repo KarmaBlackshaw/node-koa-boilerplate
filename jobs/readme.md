@@ -7,3 +7,14 @@ You can make a job using the following command:
 ```
 npm run make:job [name]
 ```
+
+Listening to redis events
+```
+const redis = require('@config/redis')
+
+// socket:[USER_EVENT_TYPE]:[NAMESPACE]:[EVENT_NAME]
+
+await redis.subscribe('socket:user_events:test:insert', function () {
+  console.log('test')
+})
+```
