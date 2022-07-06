@@ -3,8 +3,7 @@ const env = require('@config/env')
 
 const state = {
   client: null,
-  publisher: null,
-  subscriber: null
+  publisher: null
 }
 
 async function connect () {
@@ -27,7 +26,6 @@ async function connect () {
 async function start () {
   state.client = await connect()
   state.publisher = await duplicate()
-  state.subscriber = await duplicate()
 }
 
 async function duplicate () {
@@ -36,6 +34,12 @@ async function duplicate () {
   await instance.connect()
 
   return instance
+}
+
+async function subscribe (url, handler) {
+  const sub = await duplicate()
+
+  sub.subscribe(url, handler)
 }
 
 function emitSocketAdmin (namespace, event, data) {
@@ -57,6 +61,7 @@ module.exports = {
   publisher: state.publisher,
   subscriber: state.subscriber,
   start,
+  subscribe,
   duplicate,
   emitSocketAdmin,
   emitSocketUser
