@@ -1,7 +1,7 @@
 const knex = require('@config/knex')
 
 // utilities
-const getKey = require('@utilities/get-key')
+const { getKey } = require('@utilities/object')
 const moment = require('@utilities/moment')
 
 // libraries
