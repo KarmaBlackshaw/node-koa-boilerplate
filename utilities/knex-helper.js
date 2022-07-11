@@ -128,8 +128,8 @@ function makeQuery ({ knex, filterBy, q, filterDictionary, page, rows, sortBy, s
           ? moment(dateTo).format(format)
           : moment(dateTo).endOf('day').format(format)
 
-        knex.where(dateBy, '>=', dateFromTimestamp)
-        knex.where(dateBy, '<=', dateToTimestamp)
+        knex.where(dateDictionary[dateBy], '>=', dateFromTimestamp)
+        knex.where(dateDictionary[dateBy], '<=', dateToTimestamp)
       }
     })()
   }
