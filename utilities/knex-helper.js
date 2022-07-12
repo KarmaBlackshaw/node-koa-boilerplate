@@ -60,7 +60,23 @@ function raw (qb) {
   EXAMPLE
   http://localhost:4002/samples?rows=100&page=1&date_by=created_at&date_from=2021-07-06&date_to=2021-07-10&sort_by=amount&sort=desc&sort_by=login_id&sort=asc&filter_by=login_id&q=ndm&filter_by=login_id&q=104
   */
-function makeQuery ({ knex, filterBy, q, filterDictionary, page, rows, sortBy, sort, sortDictionary, dateBy, dateFrom, dateTo, dateDictionary, isCount }) {
+function makeQuery ({
+  knex,
+  filterBy,
+  q,
+  filterDictionary,
+  filterOperator = 'or',
+  page,
+  rows,
+  sortBy,
+  sort,
+  sortDictionary,
+  dateBy,
+  dateFrom,
+  dateTo,
+  dateDictionary,
+  isCount
+}) {
   /**
      * PAGE AND ROWS
      */
@@ -141,6 +157,10 @@ function makeQuery ({ knex, filterBy, q, filterDictionary, page, rows, sortBy, s
     (() => {
       if (_isArray(filterBy) && _isArray(q)) {
         knex.where(function () {
+          const whereMethod = filterOperator === 'or'
+            ? this.orWhere
+            : this.where
+
           for (let i = 0; i < q.length; i++) {
             const currQ = q[i]
             const currFilter = filterDictionary[filterBy[i]]
@@ -150,7 +170,7 @@ function makeQuery ({ knex, filterBy, q, filterDictionary, page, rows, sortBy, s
             }
 
             if (_isArray(currFilter)) {
-              this.where(function () {
+              whereMethod(function () {
                 for (let j = 0; j < currFilter.length; j++) {
                   this.orWhere(currFilter[j], 'like', `%${currQ}%`)
                 }
@@ -159,7 +179,7 @@ function makeQuery ({ knex, filterBy, q, filterDictionary, page, rows, sortBy, s
               continue
             }
 
-            this.where(currFilter, 'like', `%${currQ}%`)
+            whereMethod(currFilter, 'like', `%${currQ}%`)
           }
         })
 
@@ -223,7 +243,7 @@ function findBy ({ knex, filterBy, q, dictionary }) {
 function jsonObject (data) {
   const cols = Object.entries(data)
     .map(([key, value]) => `"${key}", ${value}`)
-    .join(', ')
+    .join(',  ')
 
   return raw(`JSON_OBJECT(${cols})`)
 }
