@@ -8,8 +8,14 @@ const minimatch = require('minimatch')
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
 
+// middlewares
+const koaStatic = require('@middleware/koa-static')
+
 // instances
 const app = new Koa()
+
+// config
+const env = require('@config/env')
 
 // helpers
 async function getRoutes () {
@@ -47,7 +53,7 @@ async function getRoutes () {
 }
 
 async function getMiddlewares () {
-  const dir = [process.cwd(), 'services', 'http', 'middleware']
+  const dir = [process.cwd(), '/services/http/middleware']
   const files = await fs.readdirAsync(path.join(...dir))
 
   return files
@@ -68,13 +74,15 @@ module.exports = async () => {
   app.use(cors())
   app.use(router.allowedMethods())
 
-  middlewares.forEach(middleware => {
-    app.use(middleware())
-  })
+  /**
+   * Middlewares
+   */
+  middlewares.forEach(middleware => app.use(middleware()))
+  app.use(koaStatic('/public', '/storage/app/public'))
 
   app.use(router.routes())
 
-  app.listen(process.env.APP_PORT || '4000')
+  app.listen(env.APP_PORT || '4000')
 
   return app
 }
