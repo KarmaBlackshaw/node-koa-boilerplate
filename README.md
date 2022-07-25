@@ -1,6 +1,5 @@
 # Node-Koa Boilerplate
 
-[![GitHub Karmablackshaw](https://badges.pufler.dev/visits/karmablackshaw/node-koa-boilerplate)](https://github.com/karmablackshaw)
 [![GitHub Karmablackshaw](https://img.shields.io/github/last-commit/karmablackshaw/node-koa-boilerplate?label=Last+Commit)](https://github.com/karmablackshaw)
 [![GitHub Karmablackshaw](https://img.shields.io/github/commit-activity/m/karmablackshaw/node-koa-boilerplate?color=orange&label=Average+Commits)](https://github.com/karmablackshaw)
 [![GitHub Karmablackshaw](https://img.shields.io/github/last-commit/karmablackshaw/node-koa-boilerplate?label=Last+Commit)](https://github.com/karmablackshaw)
