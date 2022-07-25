@@ -47,9 +47,9 @@ module.exports = ({ router }) => router
        * Change necessarily and remove this comment
        */
       const list = await {{ pluralPascalCase name }}.list({ ...params })
-      const count = await {{ pluralPascalCase name }}.list({ ...params, isCount: true })
+      const total = await {{ pluralPascalCase name }}.list({ ...params, isCount: true })
 
-      ctx.body = { count: _get(count, 'total', 0), list }
+      ctx.body = { total, list }
     } catch (error) {
       console.log(error)
       ctx.throw(error)
