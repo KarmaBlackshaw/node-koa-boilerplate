@@ -1,68 +1,50 @@
-const redis = require('redis')
+// config
 const env = require('@config/env')
 
-const state = {
-  client: null,
-  publisher: null
-}
+const redis = require('redis')
 
-async function connect () {
-  if (state.client) {
-    console.log('A client is already registered. Use `duplicate` instead')
-    return state.client
+class Redis {
+  constructor () {
+    this.client = null
+    this.publisher = null
+    this.subscriber = null
   }
 
-  const isntance = redis.createClient({
-    url: `redis://@${env.REDIS_HOST}:${env.REDIS_PORT}`
-  })
+  async start () {
+    this.client = await this.connect()
+    this.publisher = await this.duplicate()
+  }
 
-  await isntance.connect()
+  async connect () {
+    if (this.client) {
+      console.log('A client is already registered. Use `duplicate` instead')
+      return this.client
+    }
 
-  isntance.on('error', e => console.log('Redis instance: ', e.stack))
+    const instance = redis.createClient({
+      url: `redis://@${env.REDIS_HOST}:${env.REDIS_PORT}`
+    })
 
-  return isntance
+    await instance.connect()
+
+    instance.on('error', e => console.log('Redis instance: ', e.stack))
+
+    return instance
+  }
+
+  async subscribe (url, handler) {
+    const sub = await this.duplicate()
+
+    sub.subscribe(url, handler)
+  }
+
+  async duplicate () {
+    const instance = this.client.duplicate()
+
+    await instance.connect()
+
+    return instance
+  }
 }
 
-async function start () {
-  state.client = await connect()
-  state.publisher = await duplicate()
-}
-
-async function duplicate () {
-  const instance = state.client.duplicate()
-
-  await instance.connect()
-
-  return instance
-}
-
-async function subscribe (url, handler) {
-  const sub = await duplicate()
-
-  sub.subscribe(url, handler)
-}
-
-function emitSocketAdmin (namespace, event, data) {
-  return state.publisher.publish(
-    `socket:admin_events:${namespace}:${event}`,
-    JSON.stringify(data)
-  )
-}
-
-function emitSocketUser (namespace, event, data) {
-  return state.publisher.publish(
-    `socket:user_events:${namespace}:${event}`,
-    JSON.stringify(data)
-  )
-}
-
-module.exports = {
-  client: state.client,
-  publisher: state.publisher,
-  subscriber: state.subscriber,
-  start,
-  subscribe,
-  duplicate,
-  emitSocketAdmin,
-  emitSocketUser
-}
+module.exports = new Redis()
