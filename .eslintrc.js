@@ -10,11 +10,12 @@ module.exports = {
     SharedArrayBuffer: 'readonly'
   },
   parserOptions: {
-    ecmaVersion: 2018
+    ecmaVersion: 2020
   },
   extends: ['standard'],
   rules: {
     'no-await-in-loop': 'off',
+    'no-process-env': 'error',
     'no-console': 'off',
     'no-useless-catch': 'off',
     eqeqeq: 'off',
