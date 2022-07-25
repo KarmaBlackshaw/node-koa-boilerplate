@@ -7,26 +7,17 @@ const cluster = require('cluster')
 const cpus = require('os').cpus()
 
 // libs
-const colors = require('colors')
+const chalk = require('chalk')
 
 // config
-require('./config/module-alias')(__dirname)
+require('./config/module-alias')
+require('@config/console')
 const env = require('@config/env')
-
-function startRedis () {
-  return env.REDIS_ENABLED &&
-    require('@config/redis').start()
-}
-
-function startSocket () {
-  return env.SOCKET_ENABLED &&
-    require('@bootstrap/websocket')()
-}
 
 ;(async () => {
   try {
     await env.validate()
-    await startRedis()
+    await require('@config/redis').start()
 
     if (cluster.isMaster) {
       await Promise.all([
@@ -34,20 +25,19 @@ function startSocket () {
         require('@bootstrap/listeners')()
       ])
 
-      Array.from({ length: env.CLUSTER_COUNT || cpus.length }, () => cluster.fork())
-
-      const socketNetwork = colors.cyan(`http://localhost:${env.SOCKET_PORT}`)
-      console.log(`Socket running at: \t${socketNetwork}`)
+      Array.from({ length: env.CLUSTER_COUNT ?? cpus.length }, () => cluster.fork())
     } else {
       await Promise.all([
-        startSocket(),
+        require('@bootstrap/websocket')(),
         require('@bootstrap/http')()
       ])
 
-      console.info(`App running on port ${env.APP_PORT} | WID ${process.pid}`)
+      const socketNetwork = chalk.cyan(`http://localhost:${env.SOCKET_PORT}`)
+      console.log(`Socket running at: \t${socketNetwork}`)
+      console.log(`App running on port ${env.APP_PORT} | WID ${process.pid}`)
     }
   } catch (error) {
-    console.log(`[Application Error]: ${error}`)
+    console.log(error)
     process.exit(1)
   }
 })()
