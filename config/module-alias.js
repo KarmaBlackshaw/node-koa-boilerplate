@@ -4,16 +4,19 @@ const moduleAlias = require('module-alias')
 // node core
 const path = require('path')
 
-module.exports = dir => {
-  moduleAlias.addAliases({
-    '@': path.join(dir),
-    '@utilities': path.join(dir, 'utilities'),
-    '@config': path.join(dir, 'config'),
-    '@bootstrap': path.join(dir, 'bootstrap'),
-    '@listeners': path.join(dir, 'listeners'),
-    '@jobs': path.join(dir, 'jobs'),
-    '@services': path.join(dir, 'services'),
-    '@model': path.join(dir, 'model'),
-    '@middleware': path.join(dir, 'services', 'http', 'middleware')
-  })
-}
+// constants
+const ROOT = process.cwd()
+
+moduleAlias.addAliases({
+  '@': path.join(ROOT),
+  '@utilities': path.join(ROOT, 'utilities'),
+  '@config': path.join(ROOT, 'config'),
+  '@bootstrap': path.join(ROOT, 'bootstrap'),
+  '@listeners': path.join(ROOT, 'listeners'),
+  '@jobs': path.join(ROOT, 'jobs'),
+  '@services': path.join(ROOT, 'services'),
+  '@model': path.join(ROOT, 'model'),
+  '@middleware': path.join(ROOT, 'services', 'http', 'middleware')
+})
+
+module.exports = moduleAlias
