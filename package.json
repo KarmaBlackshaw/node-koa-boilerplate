@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app",
-    "test": "eslint .",
-    "fix": "eslint . --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "make:module": "plop --plopfile ./generator/module/index.js",
     "make:job": "plop --plopfile ./generator/job/index.js",
     "make:listener": "plop --plopfile ./generator/listener/index.js",
@@ -14,7 +14,8 @@
     "make:middleware": "plop --plopfile ./generator/middleware/index.js",
     "make:socket": "plop --plopfile ./generator/socket/index.js",
     "generate:key": "node ./bin/key-generator.js",
-    "generate:env": "node ./bin/env-generator.js"
+    "generate:env": "node ./bin/env-generator.js",
+    "prepare": "husky install"
   },
   "env": {
     "node": true
@@ -74,6 +75,7 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.3.1",
     "eslint-plugin-standard": "4.0.1",
+    "husky": "^8.0.1",
     "plop": "2.7.4"
   }
 }
