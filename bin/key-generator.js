@@ -3,7 +3,7 @@ const util = require('util')
 const cp = require('child_process')
 
 // libs
-const colors = require('colors')
+const chalk = require('chalk')
 const { v4: uuidv4 } = require('uuid')
 
 const key = uuidv4()
@@ -14,5 +14,5 @@ cp
   .end(util.inspect(key))
 
 console.log(`
-  Copied: ${colors.cyan(key)}
+  Copied: ${chalk.cyan(key)}
 `)
