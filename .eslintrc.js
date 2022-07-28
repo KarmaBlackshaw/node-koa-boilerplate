@@ -12,11 +12,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020
   },
-  extends: ['standard'],
+  extends: ['standard', 'eslint:recommended'],
   rules: {
     'no-await-in-loop': 'off',
-    'no-process-env': 'error',
     'no-console': 'off',
+    'no-process-env': 'error',
     'no-useless-catch': 'off',
     eqeqeq: 'off',
     'prefer-regex-literals': 'off',
@@ -24,10 +24,12 @@ module.exports = {
     'comma-dangle': ['error', 'never'],
     'prefer-const': 'error',
     'arrow-parens': [2, 'as-needed'],
+    'no-param-reassign': 'error',
     'object-curly-spacing': ['error', 'always'],
     curly: [2, 'all'],
     indent: ['error', 2, {
-      SwitchCase: 1
+      SwitchCase: 1,
+      outerIIFEBody: 'off'
     }],
     'comma-spacing': ['error', {
       before: false, after: true
