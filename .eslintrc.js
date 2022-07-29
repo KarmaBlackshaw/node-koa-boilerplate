@@ -10,8 +10,10 @@ module.exports = {
     SharedArrayBuffer: 'readonly'
   },
   parserOptions: {
-    ecmaVersion: 2020
+    ecmaVersion: 13,
+    requireConfigFile: false
   },
+  parser: '@babel/eslint-parser',
   extends: ['standard', 'eslint:recommended'],
   rules: {
     'no-await-in-loop': 'off',
