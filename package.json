@@ -15,6 +15,7 @@
     "make:socket": "plop --plopfile ./generator/socket/index.js",
     "generate:key": "node ./bin/key-generator.js",
     "generate:env": "node ./bin/env-generator.js",
+    "generate:port": "node ./bin/get-free-port.js",
     "prepare": "husky install"
   },
   "env": {
