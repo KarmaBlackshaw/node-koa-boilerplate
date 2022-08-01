@@ -6,14 +6,17 @@
  * throw new CustomError({ name: 'VALIDATION_ERROR', message: 'hello world' })
  */
 
-const getKey = (key, obj) => obj[key] === undefined ? obj.default : obj[key]
-const isString = str => typeof str === 'string'
+const {
+  getKey
+} = require('@utilities/object')
+
+const _isString = require('lodash/isString')
 
 module.exports = class CustomError extends Error {
   constructor (err) {
     super(err)
 
-    if (isString(err.message) && err.message.includes('Error:')) {
+    if (_isString(err.message) && err.message.includes('Error:')) {
       const split = err.message.split(': ')
 
       this.name = split[0]

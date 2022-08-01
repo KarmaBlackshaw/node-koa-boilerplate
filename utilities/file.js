@@ -7,11 +7,12 @@ const _defaults = require('lodash/defaults')
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
 
+// utilities
 const {
   makeUniq
-} = require('@helpers/string')
+} = require('@utilities/string')
 
-// utilities
+// config
 const env = require('@config/env')
 const s3 = require('@config/s3')
 
