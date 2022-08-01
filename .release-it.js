@@ -18,7 +18,7 @@ module.exports = {
     push: true,
     requireCommits: true,
     changelog:
-      'npx auto-changelog --stdout --commit-limit false -u --template ./release/changelog.hbs'
+      'npx auto-changelog --stdout --commit-limit false -u --template ./config/changelog.hbs'
   },
   github: {
     release: false,
