@@ -16,7 +16,8 @@
     "generate:key": "node ./bin/key-generator.js",
     "generate:env": "node ./bin/env-generator.js",
     "generate:port": "node ./bin/get-free-port.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "release": "release-it --no-npm.publish"
   },
   "env": {
     "node": true
@@ -78,6 +79,7 @@
     "husky": "^8.0.1",
     "nodemon": "^2.0.19",
     "plop": "2.7.4",
-    "pluralize": "^8.0.0"
+    "pluralize": "^8.0.0",
+    "release-it": "^15.2.0"
   }
 }
