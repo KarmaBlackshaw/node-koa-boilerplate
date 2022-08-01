@@ -7,7 +7,7 @@
     "start": "nodemon app",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "make:module": "plop --plopfile ./generator/module/index.js",
+    "make:resource": "plop --plopfile ./generator/resource/index.js",
     "make:job": "plop --plopfile ./generator/job/index.js",
     "make:listener": "plop --plopfile ./generator/listener/index.js",
     "make:utility": "plop --plopfile ./generator/utility/index.js",
