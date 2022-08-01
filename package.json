@@ -17,7 +17,7 @@
     "generate:env": "node ./bin/env-generator.js",
     "generate:port": "node ./bin/get-free-port.js",
     "prepare": "husky install",
-    "release": "release-it --no-npm.publish"
+    "release": "release-it"
   },
   "env": {
     "node": true
