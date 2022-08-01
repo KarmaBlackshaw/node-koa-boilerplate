@@ -22,7 +22,7 @@ async function getRoutes () {
   const exclude = [
     '_*',
     '.*',
-    'index.js'
+    '*.md'
   ]
 
   const router = koaRouter()
