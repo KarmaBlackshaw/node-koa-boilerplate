@@ -15,32 +15,31 @@ const _get = require('lodash/get')
 // helpers
 
 module.exports = {
-  async list ({ filterBy, q, page, rows, sortBy, sort, isCount, dateBy, dateFrom, dateTo } = {}) {
-    /**
-     * Change necessarily and remove this comment
-     */
+  async list ({
+    filter_by: filterBy,
+    q,
+    page,
+    rows,
+    sort_by: sortBy,
+    sort,
+    is_count: isCount,
+    date_by: dateBy,
+    date_from: dateFrom,
+    date_to: dateTo
+  } = {}) {
     const filterDictionary = {}
 
-    /**
-     * Change necessarily and remove this comment
-     */
     const sortDictionary = {
       login_id: '{{ pluralSnakeCase name }}.login_id',
       login_name: '{{ pluralSnakeCase name }}.login_name',
       amount: '{{ pluralSnakeCase name }}.amount'
     }
 
-    /**
-     * Change necessarily and remove this comment
-     */
     const dateDictionary = {
       created_at: '{{ pluralSnakeCase name }}.created_at'
     }
 
     try {
-      /**
-       * Change necessarily and remove this comment
-       */
       const list = await knex('{{ pluralSnakeCase name }}')
         .modify(knex => {
           makeQuery({
@@ -53,16 +52,10 @@ module.exports = {
           })
 
           if (isCount) {
-            /**
-             * Change necessarily and remove this comment
-             */
             knex
               .count({ total: '{{ pluralSnakeCase name }}.id' })
               .first()
           } else {
-            /**
-             * Change necessarily and remove this comment
-             */
             knex.select({
               id: '{{ pluralSnakeCase name }}.id',
               login_id: '{{ pluralSnakeCase name }}.login_id',
@@ -85,9 +78,6 @@ module.exports = {
   },
 
   async find (conditions) {
-    /**
-     * Change necessarily and remove this comment
-     */
     const dictionary = {
       id: '{{ pluralSnakeCase name }}.id',
       type_id: '{{ pluralSnakeCase name }}.type_id',
@@ -110,18 +100,12 @@ module.exports = {
             }
           }
 
-          /**
-           * Change necessarily and remove this comment
-           */
           if (conditions.is_deleted) {
             knex.whereNotNull('{{ pluralSnakeCase name }}.deleted_at')
           } else {
             knex.whereNull('{{ pluralSnakeCase name }}.deleted_at')
           }
         })
-        /**
-         * Change necessarily and remove this comment
-         */
         .select({
           id: '{{ pluralSnakeCase name }}.id',
           type_id: '{{ pluralSnakeCase name }}.type_id',
@@ -138,9 +122,6 @@ module.exports = {
   },
 
   async store (payload) {
-    /**
-     * Change necessarily and remove this comment
-     */
     const fillables = new Set([
       'foo',
       'bar'
@@ -151,9 +132,6 @@ module.exports = {
       const filterer = hay => _pickBy(hay, (val, key) => !_isNil(val) && fillables.has(key))
       const data = arrayPayload.map(filterer)
 
-      /**
-       * Change necessarily and remove this comment
-       */
       const [id] = await knex('{{ pluralSnakeCase name }}').insert(data)
 
       return id
@@ -165,9 +143,6 @@ module.exports = {
 
   async modify (id, payload) {
     try {
-      /**
-       * Change necessarily and remove this comment
-       */
       const dictionary = {
         foo: '{{ pluralSnakeCase name }}.foo'
       }
@@ -188,9 +163,6 @@ module.exports = {
         return
       }
 
-      /**
-       * Change necessarily and remove this comment
-       */
       await knex({ tbl: '{{ pluralSnakeCase name }}' })
         .where('tbl.id', id)
         .update(updateData)
