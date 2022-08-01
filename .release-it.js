@@ -1,6 +1,11 @@
 module.exports = {
   hooks: {
     'after:bump': ['npx auto-changelog -p'],
+    'after:git-release': [
+      'git add CHANGELOG.md',
+      'git push origin master',
+      'echo Successfully released ${name} v${version} to ${repo.repository}.'
+    ]
   },
   git: {
     requireBranch: 'master',
