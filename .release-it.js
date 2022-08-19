@@ -1,6 +1,6 @@
 module.exports = {
   hooks: {
-    'after:bump': ['npx auto-changelog -p'],
+    'after:bump': 'npx auto-changelog -p',
     'after:git-release': [
       'git add CHANGELOG.md',
       'git push origin master',
@@ -17,8 +17,7 @@ module.exports = {
     tagAnnotation: '${version}',
     push: true,
     requireCommits: true,
-    changelog:
-      'npx auto-changelog --stdout --commit-limit false -u --template ./config/changelog.hbs'
+    changelog: `npx auto-changelog --stdout --commit-limit false -u --template ./templates/changelog.hbs`
   },
   github: {
     release: false,
