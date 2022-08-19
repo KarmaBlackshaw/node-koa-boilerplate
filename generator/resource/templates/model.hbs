@@ -41,16 +41,14 @@ module.exports = {
 
     try {
       const list = await knex('{{ pluralSnakeCase name }}')
+        .meta({
+          ...{ dateBy, dateFrom, dateTo, dateDictionary },
+          ...{ sortBy, sort, sortDictionary },
+          ...{ page, rows },
+          ...{ filterBy, q, filterDictionary },
+          isCount
+        })
         .modify(knex => {
-          makeQuery({
-            ...{ filterBy, q, filterDictionary },
-            ...{ sortBy, sort, sortDictionary },
-            ...{ dateBy, dateFrom, dateTo, dateDictionary },
-            ...{ page, rows },
-            knex,
-            isCount
-          })
-
           if (isCount) {
             knex
               .count({ total: '{{ pluralSnakeCase name }}.id' })
@@ -122,17 +120,14 @@ module.exports = {
   },
 
   async store (payload) {
-    const fillables = new Set([
+    const fillables = [
       'foo',
       'bar'
-    ])
+    ]
 
     try {
-      const arrayPayload = _castArray(payload)
-      const filterer = hay => _pickBy(hay, (val, key) => !_isNil(val) && fillables.has(key))
-      const data = arrayPayload.map(filterer)
-
-      const [id] = await knex('{{ pluralSnakeCase name }}').insert(data)
+      const [id] = await knex('{{ pluralSnakeCase name }}')
+        .metaInsert(payload, fillables)
 
       return id
     } catch (error) {
@@ -147,25 +142,9 @@ module.exports = {
         foo: '{{ pluralSnakeCase name }}.foo'
       }
 
-      const updateData = {}
-      for (const key in payload) {
-        const updateValue = payload[key]
-        const currDictionary = dictionary[key]
-
-        if (_isNil(updateValue) || !currDictionary) {
-          continue
-        }
-
-        updateData[currDictionary] = updateValue
-      }
-
-      if (_isEmpty(updateData)) {
-        return
-      }
-
       await knex({ tbl: '{{ pluralSnakeCase name }}' })
         .where('tbl.id', id)
-        .update(updateData)
+        .metaUpdate(payload, dictionary)
     } catch (error) {
       console.log(error)
       throw error
