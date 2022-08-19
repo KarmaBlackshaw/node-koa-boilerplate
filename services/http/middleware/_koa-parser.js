@@ -1,5 +1,5 @@
-
 const bodyParser = require('koa-bodyparser')
+const formidable = require('koa2-formidable')
 
 module.exports = () => {
   return async (ctx, next) => {
@@ -12,12 +12,14 @@ module.exports = () => {
       ctx.request.header['content-encoding'] = 'gzip'
     }
 
-    const req = bodyParser({
-      enableTypes: ['json', 'text'],
-      jsonLimit: '200mb',
-      formLimit: '200mmb',
-      textLimit: '20mb'
-    })
+    const req = ctx.is('application/json')
+      ? bodyParser({
+        enableTypes: ['json', 'text'],
+        jsonLimit: '200mb',
+        formLimit: '200mb',
+        textLimit: '20mb'
+      })
+      : formidable({})
 
     try {
       await req(ctx, next)
