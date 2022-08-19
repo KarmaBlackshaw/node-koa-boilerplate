@@ -79,7 +79,8 @@ const schema = Joi
 
     CLUSTER_COUNT: Joi.number()
       .optional()
-      .allow(''),
+      .allow('')
+      .default(1),
 
     STORAGE_TYPE: Joi.string()
       .optional()
