@@ -23,6 +23,6 @@ for (const group in groups) {
   envContent += '\n'
 }
 
-const dir = path.join(process.cwd(), '.dev.env')
+const dir = path.join(process.cwd(), '.env')
 
 fs.writeFileSync(dir, envContent.trim())
