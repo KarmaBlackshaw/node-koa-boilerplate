@@ -1,4 +1,4 @@
-const logger = require('@config/logger')
+const logger = require('@config/logger')()
 
 module.exports = () => {
   return async (ctx, next) => {
