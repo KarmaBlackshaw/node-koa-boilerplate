@@ -47,12 +47,6 @@ module.exports = plop => {
         templateFile: './templates/handler.hbs',
         skipIfExists: true
       }
-      // {
-      //   type: 'add',
-      //   path: '../test/{{kebabCase name}}.js',
-      //   templateFile: './modules/testTemplate.js',
-      //   skipIfExists: true
-      // }
     ]
   })
 }
