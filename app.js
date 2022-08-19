@@ -4,7 +4,6 @@
  */
 
 const cluster = require('cluster')
-const cpus = require('os').cpus()
 
 // libs
 const chalk = require('chalk')
@@ -25,7 +24,7 @@ const env = require('@config/env')
         require('@bootstrap/listeners')()
       ])
 
-      Array.from({ length: env.CLUSTER_COUNT ?? cpus.length }, () => cluster.fork())
+      Array.from({ length: env.CLUSTER_COUNT || 1 }, () => cluster.fork())
     } else {
       await Promise.all([
         require('@bootstrap/websocket')(),
