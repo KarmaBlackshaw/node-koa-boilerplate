@@ -40,6 +40,7 @@
   "author": "Ernie Jeash",
   "license": "ISC",
   "dependencies": {
+    "@jeash/knex-meta": "^1.1.0",
     "@koa/cors": "2.2.2",
     "aws-sdk": "2.900.0",
     "axios": "0.18.1",
