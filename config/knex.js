@@ -1,5 +1,22 @@
 const knex = require('knex')
 const env = require('@config/env')
+const knexMeta = require('@jeash/knex-meta')
+
+const utils = [
+  knexMeta.metaDate,
+  knexMeta.metaFilter,
+  knexMeta.metaPage,
+  knexMeta.metaSort,
+  knexMeta.meta,
+  knexMeta.bulkUpdate,
+  knexMeta.jsonObject,
+  knexMeta.metaUpdate,
+  knexMeta.metaInsert
+]
+
+utils.forEach(extension => {
+  knex.QueryBuilder.extend(extension.name, extension)
+})
 
 module.exports = knex({
   client: env.DB_CLIENT || 'mysql',
