@@ -2,9 +2,10 @@
 const knex = require('@config/knex')
 
 // libs
-const _isEmpty = require('lodash/isEmpty')
-const _isNil = require('lodash/isNil')
 const _get = require('lodash/get')
+const _first = require('lodash/first')
+
+const { createFindArguments } = require('@utilities/knex-helper')
 
 module.exports = {
   async list ({
@@ -17,36 +18,35 @@ module.exports = {
     is_count: isCount,
     date_by: dateBy,
     date_from: dateFrom,
-    date_to: dateTo
+    date_to: dateTo,
+    is_find: isFind
   } = {}) {
     const filterDictionary = {}
 
-    const sortDictionary = {
-      login_id: '{{ pluralSnakeCase name }}.login_id',
-      login_name: '{{ pluralSnakeCase name }}.login_name',
-      amount: '{{ pluralSnakeCase name }}.amount'
-    }
+    const sortDictionary = {}
 
-    const dateDictionary = {
-      created_at: '{{ pluralSnakeCase name }}.created_at'
-    }
+    const dateDictionary = {}
 
     try {
       const list = await knex('{{ pluralSnakeCase name }}')
         .meta({
-          ...{ dateBy, dateFrom, dateTo, dateDictionary },
-          ...{ sortBy, sort, sortDictionary },
-          ...{ page, rows },
           ...{ filterBy, q, filterDictionary },
+          ...{ sortBy, sort, sortDictionary },
+          ...{ dateBy, dateFrom, dateTo, dateDictionary },
+          ...{ page, rows },
           isCount
         })
-        .modify(knex => {
+        .modify(function () {
+          if (isFind) {
+            this.limit(1)
+          }
+
           if (isCount) {
-            knex
+            this
               .count({ total: '{{ pluralSnakeCase name }}.id' })
               .first()
           } else {
-            knex.select({
+            this.select({
               id: '{{ pluralSnakeCase name }}.id',
               login_id: '{{ pluralSnakeCase name }}.login_id',
               login_name: '{{ pluralSnakeCase name }}.login_name',
@@ -68,43 +68,13 @@ module.exports = {
   },
 
   async find (conditions) {
-    const dictionary = {
-      id: '{{ pluralSnakeCase name }}.id',
-      type_id: '{{ pluralSnakeCase name }}.type_id',
-      name: '{{ pluralSnakeCase name }}.name',
-      table: '{{ pluralSnakeCase name }}.table'
-    }
-
     try {
-      const data = await knex('{{ pluralSnakeCase name }}')
-        .modify(knex => {
-          if (_isEmpty(conditions)) {
-            knex.whereRaw('1 = 0')
-          }
+      const data = await this.list({
+        ...createFindArguments(conditions),
+        is_find: true
+      })
 
-          for (const key in conditions) {
-            const curr = conditions[key]
-
-            if (dictionary[key] && !_isNil(curr)) {
-              knex.where(dictionary[key], curr)
-            }
-          }
-
-          if (conditions.is_deleted) {
-            knex.whereNotNull('{{ pluralSnakeCase name }}.deleted_at')
-          } else {
-            knex.whereNull('{{ pluralSnakeCase name }}.deleted_at')
-          }
-        })
-        .select({
-          id: '{{ pluralSnakeCase name }}.id',
-          type_id: '{{ pluralSnakeCase name }}.type_id',
-          name: '{{ pluralSnakeCase name }}.name',
-          table: '{{ pluralSnakeCase name }}.table'
-        })
-        .first()
-
-      return data
+      return _first(data)
     } catch (error) {
       console.log(error)
       throw error
