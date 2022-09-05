@@ -15,7 +15,7 @@ moduleAlias.addAliases({
   '@listeners': path.join(ROOT, 'listeners'),
   '@jobs': path.join(ROOT, 'jobs'),
   '@services': path.join(ROOT, 'services'),
-  '@model': path.join(ROOT, 'model'),
+  '@store': path.join(ROOT, 'store'),
   '@middleware': path.join(ROOT, 'services', 'http', 'middleware')
 })
 
