@@ -44,6 +44,7 @@ module.exports = {
         argsIgnorePattern: 'next|_.+',
         varsIgnorePattern: '_'
       }
-    ]
+    ],
+    semi: ['error', 'never']
   }
 }
