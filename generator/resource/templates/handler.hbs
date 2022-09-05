@@ -2,42 +2,42 @@
 const {{ pluralPascalCase name }} = require('@store/{{ pluralKebabCase name }}')
 
 // utilities
+const { createSearchQuery } = require('@utilities/search-query')
 
 // libraries
 const Joi = require('joi')
-const _get = require('lodash/get')
-
-// middlewares
-const authentication = require('@middleware/authentication')
 
 module.exports = ({ router }) => router
   .prefix('/{{ pluralKebabCase name }}')
-
-  .use(authentication())
-
-  .get('unauth', '/hello', async ctx => {
-    ctx.body = 'Hello from {{ pluralKebabCase name }}'
-  })
 
   .get('/', async ctx => {
     try {
       const query = ctx.request.query
       const params = {
-        filter_by: query.filter_by,
-        q: query.q,
-        page: query.page,
-        rows: query.rows,
-        sort_by: query.sort_by,
-        sort: query.sort,
-        date_by: query.date_by,
-        date_from: query.date_from,
-        date_to: query.date_to
+        ...createSearchQuery(query)
       }
 
-      const list = await {{ pluralPascalCase name }}.list({ ...params })
-      const total = await {{ pluralPascalCase name }}.list({ ...params, isCount: true })
+      const list = await {{ pluralPascalCase name }}.list({
+        ...params
+      })
+
+      const total = await {{ pluralPascalCase name }}.list({
+        ...params,
+        is_count: true
+      })
 
       ctx.body = { total, list }
+    } catch (error) {
+      console.log(error)
+      ctx.throw(error)
+    }
+  })
+
+  .get('/find', async ctx => {
+    try {
+      ctx.body = await {{ pluralPascalCase name }}.find(ctx.request.query)
+
+      ctx.status = 200
     } catch (error) {
       console.log(error)
       ctx.throw(error)
