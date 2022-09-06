@@ -16,6 +16,7 @@ module.exports = {
   parser: '@babel/eslint-parser',
   extends: ['standard', 'eslint:recommended'],
   rules: {
+    'no-multi-spaces': 'error',
     'no-await-in-loop': 'off',
     'no-console': 'off',
     'no-process-env': 'error',
