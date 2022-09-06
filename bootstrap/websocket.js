@@ -46,7 +46,7 @@ module.exports = async () => {
 
     const sub = await redis.duplicate()
 
-    sub.pSubscribe('socket:user_events:*', (message, channel) => {
+    sub.pSubscribe('socket:*', (message, channel) => {
       const channelArray = channel.split(':')
 
       if (channelArray.length < 4) {

@@ -45,6 +45,13 @@ class Redis {
 
     return instance
   }
+
+  emit (namespace, event, data) {
+    return this.publisher.publish(
+      `${namespace}:${event}`,
+      JSON.stringify(data)
+    )
+  }
 }
 
 module.exports = new Redis()

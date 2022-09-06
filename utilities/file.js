@@ -9,17 +9,14 @@ const path = require('path')
 
 // utilities
 const {
-  makeUniq
+  makeUniq,
+  removeDuplicateSlash,
+  joinPaths
 } = require('@utilities/string')
 
 // config
 const env = require('@config/env')
 const s3 = require('@config/s3')
-
-// helpers
-const removeDuplicateSlash = str => str.replace(/\/+/g, '/')
-
-const joinPaths = (...paths) => paths.join('/')
 
 const directoryExists = directory => {
   try {
@@ -99,7 +96,5 @@ module.exports = {
   removeDuplicateSlash,
   joinPaths,
   directoryExists,
-  storeLocal,
-  storeBucket,
   store
 }
