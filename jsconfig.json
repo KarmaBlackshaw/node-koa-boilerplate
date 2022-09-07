@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "module": "commonjs",
+    "paths": {
+      "@root/*": ["./*"],
+      "@utilities/*": ["./utilities/*"],
+      "@config/*": ["./config/*"],
+      "@bootstrap/*": ["./bootstrap/*"],
+      "@listeners/*": ["./listeners/*"],
+      "@jobs/*": ["./jobs/*"],
+      "@services/*": ["./services/*"],
+      "@store/*": ["./store/*"],
+      "@middleware/*": ["./services/http/middleware/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
