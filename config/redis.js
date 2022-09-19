@@ -13,6 +13,7 @@ class Redis {
   async start () {
     this.client = await this.connect()
     this.publisher = await this.duplicate()
+    this.subscriber = await this.duplicate()
   }
 
   async connect () {
@@ -33,9 +34,7 @@ class Redis {
   }
 
   async subscribe (url, handler) {
-    const sub = await this.duplicate()
-
-    sub.subscribe(url, handler)
+    this.subscriber.subscribe(url, handler)
   }
 
   async duplicate () {
