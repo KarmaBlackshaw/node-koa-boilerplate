@@ -15,7 +15,6 @@ const {
 } = require('@utilities/string')
 
 // config
-const env = require('@config/env')
 const s3 = require('@config/s3')
 
 const directoryExists = directory => {
@@ -30,7 +29,7 @@ const directoryExists = directory => {
 const storeLocal = async (file, config = {}) => {
   try {
     const options = _defaults(config, {
-      destination: env.STATIC_ASSET_PATH
+      destination: process.env.STATIC_ASSET_PATH
     })
 
     const directory = removeDuplicateSlash(joinPaths(options.destination))
@@ -60,7 +59,7 @@ const storeLocal = async (file, config = {}) => {
 
 const storeBucket = async (file, config = {}) => {
   const options = _defaults({
-    bucket_name: env.AWS_BUCKET_NAME
+    bucket_name: process.env.AWS_BUCKET_NAME
   }, config)
 
   const extension = (() => {
@@ -87,7 +86,7 @@ const storeBucket = async (file, config = {}) => {
 }
 
 const store = (file, config = {}) => {
-  return env.STORAGE_TYPE === 'local'
+  return process.env.STORAGE_TYPE === 'local'
     ? storeLocal(file, config)
     : storeBucket(file, config)
 }
