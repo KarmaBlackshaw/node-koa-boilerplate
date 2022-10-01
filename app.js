@@ -3,8 +3,6 @@
  * Boostrap services here
  */
 
-const cluster = require('cluster')
-
 // libs
 const chalk = require('chalk')
 
@@ -17,24 +15,16 @@ const env = require('@config/env')
   try {
     await env.validate()
     await require('@config/redis').start()
+    await require('@config/socket').start()
 
-    if (cluster.isMaster) {
-      await Promise.all([
-        require('@bootstrap/jobs')(),
-        require('@bootstrap/listeners')()
-      ])
+    await Promise.all([
+      require('@bootstrap/jobs')(),
+      require('@bootstrap/listeners')(),
+      require('@bootstrap/http')()
+    ])
 
-      Array.from({ length: env.CLUSTER_COUNT }, () => cluster.fork())
-    } else {
-      await Promise.all([
-        require('@bootstrap/websocket')(),
-        require('@bootstrap/http')()
-      ])
-
-      const socketNetwork = chalk.cyan(`http://localhost:${env.SOCKET_PORT}`)
-      console.log(`Socket running at: \t${socketNetwork}`)
-      console.log(`App running on port ${env.APP_PORT} | WID ${process.pid}`)
-    }
+    console.log(`Socket running at: \t${chalk.cyan(`http://localhost:${env.SOCKET_PORT}`)}`)
+    console.log(`App running at: \t${chalk.cyan(`http://localhost:${env.APP_PORT}`)}`)
   } catch (error) {
     console.log(error)
     process.exit(1)
