@@ -37,7 +37,7 @@ module.exports = plop => {
     actions: [
       {
         type: 'add',
-        path: '../../store/{{ pluralKebabCase name }}.js',
+        path: '../../services/store/{{ pluralKebabCase name }}.js',
         templateFile: './templates/store.hbs',
         skipIfExists: false
       },
