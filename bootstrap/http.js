@@ -14,9 +14,6 @@ const koaStatic = require('@middleware/koa-static')
 // instances
 const app = new Koa()
 
-// config
-const env = require('@config/env')
-
 // helpers
 async function getRoutes () {
   const exclude = [
@@ -82,7 +79,7 @@ module.exports = async () => {
 
   app.use(router.routes())
 
-  app.listen(env.APP_PORT || '4000')
+  app.listen(process.env.APP_PORT || '4000')
 
   return app
 }

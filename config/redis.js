@@ -1,6 +1,3 @@
-// config
-const env = require('@config/env')
-
 const redis = require('redis')
 
 class Redis {
@@ -22,7 +19,7 @@ class Redis {
     }
 
     const instance = redis.createClient({
-      url: `redis://@${env.REDIS_HOST}:${env.REDIS_PORT}`
+      url: `redis://@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`
     })
 
     await instance.connect()

@@ -4,7 +4,6 @@ const _capitalize = require('lodash/capitalize')
 
 // config
 const redis = require('@config/redis')
-const env = require('@config/env')
 
 class Socket {
   constructor () {
@@ -16,7 +15,7 @@ class Socket {
   }
 
   async start () {
-    this.client = new Server(env.SOCKET_PORT, {
+    this.client = new Server(process.env.SOCKET_PORT, {
       transports: ['websocket', 'polling'],
       rejectUnauthorized: false
     })

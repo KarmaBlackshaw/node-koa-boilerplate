@@ -19,7 +19,6 @@ module.exports = {
     'no-multi-spaces': 'error',
     'no-await-in-loop': 'off',
     'no-console': 'off',
-    'no-process-env': 'error',
     'no-useless-catch': 'off',
     eqeqeq: 'off',
     'prefer-regex-literals': 'off',
