@@ -11,7 +11,9 @@ class Socket {
   }
 
   get namespaces () {
-    return new Set()
+    return new Set([
+      'badugi'
+    ])
   }
 
   async start () {
