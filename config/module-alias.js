@@ -14,6 +14,8 @@ moduleAlias.addAliases({
   '@bootstrap': path.join(ROOT, 'bootstrap'),
   '@listeners': path.join(ROOT, 'listeners'),
   '@jobs': path.join(ROOT, 'jobs'),
+  '@helpers': path.join(ROOT, 'helpers'),
+  '@constants': path.join(ROOT, 'constants'),
   '@store': path.join(ROOT, 'services/store'),
   '@middleware': path.join(ROOT, 'services', 'http', 'middleware')
 })
