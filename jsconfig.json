@@ -3,17 +3,17 @@
     "baseUrl": "./",
     "module": "commonjs",
     "paths": {
-      "@root/*": ["./*"],
-      "@utilities/*": ["./utilities/*"],
-      "@config/*": ["./config/*"],
-      "@bootstrap/*": ["./bootstrap/*"],
-      "@listeners/*": ["./listeners/*"],
-      "@jobs/*": ["./jobs/*"],
-      "@helpers/*": ["./helpers/*"],
-      "@constants/*": ["./constants/*"],
-      "@services/*": ["./services/*"],
-      "@store/*": ["./store/*"],
-      "@middleware/*": ["./services/http/middleware/*"]
+      "@root/*": ["./src/*"],
+      "@utilities/*": ["./src/utilities/*"],
+      "@config/*": ["./src/config/*"],
+      "@bootstrap/*": ["./src/bootstrap/*"],
+      "@listeners/*": ["./src/listeners/*"],
+      "@jobs/*": ["./src/jobs/*"],
+      "@services/*": ["./src/services/*"],
+      "@store/*": ["./src/store/*"],
+      "@middleware/*": ["./src/services/http/middleware/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@constants/*": ["./src/constants/*"],
     }
   },
   "exclude": ["node_modules"]

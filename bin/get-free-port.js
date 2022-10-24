@@ -4,7 +4,7 @@ const cp = require('child_process')
 
 // libs
 const chalk = require('chalk')
-const port = require('../utilities/port')
+const port = require('../src/utilities/port')
 
 ;(async () => {
   const freePort = await port.getFree()

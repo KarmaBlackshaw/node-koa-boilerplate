@@ -8,16 +8,16 @@ const path = require('path')
 const ROOT = process.cwd()
 
 moduleAlias.addAliases({
-  '@': path.join(ROOT),
-  '@utilities': path.join(ROOT, 'utilities'),
-  '@config': path.join(ROOT, 'config'),
-  '@bootstrap': path.join(ROOT, 'bootstrap'),
-  '@listeners': path.join(ROOT, 'listeners'),
-  '@jobs': path.join(ROOT, 'jobs'),
-  '@helpers': path.join(ROOT, 'helpers'),
-  '@constants': path.join(ROOT, 'constants'),
-  '@store': path.join(ROOT, 'services/store'),
-  '@middleware': path.join(ROOT, 'services', 'http', 'middleware')
+  '@': path.join(ROOT, 'src'),
+  '@utilities': path.join(ROOT, 'src', 'utilities'),
+  '@config': path.join(ROOT, 'src', 'config'),
+  '@bootstrap': path.join(ROOT, 'src', 'bootstrap'),
+  '@listeners': path.join(ROOT, 'src', 'listeners'),
+  '@jobs': path.join(ROOT, 'src', 'jobs'),
+  '@helpers': path.join(ROOT, 'src', 'helpers'),
+  '@constants': path.join(ROOT, 'src', 'constants'),
+  '@store': path.join(ROOT, 'src', 'services/store'),
+  '@middleware': path.join(ROOT, 'src', 'services', 'http', 'middleware')
 })
 
 module.exports = moduleAlias

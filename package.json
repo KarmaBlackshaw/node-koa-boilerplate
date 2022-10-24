@@ -16,6 +16,7 @@
     "generate:key": "node ./bin/key-generator.js",
     "generate:env": "node ./bin/env-generator.js",
     "generate:port": "node ./bin/get-free-port.js",
+    "prepare": "husky install",
     "release": "release-it"
   },
   "env": {
@@ -75,10 +76,12 @@
     "eslint": "^8.22.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.25.3",
+    "eslint-plugin-jest": "^27.1.1",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.3.1",
     "eslint-plugin-standard": "4.0.1",
     "faker": "^6.6.6",
+    "husky": "^8.0.1",
     "nodemon": "^2.0.19",
     "plop": "2.7.4",
     "pluralize": "^8.0.0",
