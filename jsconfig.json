@@ -9,6 +9,8 @@
       "@bootstrap/*": ["./bootstrap/*"],
       "@listeners/*": ["./listeners/*"],
       "@jobs/*": ["./jobs/*"],
+      "@helpers/*": ["./helpers/*"],
+      "@constants/*": ["./constants/*"],
       "@services/*": ["./services/*"],
       "@store/*": ["./store/*"],
       "@middleware/*": ["./services/http/middleware/*"]
