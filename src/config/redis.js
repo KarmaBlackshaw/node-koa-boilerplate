@@ -1,4 +1,6 @@
+// libs
 const redis = require('redis')
+const destr = require('destr')
 
 class Redis {
   constructor () {
@@ -48,6 +50,16 @@ class Redis {
       `${namespace}:${event}`,
       JSON.stringify(data)
     )
+  }
+
+  async get (key) {
+    const data = await this.client.get(key)
+
+    return destr(data)
+  }
+
+  async set (key, value) {
+    await this.client.set(key, JSON.stringify(value))
   }
 }
 

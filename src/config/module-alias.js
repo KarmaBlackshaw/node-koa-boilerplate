@@ -13,6 +13,7 @@ moduleAlias.addAliases({
   '@config': path.join(ROOT, 'src', 'config'),
   '@bootstrap': path.join(ROOT, 'src', 'bootstrap'),
   '@listeners': path.join(ROOT, 'src', 'listeners'),
+  '@constants': path.join(ROOT, 'src', 'constants'),
   '@jobs': path.join(ROOT, 'src', 'jobs'),
   '@store': path.join(ROOT, 'src', 'services/store'),
   '@middleware': path.join(ROOT, 'src', 'services', 'http', 'middleware')

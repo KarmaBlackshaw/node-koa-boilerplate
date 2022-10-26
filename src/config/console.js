@@ -12,6 +12,10 @@ const methods = [
     prefix: chalk.blue('[DEBUG]')
   },
   {
+    name: 'success',
+    prefix: chalk.green('[SUCCESS]')
+  },
+  {
     name: 'warn',
     prefix: chalk.yellow('[WARN]')
   },
@@ -22,6 +26,10 @@ const methods = [
   {
     name: 'deprecate',
     prefix: chalk.red('[DEPRECATED]')
+  },
+  {
+    name: 'info',
+    prefix: chalk.white('[INFO]')
   },
   {
     name: 'log'
