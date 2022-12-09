@@ -27,8 +27,6 @@ async function getRoutes () {
       router: koaRouter()
     })
 
-    console.log(route)
-
     router.use(route.routes())
   })
 

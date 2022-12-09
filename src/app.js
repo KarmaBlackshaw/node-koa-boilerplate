@@ -20,8 +20,8 @@ module.exports = (async () => {
 
     const server = await require('@bootstrap/http')()
 
-    console.log(`Socket running at: \t${chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)}`)
     console.log(`App running at: \t\t${chalk.cyan(`http://localhost:${process.env.APP_PORT}`)}`)
+    console.log(`Socket running at: \t${chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)}`)
 
     return {
       server
