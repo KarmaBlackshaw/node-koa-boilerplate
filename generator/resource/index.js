@@ -37,15 +37,21 @@ module.exports = plop => {
     actions: [
       {
         type: 'add',
-        path: '../../src/services/store/{{ pluralKebabCase name }}.js',
-        templateFile: './templates/store.hbs',
+        path: '../../src/modules/{{ kebabCase name }}/controller.js',
+        templateFile: './templates/controller.hbs',
         skipIfExists: false
       },
       {
         type: 'add',
-        path: '../../src/services/http/routes/{{ pluralKebabCase name }}.js',
-        templateFile: './templates/handler.hbs',
-        skipIfExists: true
+        path: '../../src/modules/{{ kebabCase name }}/route.js',
+        templateFile: './templates/route.hbs',
+        skipIfExists: false
+      },
+      {
+        type: 'add',
+        path: '../../src/modules/{{ kebabCase name }}/service.js',
+        templateFile: './templates/service.hbs',
+        skipIfExists: false
       }
     ]
   })

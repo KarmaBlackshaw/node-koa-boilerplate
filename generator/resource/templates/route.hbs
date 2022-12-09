@@ -1,0 +1,13 @@
+// controllers
+const {{camelCase name}}Controller = require('@modules/user/controller')
+
+module.exports = ({ router }) => router
+  .prefix('/{{ pluralKebabCase name }}')
+
+  .get('/all', {{camelCase name}}Controller.list)
+
+  .get('/find', {{camelCase name}}Controller.find)
+
+  .patch('/', {{camelCase name}}Controller.patch)
+
+  .delete('/', {{camelCase name}}Controller.delete)

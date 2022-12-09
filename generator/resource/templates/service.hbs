@@ -27,7 +27,7 @@ module.exports = {
     const dateDictionary = {}
 
     try {
-      const list = await knex('tests')
+      const list = await knex('{{pluralSnakeCase name}}')
         .meta({
           ...{ filterBy, q, filterDictionary },
           ...{ sortBy, sort, sortDictionary },
@@ -42,15 +42,15 @@ module.exports = {
 
           if (isCount) {
             this
-              .count({ total: 'tests.id' })
+              .count({ total: '{{pluralSnakeCase name}}.id' })
               .first()
           } else {
             this.select({
-              id: 'tests.id',
-              login_id: 'tests.login_id',
-              login_name: 'tests.login_name',
-              amount: 'tests.amount',
-              created_at: 'tests.created_at'
+              id: '{{pluralSnakeCase name}}.id',
+              login_id: '{{pluralSnakeCase name}}.login_id',
+              login_name: '{{pluralSnakeCase name}}.login_name',
+              amount: '{{pluralSnakeCase name}}.amount',
+              created_at: '{{pluralSnakeCase name}}.created_at'
             })
           }
         })
@@ -87,7 +87,7 @@ module.exports = {
     ]
 
     try {
-      const [id] = await knex('tests')
+      const [id] = await knex('{{pluralSnakeCase name}}')
         .metaInsert(payload, fillables)
 
       return id
@@ -100,10 +100,10 @@ module.exports = {
   async modify (id, payload) {
     try {
       const dictionary = {
-        foo: 'tests.foo'
+        foo: '{{pluralSnakeCase name}}.foo'
       }
 
-      await knex({ tbl: 'tests' })
+      await knex('{{pluralSnakeCase name}}')
         .where('tbl.id', id)
         .metaUpdate(payload, dictionary)
     } catch (error) {
