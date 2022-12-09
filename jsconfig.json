@@ -3,11 +3,10 @@
     "baseUrl": "./",
     "module": "commonjs",
     "paths": {
-      "@root/*": ["./src/*"],
       "@utilities/*": ["./src/utilities/*"],
       "@config/*": ["./src/config/*"],
       "@bootstrap/*": ["./src/bootstrap/*"],
-      "@middleware/*": ["src/middleware/*"],
+      "@middleware/*": ["./src/middleware/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@constants/*": ["./src/constants/*"],
       "@modules/*": ["./src/modules/*"]

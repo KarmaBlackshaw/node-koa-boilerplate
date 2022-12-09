@@ -7,15 +7,22 @@ const path = require('path')
 // constants
 const ROOT = process.cwd()
 
-moduleAlias.addAliases({
-  '@': path.join(ROOT, 'src'),
-  '@utilities': path.join(ROOT, 'src', 'utilities'),
-  '@config': path.join(ROOT, 'src', 'config'),
-  '@modules': path.join(ROOT, 'src', 'modules'),
-  '@bootstrap': path.join(ROOT, 'src', 'bootstrap'),
-  '@constants': path.join(ROOT, 'src', 'constants'),
-  '@jobs': path.join(ROOT, 'src', 'jobs'),
-  '@middleware': path.join(ROOT, 'src', 'middleware')
-})
+const jsconfig = require('../../jsconfig.json')
+
+const aliases = Object.entries(jsconfig.compilerOptions.paths)
+  .reduce((acc, entry) => {
+    const name = entry[0]
+      .replace(/\/\*$$/, '')
+
+    const directory = entry[1][0]
+      .replace(/(?:\.\/)(.+?)(?:\/\*)/g, '$1')
+
+    return {
+      ...acc,
+      [name]: path.join(ROOT, ...directory.split('/'))
+    }
+  }, {})
+
+moduleAlias.addAliases(aliases)
 
 module.exports = moduleAlias
