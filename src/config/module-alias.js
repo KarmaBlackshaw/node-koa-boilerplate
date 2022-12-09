@@ -11,12 +11,11 @@ moduleAlias.addAliases({
   '@': path.join(ROOT, 'src'),
   '@utilities': path.join(ROOT, 'src', 'utilities'),
   '@config': path.join(ROOT, 'src', 'config'),
+  '@modules': path.join(ROOT, 'src', 'modules'),
   '@bootstrap': path.join(ROOT, 'src', 'bootstrap'),
-  '@listeners': path.join(ROOT, 'src', 'listeners'),
   '@constants': path.join(ROOT, 'src', 'constants'),
   '@jobs': path.join(ROOT, 'src', 'jobs'),
-  '@store': path.join(ROOT, 'src', 'services/store'),
-  '@middleware': path.join(ROOT, 'src', 'services', 'http', 'middleware')
+  '@middleware': path.join(ROOT, 'src', 'middleware')
 })
 
 module.exports = moduleAlias

@@ -12,10 +12,6 @@ const methods = [
     prefix: chalk.blue('[DEBUG]')
   },
   {
-    name: 'success',
-    prefix: chalk.green('[SUCCESS]')
-  },
-  {
     name: 'warn',
     prefix: chalk.yellow('[WARN]')
   },
@@ -28,8 +24,7 @@ const methods = [
     prefix: chalk.red('[DEPRECATED]')
   },
   {
-    name: 'info',
-    prefix: chalk.white('[INFO]')
+    name: 'raw'
   },
   {
     name: 'log'
@@ -39,7 +34,7 @@ const methods = [
 methods.forEach(method => {
   const originalLoggingMethod = console[method.name] || console.log
 
-  console[method.name] = (firstArgument, ...otherArguments) => {
+  console[method.name] = (...otherArguments) => {
     const originalPrepareStackTrace = Error.prepareStackTrace
     Error.prepareStackTrace = (_, stack) => stack
     const callee = new Error().stack[1]
@@ -47,12 +42,10 @@ methods.forEach(method => {
 
     const filename = path.relative(CWD, callee.getFileName())
     const source = chalk.cyan.underline(`${filename}:${callee.getLineNumber()}:`)
-    const sourceAndPrefix = [source, method.prefix].join(' ').trim()
+    const sourceAndPrefix = method.name === 'raw'
+      ? ''
+      : [source, method.prefix].join(' ').trim()
 
-    if (typeof firstArgument === 'string') {
-      originalLoggingMethod(sourceAndPrefix + ' ' + firstArgument, ...otherArguments)
-    } else {
-      originalLoggingMethod(sourceAndPrefix, firstArgument, ...otherArguments)
-    }
+    originalLoggingMethod(sourceAndPrefix, ...otherArguments)
   }
 })

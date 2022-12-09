@@ -2,8 +2,9 @@
 const Koa = require('koa')
 const koaRouter = require('koa-router')
 const cors = require('@koa/cors')
+const morgan = require('koa-morgan')
 const Promise = require('bluebird')
-const minimatch = require('minimatch')
+const glob = Promise.promisify(require('glob'))
 
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
@@ -14,48 +15,33 @@ const koaStatic = require('@middleware/koa-static')
 // instances
 const app = new Koa()
 
-// helpers
 async function getRoutes () {
-  const exclude = [
-    '_*',
-    '.*',
-    '*.md'
-  ]
-
   const router = koaRouter()
+  const routePaths = await glob('src/modules/**/route.js', {
+    cwd: process.cwd(),
+    absolute: true
+  })
 
-  const dir = [process.cwd(), 'src', 'services', 'http', 'handlers']
-  const files = await fs.readdirAsync(path.join(...dir))
+  routePaths.forEach(routePath => {
+    const route = require(routePath)({
+      router: koaRouter()
+    })
 
-  files.forEach(file => {
-    const isExcluded = exclude.some(glob => !!minimatch(file, glob))
+    console.log(route)
 
-    if (isExcluded) {
-      return
-    }
-
-    try {
-      const endpoint = require(path.join(...dir, file))({
-        router: koaRouter()
-      })
-
-      router.use(endpoint.routes())
-    } catch (err) {
-      console.log(err)
-      throw new Error(`Failed on http/handlers/${file}`)
-    }
+    router.use(route.routes())
   })
 
   return router
 }
 
 async function getMiddlewares () {
-  const dir = [process.cwd(), '/src/services/http/middleware']
+  const dir = [process.cwd(), '/src/middleware']
   const files = await fs.readdirAsync(path.join(...dir))
 
   return files
     .filter(file => {
-      return (/^_/).test(file)
+      return (/^app-/).test(file)
     })
     .map(file => {
       return require(path.join(...dir, file))
@@ -68,18 +54,21 @@ module.exports = async () => {
 
   app.proxy = true
 
-  app.use(cors())
-  app.use(router.allowedMethods())
-
   /**
    * Middlewares
    */
+  app.use(cors())
+  app.use(morgan('dev'))
+  app.use(router.allowedMethods())
   middlewares.forEach(middleware => app.use(middleware()))
   app.use(koaStatic('/public', '/storage/app/public'))
 
+  /**
+   * Routes
+   */
   app.use(router.routes())
 
-  app.listen(process.env.APP_PORT || '4000')
+  app.listen(process.env.APP_PORT)
 
   return app
 }

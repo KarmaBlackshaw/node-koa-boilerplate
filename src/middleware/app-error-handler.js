@@ -5,12 +5,16 @@ module.exports = () => {
     try {
       await next()
     } catch (error) {
+      console.log(error.stack)
+
       logger.error(error)
+
       ctx.status = error.status || 500
       ctx.body = {
+        status: ctx.status,
         name: error.name,
-        message: error.message,
-        params: error.params
+        msg: error.message,
+        errors: error.body
       }
     }
   }

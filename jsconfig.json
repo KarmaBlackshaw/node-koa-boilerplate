@@ -11,9 +11,10 @@
       "@jobs/*": ["./src/jobs/*"],
       "@services/*": ["./src/services/*"],
       "@store/*": ["./src/store/*"],
-      "@middleware/*": ["./src/services/http/middleware/*"],
+      "@middleware/*": ["src/middleware/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@constants/*": ["./src/constants/*"],
+      "@modules/*": ["./src/modules/*"]
     }
   },
   "exclude": ["node_modules"]

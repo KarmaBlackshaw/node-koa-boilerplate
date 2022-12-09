@@ -11,37 +11,27 @@ module.exports = ({ router }) => router
   .prefix('/{{ pluralKebabCase name }}')
 
   .get('/', async ctx => {
-    try {
-      const query = ctx.request.query
-      const params = {
-        ...createSearchQuery(query)
-      }
-
-      const list = await {{ pluralPascalCase name }}.list({
-        ...params
-      })
-
-      const total = await {{ pluralPascalCase name }}.list({
-        ...params,
-        is_count: true
-      })
-
-      ctx.body = { total, list }
-    } catch (error) {
-      console.log(error)
-      ctx.throw(error)
+    const query = ctx.request.query
+    const params = {
+      ...createSearchQuery(query)
     }
+
+    const list = await {{ pluralPascalCase name }}.list({
+      ...params
+    })
+
+    const total = await {{ pluralPascalCase name }}.list({
+      ...params,
+      is_count: true
+    })
+
+    ctx.body = { total, list }
   })
 
   .get('/find', async ctx => {
-    try {
-      ctx.body = await {{ pluralPascalCase name }}.find(ctx.request.query)
+    ctx.body = await {{ pluralPascalCase name }}.find(ctx.request.query)
 
-      ctx.status = 200
-    } catch (error) {
-      console.log(error)
-      ctx.throw(error)
-    }
+    ctx.status = 200
   })
 
   .post('/', async ctx => {
@@ -54,18 +44,13 @@ module.exports = ({ router }) => router
         .required()
     })
 
-    try {
-      const request = await schema.validateAsync(ctx.request.body)
+    const request = await schema.validateAsync(ctx.request.body)
 
-      ctx.body = await {{ pluralPascalCase name }}.store({
-        start_date: request.start_date,
-        end_date: request.end_date,
-        profit: request.profit
-      })
-    } catch (error) {
-      console.log(error)
-      ctx.throw(error)
-    }
+    ctx.body = await {{ pluralPascalCase name }}.store({
+      start_date: request.start_date,
+      end_date: request.end_date,
+      profit: request.profit
+    })
   })
 
   .patch('/', async ctx => {
@@ -74,14 +59,9 @@ module.exports = ({ router }) => router
         .required()
     })
 
-    try {
-      const data = await schema.validateAsync(ctx.request.body)
+    const data = await schema.validateAsync(ctx.request.body)
 
-      ctx.body = await {{ pluralPascalCase name }}.modify(data.id, {})
-    } catch (error) {
-      console.log(error)
-      ctx.throw(error)
-    }
+    ctx.body = await {{ pluralPascalCase name }}.modify(data.id, {})
   })
 
   .delete('/', async ctx => {
@@ -90,16 +70,11 @@ module.exports = ({ router }) => router
         .required()
     })
 
-    try {
-      const data = await schema.validateAsync(ctx.request.body)
+    const data = await schema.validateAsync(ctx.request.body)
 
-      await {{ pluralPascalCase name }}.modify(data.id, {
-        deleted_at: new Date()
-      })
+    await {{ pluralPascalCase name }}.modify(data.id, {
+      deleted_at: new Date()
+    })
 
-      ctx.status = 200
-    } catch (error) {
-      console.log(error)
-      ctx.throw(error)
-    }
+    ctx.status = 200
   })

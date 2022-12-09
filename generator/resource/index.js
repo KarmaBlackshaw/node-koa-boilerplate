@@ -12,7 +12,7 @@ module.exports = plop => {
         type: 'input',
         name: 'name',
         message: 'Generate module:',
-        validate: function (input) {
+        validate (input) {
           if (isNaN(input)) {
             return true
           }
@@ -43,7 +43,7 @@ module.exports = plop => {
       },
       {
         type: 'add',
-        path: '../../src/services/http/handlers/{{ pluralKebabCase name }}.js',
+        path: '../../src/services/http/routes/{{ pluralKebabCase name }}.js',
         templateFile: './templates/handler.hbs',
         skipIfExists: true
       }

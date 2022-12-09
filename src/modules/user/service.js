@@ -2,8 +2,7 @@
 const knex = require('@config/knex')
 
 // libs
-const _get = require('lodash/get')
-const _first = require('lodash/first')
+const _ = require('lodash')
 
 const { createFindArguments } = require('@utilities/knex-helper')
 
@@ -57,7 +56,7 @@ module.exports = {
         })
 
       if (isCount) {
-        return _get(list, 'total', 0)
+        return _.get(list, 'total', 0)
       }
 
       return list
@@ -74,7 +73,7 @@ module.exports = {
         is_find: true
       })
 
-      return _first(data)
+      return _.first(data)
     } catch (error) {
       console.log(error)
       throw error
