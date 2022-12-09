@@ -9,22 +9,21 @@ const Joi = require('joi')
 
 module.exports = {
   async list (ctx) {
-    ctx.body = '123213'
-    // const query = ctx.request.query
-    // const params = {
-    //   ...createSearchQuery(query)
-    // }
+    const query = ctx.request.query
+    const params = {
+      ...createSearchQuery(query)
+    }
 
-    // const list = await userService.list({
-    //   ...params
-    // })
+    const list = await userService.list({
+      ...params
+    })
 
-    // const total = await userService.list({
-    //   ...params,
-    //   is_count: true
-    // })
+    const total = await userService.list({
+      ...params,
+      is_count: true
+    })
 
-    // ctx.body = { total, list }
+    ctx.body = { total, list }
   },
 
   async find (ctx) {
