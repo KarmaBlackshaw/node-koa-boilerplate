@@ -1,31 +1,19 @@
 // libs
 const Promise = require('bluebird')
-const minimatch = require('minimatch')
-
-const fs = Promise.promisifyAll(require('fs'))
-const path = require('path')
-
-const exclude = [
-  '_*',
-  '.*',
-  '*.md'
-]
+const glob = Promise.promisify(require('glob'))
 
 module.exports = async () => {
-  const files = await fs.readdirAsync(path.join(__dirname, '..', 'jobs'))
+  const jobs = await glob('src/jobs/*.js', {
+    cwd: process.cwd(),
+    absolute: true
+  })
 
-  files.forEach(file => {
+  jobs.forEach(path => {
     try {
-      const isExcluded = exclude.some(glob => !!minimatch(file, glob))
-
-      if (isExcluded) {
-        return
-      }
-
-      require(path.join(__dirname, '..', 'jobs', file))
+      require(path)
     } catch (error) {
       console.log(error)
-      throw new Error(`Error on file jobs/${file}`)
+      throw new Error(`Error on file ${path}`)
     }
   })
 }
