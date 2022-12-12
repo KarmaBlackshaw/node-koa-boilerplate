@@ -6,9 +6,6 @@ const morgan = require('koa-morgan')
 const Promise = require('bluebird')
 const glob = Promise.promisify(require('glob'))
 
-const fs = Promise.promisifyAll(require('fs'))
-const path = require('path')
-
 // middlewares
 const koaStatic = require('@middleware/koa-static')
 
@@ -34,16 +31,12 @@ async function getRoutes () {
 }
 
 async function getMiddlewares () {
-  const dir = [process.cwd(), '/src/middleware']
-  const files = await fs.readdirAsync(path.join(...dir))
+  const middlewares = await glob('src/middleware/app-*.js', {
+    cwd: process.cwd(),
+    absolute: true
+  })
 
-  return files
-    .filter(file => {
-      return (/^app-/).test(file)
-    })
-    .map(file => {
-      return require(path.join(...dir, file))
-    })
+  return middlewares.map(path => require(path))
 }
 
 module.exports = async () => {
