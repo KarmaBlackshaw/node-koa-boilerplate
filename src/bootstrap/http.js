@@ -9,9 +9,6 @@ const glob = Promise.promisify(require('glob'))
 // middlewares
 const koaStatic = require('@middleware/koa-static')
 
-// instances
-const app = new Koa()
-
 async function getRoutes () {
   const router = koaRouter()
   const routePaths = await glob('src/modules/**/route.js', {
@@ -42,6 +39,8 @@ async function getMiddlewares () {
 module.exports = async () => {
   const router = await getRoutes()
   const middlewares = await getMiddlewares()
+
+  const app = new Koa()
 
   app.proxy = true
 
