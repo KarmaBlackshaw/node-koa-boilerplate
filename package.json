@@ -37,7 +37,6 @@
   "dependencies": {
     "@jeash/knex-meta": "^1.2.8",
     "@koa/cors": "2.2.2",
-    "aws-sdk": "2.900.0",
     "axios": "^0.27.2",
     "bcryptjs": "2.4.3",
     "bluebird": "3.5.2",
@@ -57,7 +56,6 @@
     "koa-static": "^5.0.0",
     "koa2-formidable": "^1.0.3",
     "lodash": "^4.17.21",
-    "minimatch": "3.0.4",
     "module-alias": "2.2.2",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.37",
@@ -80,7 +78,7 @@
     "faker": "^6.6.6",
     "husky": "^8.0.1",
     "nodemon": "^2.0.19",
-    "plop": "2.7.4",
+    "plop": "^3.1.1",
     "pluralize": "^8.0.0",
     "release-it": "^15.2.0"
   }
