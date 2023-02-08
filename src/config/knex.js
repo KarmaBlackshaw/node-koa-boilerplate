@@ -27,6 +27,20 @@ module.exports = knex({
     database: process.env.DB_NAME || '',
     port: process.env.DB_PORT || 3306,
 
-    dateStrings: true
+    dateStrings: true,
+
+    typeCast (field, next) {
+      try {
+        if (field.type === 'JSON') {
+          const string = field.string()
+
+          return string && JSON.parse(string)
+        }
+
+        return next()
+      } catch (err) {
+        console.log(err)
+      }
+    }
   }
 })
