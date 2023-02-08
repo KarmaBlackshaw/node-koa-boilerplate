@@ -12,7 +12,7 @@ const {
   makeUniq,
   removeDuplicateSlash,
   joinPaths
-} = require('@utilities/string')
+} = require('@utilities/helpers')
 
 // config
 const s3 = require('@config/s3')
