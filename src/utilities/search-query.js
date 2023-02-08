@@ -1,10 +1,10 @@
-const _castArray = require('lodash/castArray')
+const _ = require('lodash')
 
 function createSearchQuery (query) {
   const toArrayIfExists = key => {
     const keyQuery = query[`${key}[]`] || query[key]
 
-    return keyQuery && _castArray(keyQuery)
+    return keyQuery && _.castArray(keyQuery)
   }
 
   return {
