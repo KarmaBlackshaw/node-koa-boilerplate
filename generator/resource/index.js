@@ -52,6 +52,12 @@ module.exports = plop => {
         path: '../../src/resources/{{ kebabCase name }}/service.js',
         templateFile: './templates/service.hbs',
         skipIfExists: false
+      },
+      {
+        type: 'add',
+        path: '../../src/resources/{{ kebabCase name }}/helpers.js',
+        templateFile: './templates/helpers.hbs',
+        skipIfExists: false
       }
     ]
   })
