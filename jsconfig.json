@@ -9,7 +9,7 @@
       "@middleware/*": ["./src/middleware/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@constants/*": ["./src/constants/*"],
-      "@modules/*": ["./src/modules/*"]
+      "@resources/*": ["./src/resources/*"]
     }
   },
   "exclude": ["node_modules"]
