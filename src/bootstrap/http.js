@@ -11,7 +11,7 @@ const koaStatic = require('@middleware/koa-static')
 
 async function getRoutes () {
   const router = koaRouter()
-  const routePaths = await glob('src/modules/**/route.js', {
+  const routePaths = await glob('src/resources/**/route.js', {
     cwd: process.cwd(),
     absolute: true
   })
