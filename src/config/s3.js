@@ -8,6 +8,4 @@ AWS.config.update({
   region: process.env.AWS_REGION
 })
 
-S3.config.update({ credentials: AWS.config.credentials })
-
 module.exports = S3
