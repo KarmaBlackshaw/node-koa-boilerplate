@@ -2,15 +2,11 @@ const knex = require('knex')
 const knexMeta = require('@jeash/knex-meta')
 
 const utils = [
-  knexMeta.metaDate,
-  knexMeta.metaFilter,
-  knexMeta.metaPage,
-  knexMeta.metaSort,
-  knexMeta.meta,
   knexMeta.bulkUpdate,
   knexMeta.jsonObject,
   knexMeta.metaUpdate,
-  knexMeta.metaInsert
+  knexMeta.metaInsert,
+  knexMeta.metaQuery
 ]
 
 utils.forEach(extension => {
