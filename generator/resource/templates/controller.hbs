@@ -1,25 +1,19 @@
-// utilities
-const { createSearchQuery } = require('@utilities/search-query')
-
 // services
-const {{camelCase name}}Service = require('@modules/{{camelCase name}}/service')
+const {{camelCase name}}Service = require('@resources/{{camelCase name}}/service')
 
 // libraries
 const Joi = require('joi')
 
 module.exports = {
   async list (ctx) {
-    const query = ctx.request.query
-    const params = {
-      ...createSearchQuery(query)
-    }
+    const body = ctx.request.body
 
     const list = await {{camelCase name}}Service.list({
-      ...params
+      ...body
     })
 
     const total = await {{camelCase name}}Service.list({
-      ...params,
+      ...body,
       is_count: true
     })
 

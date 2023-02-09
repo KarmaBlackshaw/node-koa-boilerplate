@@ -1,10 +1,10 @@
 // controllers
-const {{camelCase name}}Controller = require('@modules/user/controller')
+const {{camelCase name}}Controller = require('@resources/{{ pluralKebabCase name }}/controller')
 
 module.exports = ({ router }) => router
   .prefix('/{{ pluralKebabCase name }}')
 
-  .get(
+  .post(
     '/all',
     {{camelCase name}}Controller.list
   )

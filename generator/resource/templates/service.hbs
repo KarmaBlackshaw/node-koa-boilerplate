@@ -8,33 +8,15 @@ const { createFindArguments } = require('@utilities/knex-helper')
 
 module.exports = {
   async list ({
-    filter_by: filterBy,
-    q,
-    sort_by: sortBy,
-    sort,
-    page,
-    rows,
+    query,
     is_count: isCount,
-    date_by: dateBy,
-    date_from: dateFrom,
-    date_to: dateTo,
     is_find: isFind
   } = {}) {
-    const filterDictionary = {}
-
-    const sortDictionary = {}
-
-    const dateDictionary = {}
+    const fields = {}
 
     try {
       const list = await knex('{{pluralSnakeCase name}}')
-        .meta({
-          ...{ filterBy, q, filterDictionary },
-          ...{ sortBy, sort, sortDictionary },
-          ...{ dateBy, dateFrom, dateTo, dateDictionary },
-          ...{ page, rows },
-          isCount
-        })
+        .metaQuery(query, fields)
         .modify(function () {
           if (isFind) {
             this.limit(1)
