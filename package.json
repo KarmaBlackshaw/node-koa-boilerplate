@@ -35,7 +35,7 @@
   "author": "Ernie Jeash",
   "license": "ISC",
   "dependencies": {
-    "@jeash/knex-meta": "^1.2.8",
+    "@jeash/knex-meta": "^1.3.2",
     "@koa/cors": "2.2.2",
     "axios": "^0.27.2",
     "bcryptjs": "2.4.3",
