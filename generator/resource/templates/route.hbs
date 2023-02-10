@@ -6,20 +6,20 @@ module.exports = ({ router }) => router
 
   .post(
     '/all',
-    {{camelCase name}}Controller.list
+    {{ camelCase name }}Controller.list
   )
 
-  .get(
+  .post(
     '/find',
-    {{camelCase name}}Controller.find
+    {{ camelCase name }}Controller.find
   )
 
   .patch(
     '/',
-    {{camelCase name}}Controller.patch
+    {{ camelCase name }}Controller.patch
   )
 
   .delete(
     '/',
-    {{camelCase name}}Controller.delete
+    {{ camelCase name }}Controller.delete
   )

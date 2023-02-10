@@ -12,14 +12,14 @@ module.exports = {
   } = {}) {
     const fields = {
       id: {
-        column: '{{pluralSnakeCase name}}.id',
+        column: '{{ pluralSnakeCase name }}.id',
         filterable: true,
         sortable: true
       }
     }
 
     try {
-      const list = await knex('{{pluralSnakeCase name}}')
+      const list = await knex('{{ pluralSnakeCase name }}')
         .metaQuery(query, fields)
         .modify(function () {
           if (isFind) {
@@ -28,15 +28,15 @@ module.exports = {
 
           if (isCount) {
             this
-              .count({ total: '{{pluralSnakeCase name}}.id' })
+              .count({ total: '{{ pluralSnakeCase name }}.id' })
               .first()
           } else {
             this.select({
-              id: '{{pluralSnakeCase name}}.id',
-              login_id: '{{pluralSnakeCase name}}.login_id',
-              login_name: '{{pluralSnakeCase name}}.login_name',
-              amount: '{{pluralSnakeCase name}}.amount',
-              created_at: '{{pluralSnakeCase name}}.created_at'
+              id: '{{ pluralSnakeCase name }}.id',
+              login_id: '{{ pluralSnakeCase name }}.login_id',
+              login_name: '{{ pluralSnakeCase name }}.login_name',
+              amount: '{{ pluralSnakeCase name }}.amount',
+              created_at: '{{ pluralSnakeCase name }}.created_at'
             })
           }
         })
@@ -70,7 +70,7 @@ module.exports = {
     ]
 
     try {
-      const [id] = await knex('{{pluralSnakeCase name}}')
+      const [id] = await knex('{{ pluralSnakeCase name }}')
         .metaInsert(payload, fillables)
 
       return id
@@ -83,10 +83,10 @@ module.exports = {
   async modify (id, payload) {
     try {
       const dictionary = {
-        foo: '{{pluralSnakeCase name}}.foo'
+        foo: '{{ pluralSnakeCase name }}.foo'
       }
 
-      await knex('{{pluralSnakeCase name}}')
+      await knex('{{ pluralSnakeCase name }}')
         .where('tbl.id', id)
         .metaUpdate(payload, dictionary)
     } catch (error) {
