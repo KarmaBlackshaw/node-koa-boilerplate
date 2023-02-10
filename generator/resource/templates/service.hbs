@@ -4,8 +4,6 @@ const knex = require('@config/knex')
 // libs
 const _ = require('lodash')
 
-const { createFindArguments } = require('@utilities/knex-helper')
-
 module.exports = {
   async list ({
     query,
@@ -54,12 +52,9 @@ module.exports = {
     }
   },
 
-  async find (conditions) {
+  async find (query) {
     try {
-      const data = await this.list({
-        ...createFindArguments(conditions),
-        is_find: true
-      })
+      const data = await this.list({ query, is_find: true})
 
       return _.first(data)
     } catch (error) {
