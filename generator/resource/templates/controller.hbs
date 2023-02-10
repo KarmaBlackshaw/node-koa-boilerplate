@@ -1,5 +1,5 @@
 // services
-const {{ camelCase name }}Service = require('@resources/{{ kebabCase name }}/service')
+const {{camelCase name}}Service = require('@resources/{{kebabCase name}}/service')
 
 // libraries
 const Joi = require('joi')
@@ -8,14 +8,10 @@ module.exports = {
   async list (ctx) {
     const body = ctx.request.body
 
-    const list = await {{camelCase name}}Service.list({
-      ...body
-    })
-
-    const total = await {{camelCase name}}Service.list({
-      ...body,
-      is_count: true
-    })
+    const [list, total] = await Promise.all([
+      {{camelCase name}}Service.list({ ...body }),
+      {{camelCase name}}Service.list({ ...body, is_count: true })
+    ])
 
     ctx.body = { total, list }
   },
@@ -27,14 +23,7 @@ module.exports = {
   },
 
   async store (ctx) {
-    const schema = Joi.object({
-      start_date: Joi.date()
-        .optional(),
-      end_date: Joi.date()
-        .optional(),
-      profit: Joi.number()
-        .required()
-    })
+    const schema = Joi.object({})
 
     const request = await schema.validateAsync(ctx.request.body)
 
@@ -46,10 +35,7 @@ module.exports = {
   },
 
   async patch (ctx) {
-    const schema = Joi.object({
-      id: Joi.number()
-        .required()
-    })
+    const schema = Joi.object({})
 
     const data = await schema.validateAsync(ctx.request.body)
 
