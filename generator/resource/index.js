@@ -39,25 +39,29 @@ module.exports = plop => {
         type: 'add',
         path: '../../src/resources/{{ kebabCase name }}/controller.js',
         templateFile: './templates/controller.hbs',
-        skipIfExists: false
+        skipIfExists: false,
+        force: true
       },
       {
         type: 'add',
         path: '../../src/resources/{{ kebabCase name }}/route.js',
         templateFile: './templates/route.hbs',
-        skipIfExists: false
+        skipIfExists: false,
+        force: true
       },
       {
         type: 'add',
         path: '../../src/resources/{{ kebabCase name }}/service.js',
         templateFile: './templates/service.hbs',
-        skipIfExists: false
+        skipIfExists: false,
+        force: true
       },
       {
         type: 'add',
         path: '../../src/resources/{{ kebabCase name }}/helpers.js',
         templateFile: './templates/helpers.hbs',
-        skipIfExists: false
+        skipIfExists: false,
+        force: true
       }
     ]
   })

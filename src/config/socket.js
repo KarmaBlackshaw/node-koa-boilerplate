@@ -1,6 +1,6 @@
 // libs
 const { Server } = require('socket.io')
-const _capitalize = require('lodash/capitalize')
+const _ = require('lodash')
 
 // config
 const redis = require('@config/redis')
@@ -21,7 +21,7 @@ class Socket {
     })
 
     this.namespaces.forEach(namespace => {
-      this[`ns${_capitalize(namespace)}`] = this.client.of(namespace)
+      this[`ns${_.capitalize(namespace)}`] = this.client.of(namespace)
     })
 
     await this.listenToRedis()
@@ -41,7 +41,7 @@ class Socket {
       const event = channelArray[2]
 
       if (this.namespaces.has(namespace)) {
-        this[`ns${_capitalize(namespace)}`].emit(event, message)
+        this[`ns${_.capitalize(namespace)}`].emit(event, message)
       }
     })
   }

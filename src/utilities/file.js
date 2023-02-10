@@ -1,7 +1,6 @@
 // libs
 const Promise = require('bluebird')
-const _toLower = require('lodash/toLower')
-const _defaults = require('lodash/defaults')
+const _ = require('lodash')
 
 // node core
 const fs = Promise.promisifyAll(require('fs'))
@@ -28,7 +27,7 @@ const directoryExists = directory => {
 
 const storeLocal = async (file, config = {}) => {
   try {
-    const options = _defaults(config, {
+    const options = _.defaults(config, {
       destination: process.env.STATIC_ASSET_PATH
     })
 
@@ -38,13 +37,9 @@ const storeLocal = async (file, config = {}) => {
       await fs.mkdirAsync(directory, { recursive: true })
     }
 
-    const extension = (() => {
-      const ext = _toLower(path.extname(file.name))
+    const extension = _.toLower(path.extname(file.name))
 
-      return ext === '.jpeg' ? '.jpg' : ext
-    })()
-
-    const name = _toLower(`${makeUniq()}${extension}`)
+    const name = _.toLower(`${makeUniq()}${extension}`)
 
     const fileDirectory = removeDuplicateSlash(joinPaths(directory, name))
 
@@ -58,17 +53,13 @@ const storeLocal = async (file, config = {}) => {
 }
 
 const storeBucket = async (file, config = {}) => {
-  const options = _defaults({
+  const options = _.defaults({
     bucket_name: process.env.AWS_BUCKET_NAME
   }, config)
 
-  const extension = (() => {
-    const ext = _toLower(path.extname(file.name))
+  const extension = _.toLower(path.extname(file.name))
 
-    return ext === '.jpeg' ? '.jpg' : ext
-  })()
-
-  const name = _toLower(`${makeUniq()}${extension}`)
+  const name = _.toLower(`${makeUniq()}${extension}`)
 
   const params = {
     Bucket: options.bucket_name,
