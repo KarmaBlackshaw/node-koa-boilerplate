@@ -17,7 +17,7 @@ module.exports = {
   },
 
   async find (ctx) {
-    ctx.body = await {{camelCase name}}Service.find(ctx.request.query)
+    ctx.body = await {{camelCase name}}Service.find(ctx.request.body)
 
     ctx.status = 200
   },

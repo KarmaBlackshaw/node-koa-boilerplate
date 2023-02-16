@@ -3,11 +3,13 @@ const knex = require('@config/knex')
 // libs
 const _ = require('lodash')
 
+// helpers
+const serviceHelper = require('@utilities/service-helper')
+
 module.exports = {
   async list ({
     query,
-    is_count: isCount,
-    is_find: isFind
+    is_count: isCount
   } = {}) {
     const fields = {
       id: {
@@ -21,21 +23,13 @@ module.exports = {
       const list = await knex('{{ pluralSnakeCase name }}')
         .metaQuery(query, fields)
         .modify(function () {
-          if (isFind) {
-            this.limit(1)
-          }
-
           if (isCount) {
             this
               .count({ total: '{{ pluralSnakeCase name }}.id' })
               .first()
           } else {
             this.select({
-              id: '{{ pluralSnakeCase name }}.id',
-              login_id: '{{ pluralSnakeCase name }}.login_id',
-              login_name: '{{ pluralSnakeCase name }}.login_name',
-              amount: '{{ pluralSnakeCase name }}.amount',
-              created_at: '{{ pluralSnakeCase name }}.created_at'
+              id: '{{ pluralSnakeCase name }}.id'
             })
           }
         })
@@ -51,9 +45,9 @@ module.exports = {
     }
   },
 
-  async find (query) {
+  async find (filter) {
     try {
-      const data = await this.list({ query, is_find: true})
+      const data = await this.list(serviceHelper.makeFindArguments(filter))
 
       return _.first(data)
     } catch (error) {

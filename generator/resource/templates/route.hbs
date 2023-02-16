@@ -5,7 +5,12 @@ module.exports = ({ router }) => router
   .prefix('/{{ pluralKebabCase name }}')
 
   .post(
-    '/all',
+    '/',
+    {{ camelCase name }}Controller.store
+  )
+
+  .post(
+    '/list',
     {{ camelCase name }}Controller.list
   )
 
