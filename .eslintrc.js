@@ -15,7 +15,6 @@ module.exports = {
   },
   parser: '@babel/eslint-parser',
   extends: ['standard', 'eslint:recommended'],
-  plugins: ['jest'],
   rules: {
     'no-multi-spaces': 'error',
     'no-await-in-loop': 'off',
