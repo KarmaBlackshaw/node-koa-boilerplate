@@ -12,7 +12,8 @@
     "generate:key": "node ./bin/key-generator.js",
     "generate:env": "node ./bin/env-generator.js",
     "generate:port": "node ./bin/get-free-port.js",
-    "release": "release-it"
+    "release": "release-it",
+    "prepare": "husky install"
   },
   "env": {
     "node": true
@@ -75,10 +76,14 @@
     "eslint-plugin-promise": "4.3.1",
     "eslint-plugin-standard": "4.0.1",
     "faker": "^6.6.6",
-    "husky": "^8.0.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
     "nodemon": "^2.0.20",
     "plop": "^3.1.2",
     "pluralize": "^8.0.0",
     "release-it": "^15.6.0"
+  },
+  "lint-staged": {
+    "*": "npm run test"
   }
 }
