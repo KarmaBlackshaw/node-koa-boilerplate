@@ -84,6 +84,6 @@
     "release-it": "^15.6.0"
   },
   "lint-staged": {
-    "*": "npm run test"
+    "*": "npm run lint"
   }
 }

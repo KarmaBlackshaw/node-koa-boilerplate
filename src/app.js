@@ -10,7 +10,7 @@ const chalk = require('chalk')
 require('./config/module-alias')
 require('@config/console')
 require('dotenv').config()
-
+const a = 'asdf'
 module.exports = (async () => {
   try {
     await require('@config/redis').start()
@@ -31,7 +31,3 @@ module.exports = (async () => {
     process.exit(1)
   }
 })()
-
-
-
-
