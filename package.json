@@ -13,7 +13,7 @@
     "generate:env": "node ./bin/env-generator.js",
     "generate:port": "node ./bin/get-free-port.js",
     "release": "release-it",
-    "prepare": "husky install"
+    "prepare": "npx simple-git-hooks"
   },
   "env": {
     "node": true
@@ -76,14 +76,17 @@
     "eslint-plugin-promise": "4.3.1",
     "eslint-plugin-standard": "4.0.1",
     "faker": "^6.6.6",
-    "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
     "nodemon": "^2.0.20",
     "plop": "^3.1.2",
     "pluralize": "^8.0.0",
-    "release-it": "^15.6.0"
+    "release-it": "^15.6.0",
+    "simple-git-hooks": "^2.8.1"
   },
   "lint-staged": {
-    "*": "npm run lint"
+    "*.{js,ts}": "npm run lint"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
   }
 }
