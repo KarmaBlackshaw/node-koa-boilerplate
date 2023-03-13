@@ -3,9 +3,6 @@ const knex = require('@config/knex')
 // libs
 const _ = require('lodash')
 
-// helpers
-const serviceHelper = require('@utilities/service-helper')
-
 module.exports = {
   async list ({
     query,
@@ -45,9 +42,9 @@ module.exports = {
     }
   },
 
-  async find (filter) {
+  async find (query) {
     try {
-      const data = await this.list(serviceHelper.makeFindArguments(filter))
+      const data = await this.list({ query })
 
       return _.first(data)
     } catch (error) {
