@@ -18,7 +18,7 @@ Another simple node-koa boilerplate
 - ⭐ Mysql
 - 📃 Logs
 - ⛏ Utilities
-- 🐕‍🦺 Husky
+- 🐕‍🦺 Lint staged files only!
 
 ## Commands
 
