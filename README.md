@@ -12,14 +12,13 @@ Another simple node-koa boilerplate
 
 - 🚀 Auto import routes
 - 📂 Commands to generate routes, handlers, etc.
-- ✅ Validate env on boot
 - 🚦 Socket IO
 - ⚡ Redis
 - ⭐ Mysql
 - 📃 Logs
 - ⛏ Utilities
 - 🛠️ Knex Meta
-- 🐕‍🦺 Husky
+- 🐕‍🦺 Lint Staged
 
 ## Commands
 
