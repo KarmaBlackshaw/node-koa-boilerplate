@@ -11,6 +11,9 @@ require('./config/module-alias')
 require('@config/console')
 require('dotenv').config()
 
+// constants
+const env = require('@constants/env')
+
 module.exports = (async () => {
   try {
     await require('@config/redis').start()
@@ -20,8 +23,8 @@ module.exports = (async () => {
 
     const server = await require('@bootstrap/http')()
 
-    console.log(`App running at: \t\t${chalk.cyan(`http://localhost:${process.env.APP_PORT}`)}`)
-    console.log(`Socket running at: \t${chalk.cyan(`http://localhost:${process.env.SOCKET_PORT}`)}`)
+    console.log(`App running at: \t\t${chalk.cyan(`http://localhost:${env.APP.PORT}`)}`)
+    console.log(`Socket running at: \t${chalk.cyan(`http://localhost:${env.SOCKET.PORT}`)}`)
 
     return {
       server

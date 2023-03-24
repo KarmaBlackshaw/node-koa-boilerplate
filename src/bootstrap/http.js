@@ -9,6 +9,9 @@ const glob = Promise.promisify(require('glob'))
 // middlewares
 const koaStatic = require('@middleware/koa-static')
 
+// constants
+const env = require('@constants/env')
+
 async function getRoutes () {
   const router = koaRouter()
   const routePaths = await glob('src/resources/**/route.js', {
@@ -17,11 +20,16 @@ async function getRoutes () {
   })
 
   routePaths.forEach(routePath => {
-    const route = require(routePath)({
-      router: koaRouter()
-    })
+    try {
+      const route = require(routePath)({
+        router: koaRouter()
+      })
 
-    router.use(route.routes())
+      router.use(route.routes())
+    } catch (error) {
+      console.log(`Something went wrong in ${routePath}`)
+      throw error
+    }
   })
 
   return router
@@ -58,7 +66,7 @@ module.exports = async () => {
    */
   app.use(router.routes())
 
-  app.listen(process.env.APP_PORT)
+  app.listen(env.APP.PORT)
 
   return app
 }

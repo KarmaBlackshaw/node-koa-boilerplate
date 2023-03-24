@@ -2,6 +2,8 @@
 const redis = require('redis')
 const destr = require('destr')
 
+// constants
+const env = require('@constants/env')
 class Redis {
   constructor () {
     this.client = null
@@ -21,7 +23,7 @@ class Redis {
     }
 
     const instance = redis.createClient({
-      url: `redis://@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`
+      url: `redis://@${env.REDIS.HOST}:${env.REDIS.PORT}`
     })
 
     await instance.connect()

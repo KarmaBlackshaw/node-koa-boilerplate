@@ -1,11 +1,14 @@
 const AWS = require('aws-sdk')
 
+// constants
+const env = require('@constants/env')
+
 const S3 = new AWS.S3()
 
 AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_KEY_ACCESS,
-  region: process.env.AWS_REGION
+  accessKeyId: env.AWS.ACCESS_KEY_ID,
+  secretAccessKey: env.AWS.SECRET_KEY_ACCESS,
+  region: env.AWS.REGION
 })
 
 module.exports = S3

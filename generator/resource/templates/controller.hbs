@@ -17,7 +17,10 @@ module.exports = {
   },
 
   async find (ctx) {
-    ctx.body = await {{camelCase name}}Service.find(ctx.request.body)
+    ctx.body = await {{camelCase name}}Service.list({
+      ...ctx.request.body,
+      is_find: true
+    })
 
     ctx.status = 200
   },
@@ -39,7 +42,7 @@ module.exports = {
 
     const data = await schema.validateAsync(ctx.request.body)
 
-    ctx.body = await {{camelCase name}}Service.modify(data.id, {})
+    ctx.body = await {{camelCase name}}Service.modify('id', data)
   },
 
   async delete (ctx) {
@@ -50,9 +53,7 @@ module.exports = {
 
     const data = await schema.validateAsync(ctx.request.body)
 
-    await {{camelCase name}}Service.modify(data.id, {
-      deleted_at: new Date()
-    })
+    await {{camelCase name}}Service.delete(data.id)
 
     ctx.status = 200
   }

@@ -5,6 +5,9 @@ const _ = require('lodash')
 // config
 const redis = require('@config/redis')
 
+// constants
+const env = require('@constants/env')
+
 class Socket {
   constructor () {
     this.client = null
@@ -15,7 +18,7 @@ class Socket {
   }
 
   async start () {
-    this.client = new Server(process.env.SOCKET_PORT, {
+    this.client = new Server(env.SOCKET.PORT, {
       transports: ['websocket', 'polling'],
       rejectUnauthorized: false
     })

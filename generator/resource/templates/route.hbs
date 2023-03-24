@@ -6,25 +6,30 @@ module.exports = ({ router }) => router
 
   .post(
     '/',
+    ctx => (ctx.status = 503),
     {{ camelCase name }}Controller.store
   )
 
   .post(
     '/list',
+    ctx => (ctx.status = 503),
     {{ camelCase name }}Controller.list
   )
 
   .post(
     '/find',
+    ctx => (ctx.status = 503),
     {{ camelCase name }}Controller.find
   )
 
   .patch(
     '/',
+    ctx => (ctx.status = 503),
     {{ camelCase name }}Controller.patch
   )
 
   .delete(
     '/',
+    ctx => (ctx.status = 503),
     {{ camelCase name }}Controller.delete
   )

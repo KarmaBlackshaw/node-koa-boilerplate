@@ -6,7 +6,8 @@ const _ = require('lodash')
 module.exports = {
   async list ({
     query,
-    is_count: isCount
+    is_count: isCount,
+    is_first: isFirst
   } = {}) {
     const fields = {
       id: {
@@ -35,18 +36,7 @@ module.exports = {
         return _.get(list, 'total', 0)
       }
 
-      return list
-    } catch (error) {
-      console.log(error)
-      throw error
-    }
-  },
-
-  async find (query) {
-    try {
-      const data = await this.list({ query })
-
-      return _.first(data)
+      return isFirst ? _.first(list) : list
     } catch (error) {
       console.log(error)
       throw error
@@ -54,14 +44,13 @@ module.exports = {
   },
 
   async store (payload) {
-    const fillables = [
-      'foo',
-      'bar'
-    ]
+    const options = {
+      fields: ['foo']
+    }
 
     try {
       const [id] = await knex('{{ pluralSnakeCase name }}')
-        .metaInsert(payload, fillables)
+        .metaInsert(payload, options)
 
       return id
     } catch (error) {
@@ -70,15 +59,32 @@ module.exports = {
     }
   },
 
-  async modify (id, payload) {
+  async modify (keys, payload) {
     try {
-      const dictionary = {
-        foo: '{{ pluralSnakeCase name }}.foo'
+      const options = {
+        fields: {
+          id: 'users.id',
+          name: 'users.name',
+          username: 'users.username'
+        },
+        else: {
+          name: 'foo'
+        }
       }
 
       await knex('{{ pluralSnakeCase name }}')
-        .where('tbl.id', id)
-        .metaUpdate(payload, dictionary)
+        .metaUpdate(keys, payload, options)
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  },
+
+  async delete (ids) {
+    try {
+      await knex('{{ pluralSnakeCase name }}')
+        .whereIn('id', _.castArray(ids))
+        .del()
     } catch (error) {
       console.log(error)
       throw error
