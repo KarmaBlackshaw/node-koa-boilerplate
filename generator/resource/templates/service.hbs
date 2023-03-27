@@ -48,13 +48,11 @@ module.exports = {
   },
 
   async store (payload) {
-    const options = {
-      fields: ['foo']
-    }
+    const fields = ['foo']
 
     try {
       const [id] = await knex('{{ pluralSnakeCase name }}')
-        .metaInsert(payload, options)
+        .metaInsert(payload, fields)
 
       return id
     } catch (error) {
