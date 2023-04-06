@@ -47,12 +47,15 @@ module.exports = {
     }
   },
 
-  async store (payload) {
+  async store ({
+    body,
+    trx
+  }) {
     const fields = ['foo']
 
     try {
-      const [id] = await knex('{{ pluralSnakeCase name }}')
-        .metaInsert(payload, fields)
+      const [id] = await trx('{{ pluralSnakeCase name }}')
+        .metaInsert(body, fields)
 
       return id
     } catch (error) {
@@ -61,30 +64,34 @@ module.exports = {
     }
   },
 
-  async modify (keys, payload) {
+  async modify ({
+    keys,
+    body,
+    trx = knex
+  }) {
     try {
       const options = {
         fields: {
           id: 'users.id',
           name: 'users.name',
           username: 'users.username'
-        },
-        else: {
-          name: 'foo'
         }
       }
 
-      await knex('{{ pluralSnakeCase name }}')
-        .metaUpdate(keys, payload, options)
+      await trx('{{ pluralSnakeCase name }}')
+        .metaUpdate(keys, body, options)
     } catch (error) {
       console.log(error)
       throw error
     }
   },
 
-  async delete (ids) {
+  async delete ({
+    ids,
+    trx = knex
+  }) {
     try {
-      await knex('{{ pluralSnakeCase name }}')
+      await trx('{{ pluralSnakeCase name }}')
         .whereIn('id', _.castArray(ids))
         .del()
     } catch (error) {

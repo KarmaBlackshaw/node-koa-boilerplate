@@ -31,18 +31,23 @@ module.exports = {
     const request = await schema.validateAsync(ctx.request.body)
 
     ctx.body = await {{camelCase name}}Service.store({
-      start_date: request.start_date,
-      end_date: request.end_date,
-      profit: request.profit
+      body: {
+        start_date: request.start_date,
+        end_date: request.end_date,
+        profit: request.profit
+      }
     })
   },
 
   async patch (ctx) {
     const schema = Joi.object({})
 
-    const data = await schema.validateAsync(ctx.request.body)
+    const body = await schema.validateAsync(ctx.request.body)
 
-    ctx.body = await {{camelCase name}}Service.modify('id', data)
+    ctx.body = await {{camelCase name}}Service.modify({
+      key: 'id',
+      body
+    })
   },
 
   async delete (ctx) {
@@ -53,7 +58,9 @@ module.exports = {
 
     const data = await schema.validateAsync(ctx.request.body)
 
-    await {{camelCase name}}Service.delete(data.id)
+    await {{camelCase name}}Service.delete({
+      ids: data.id
+    })
 
     ctx.status = 200
   }
