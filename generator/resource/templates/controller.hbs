@@ -19,7 +19,7 @@ module.exports = {
   async find (ctx) {
     ctx.body = await {{camelCase name}}Service.list({
       ...ctx.request.body,
-      is_find: true
+      is_first: true
     })
 
     ctx.status = 200
