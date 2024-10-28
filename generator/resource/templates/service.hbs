@@ -1,7 +1,8 @@
 const knex = require('@config/knex')
 
-// libs
-const _ = require('lodash')
+const _get = require('lodash/get')
+const _first = require('lodash/first')
+const _castArray = require('lodash/castArray')
 
 module.exports = {
   async list ({
@@ -37,10 +38,10 @@ module.exports = {
         })
 
       if (isCount) {
-        return _.get(list, 'total', 0)
+        return _get(list, 'total', 0)
       }
 
-      return isFirst ? _.first(list) : list
+      return isFirst ? _first(list) : list
     } catch (error) {
       console.log(error)
       throw error
@@ -92,7 +93,7 @@ module.exports = {
   }) {
     try {
       await trx('{{ pluralSnakeCase name }}')
-        .whereIn('id', _.castArray(ids))
+        .whereIn('id', _castArray(ids))
         .del()
     } catch (error) {
       console.log(error)
