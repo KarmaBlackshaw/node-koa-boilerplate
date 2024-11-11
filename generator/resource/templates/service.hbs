@@ -6,9 +6,9 @@ const _castArray = require('lodash/castArray')
 
 module.exports = {
   async list ({
-    query,
     is_count: isCount,
-    is_first: isFirst
+    is_first: isFirst,
+    ...query
   } = {}) {
     const fields = {
       id: {
