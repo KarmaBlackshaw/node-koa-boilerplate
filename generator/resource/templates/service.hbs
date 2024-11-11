@@ -5,11 +5,9 @@ const _first = require('lodash/first')
 const _castArray = require('lodash/castArray')
 
 module.exports = {
-  async list ({
-    is_count: isCount,
-    is_first: isFirst,
-    ...query
-  } = {}) {
+  async list (query) {
+    const { is_count: isCount, is_first: isFirst } = query
+
     const fields = {
       id: {
         column: '{{ pluralSnakeCase name }}.id',
