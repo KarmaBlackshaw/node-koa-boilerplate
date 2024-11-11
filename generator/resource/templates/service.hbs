@@ -50,7 +50,7 @@ module.exports = {
 
   async store ({
     body,
-    trx
+    trx = knex
   }) {
     const fields = ['foo']
 
