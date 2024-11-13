@@ -28,14 +28,10 @@ module.exports = {
   async store (ctx) {
     const schema = Joi.object({})
 
-    const request = await schema.validateAsync(ctx.request.body)
+    const body = await schema.validateAsync(ctx.request.body)
 
     ctx.body = await {{camelCase name}}Service.store({
-      body: {
-        start_date: request.start_date,
-        end_date: request.end_date,
-        profit: request.profit
-      }
+      body
     })
   },
 
