@@ -4,6 +4,9 @@ const {{camelCase name}}Service = require('@resources/{{kebabCase name}}/service
 // libraries
 const Joi = require('joi')
 
+// utilities
+const { createFindArguments } = require('@utilities/knex-helper')
+
 module.exports = {
   async list (ctx) {
     const body = ctx.request.body
@@ -18,7 +21,7 @@ module.exports = {
 
   async find (ctx) {
     ctx.body = await {{camelCase name}}Service.list({
-      ...ctx.request.body,
+      ...createFindArguments(ctx.request.body),
       is_first: true
     })
 

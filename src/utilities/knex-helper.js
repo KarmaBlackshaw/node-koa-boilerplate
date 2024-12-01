@@ -12,21 +12,21 @@ function wrapCase (caseStatements) {
   return raw(`(CASE ${caseStatements} END)`)
 }
 
-function createFindArguments (conditions) {
-  const filterBy = []
-  const q = []
+function createFindArguments (payload) {
+  const result = Object.entries(payload)
+    .map(([key, value]) => ({
+      field: key,
+      operator: '=',
+      value
+    }))
 
-  for (const key in conditions) {
-    const value = conditions[key]
-
-    filterBy.push(key)
-    q.push(`"${value}"`)
+  const query = {
+    filter: {
+      $and: result
+    }
   }
 
-  return {
-    filter_by: filterBy,
-    q
-  }
+  return query
 }
 
 module.exports = {
